@@ -41,6 +41,13 @@ client.on(Events.InteractionCreate, async interaction => {
 		console.error(`No command matching ${interaction.commandName} was found.`);
 		return;
 	}
+	//react to the select menu interaction with the id delete_select
+	if (interaction.customID === 'delete_select') {
+		const selectedValue = interaction.values[0]; // Assuming it's a single-select menu
+		await interaction.reply(`You selected: ${selectedValue}`);
+		await interaction.message.delete();
+		return;
+	}
 
 	try {
 		await command.execute(interaction);
