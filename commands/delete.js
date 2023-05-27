@@ -1,4 +1,8 @@
 const { Events, ModalBuilder, SlashCommandBuilder } = require('discord.js');
+const fetch = require('node-fetch');
+const User = require('../models/user.js');
+const Discord = require('discord.js');
+
 
 module.exports = {
 	data: new SlashCommandBuilder()
