@@ -53,7 +53,7 @@ module.exports = {
             .addOptions(results);
 
           // Add the select menu to the modal
-          modal.addComponent(selectMenu);
+          modal.components.add(dropdown);
 
           // Open the modal
           await interaction.reply({
