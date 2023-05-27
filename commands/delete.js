@@ -42,9 +42,6 @@ module.exports = {
           await interaction.reply("You don't own any domains");
           return;
         } else {
-          const modal = new ModalBuilder()
-            .setCustomId('delete_modal')
-            .setTitle('Delete a domain');
 
           // Create a select menu
           const dropdown = new StringSelectMenuBuilder()
@@ -52,31 +49,14 @@ module.exports = {
             .setPlaceholder('Select a domain')
             .addOptions(results);
 
-          // Add the select menu to the modal
-        
-          // Add components to modal
+            const row = new ActionRowBuilder()
+            .addComponents(dropdown);
 
           // Create the text input components
-          const favoriteColorInput = new TextInputBuilder()
-            .setCustomId('favoriteColorInput')
-              // The label is the prompt the user sees for this input
-            .setLabel("What's your favorite color?")
-              // Short means only a single line of text
-            .setStyle(TextInputStyle.Short);
-
-          const hobbiesInput = new TextInputBuilder()
-            .setCustomId('hobbiesInput')
-            .setLabel("What's some of your favorite hobbies?")
-              // Paragraph means multiple lines of text.
-            .setStyle(TextInputStyle.Paragraph);
-
-          const firstActionRow = new ActionRowBuilder().addComponents(favoriteColorInput);
-          const secondActionRow = new ActionRowBuilder().addComponents(hobbiesInput);
-          const thirdActionRow = new ActionRowBuilder().addComponents(dropdown);
-          modal.addComponents(firstActionRow, secondActionRow, thirdActionRow);
-
-          // Open the modal
-          await interaction.showModal(modal);
+          await interaction.reply({
+            content: 'Choose the domian you want to delete',
+            components: [row],
+          });
         }
       });
   },
