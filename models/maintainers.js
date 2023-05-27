@@ -1,10 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
-  userid: String,
-  maintainer: Boolean
-}, { collection: 'maintainer' });
+const userSchema = new mongoose.Schema(
+    {
+        userid: String,
+        maintainer: Boolean,
+    },
+    { collection: "maintainer" }
+);
 
-const Maintainers = mongoose.model('maintainer', userSchema);
-
-module.exports = Maintainers;
+module.exports = mongoose.model("maintainer", userSchema);
