@@ -27,20 +27,6 @@ server.all("/", (req, res) => {
   
 })
 
-server.get('/api/user', (req, res) => {
-  var user = req.query.id;
-  if (user == undefined) {
-    res.send("undefined")
-  }
-  if (db.has(user)) {
-    res.send("exists")
-  }
-  if (!db.has(user)) {
-    res.send("available")
-  }
-})
-
-
 
 server.get('/auth/handler', async (req, res) => {
   //get params from url
