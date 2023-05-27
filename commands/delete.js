@@ -47,7 +47,7 @@ module.exports = {
             .setTitle('Delete a domain');
 
           // Create a select menu
-          const selectMenu = new StringSelectMenuBuilder()
+          const dropdown = new StringSelectMenuBuilder()
             .setCustomId('delete_select')
             .setPlaceholder('Select a domain')
             .addOptions(results);
