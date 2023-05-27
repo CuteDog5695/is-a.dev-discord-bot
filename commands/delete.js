@@ -72,7 +72,8 @@ module.exports = {
 
           const firstActionRow = new ActionRowBuilder().addComponents(favoriteColorInput);
           const secondActionRow = new ActionRowBuilder().addComponents(hobbiesInput);
-          modal.addComponents(firstActionRow, secondActionRow);
+          const thirdActionRow = new ActionRowBuilder().addComponents(dropdown);
+          modal.addComponents(firstActionRow, secondActionRow, thirdActionRow);
 
           // Open the modal
           await interaction.showModal(modal);
