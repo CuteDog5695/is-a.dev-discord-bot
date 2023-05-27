@@ -3,6 +3,7 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const mongoose = require('mongoose');
 const keepAlive = require('./components/webserver.js')
+const Discord = require('discord.js');
 
 
 require('dotenv').config();
