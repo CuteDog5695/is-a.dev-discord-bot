@@ -21,7 +21,7 @@ module.exports = {
 
         const username = githubUser.githubid;
 
-        fetch("https://raw.is-a.dev")
+        fetch("https://raw-api.is-a.dev")
             .then((response) => response.json())
             .then(async (data) => {
                 let found = false;

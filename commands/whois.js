@@ -17,7 +17,7 @@ module.exports = {
         }
 
         try {
-            const response = await fetch(`https://raw.githubusercontent.com/is-a-dev/register/main/domains/${domain}.json`, {
+            const response = await fetch(`https://raw-api.githubusercontent.com/is-a-dev/register/main/domains/${domain}.json`, {
                 headers: {
                     "User-Agent": "is-a-dev-bot",
                 },
@@ -60,7 +60,7 @@ module.exports = {
                     timestamp: new Date(),
                     footer: {
                         text: "is-a.dev",
-                        icon_url: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
+                        icon_url: "https://raw-api.githubusercontent.com/is-a-dev/register/main/media/logo.png",
                     },
                 };
 

@@ -92,7 +92,7 @@ server.post("/api/email", upload.none(), (req, res) => {
 
     webhookClient.send({
         username: "is-a.dev Email",
-        avatarURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
+        avatarURL: "https://raw-api.githubusercontent.com/is-a-dev/register/main/media/logo.png",
         embeds: [embed],
     });
 
