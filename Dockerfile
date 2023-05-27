@@ -8,6 +8,13 @@ WORKDIR /usr/src/bot
 COPY package.json /usr/src/bot
 RUN npm install
 
+# For Debugging
+RUN apt-get update && apt-get install -y \
+    nano \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
 # Our precious bot
 COPY . /usr/src/bot
 
