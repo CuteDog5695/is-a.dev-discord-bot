@@ -59,6 +59,7 @@ module.exports = {
           await interaction.reply({
             content: 'Please select a domain to delete:',
             components: [modal],
+            type: "modal"
           });
         }
       });
