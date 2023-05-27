@@ -56,11 +56,7 @@ module.exports = {
           modal.addComponents(dropdown);
 
           // Open the modal
-          await interaction.reply({
-            content: 'Please select a domain to delete:',
-            components: [modal],
-            type: "modal"
-          });
+          await interaction.showModal(modal);
         }
       });
   },
