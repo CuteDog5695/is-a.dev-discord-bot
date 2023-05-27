@@ -1,7 +1,6 @@
-const { Events, ModalBuilder, SlashCommandBuilder } = require('discord.js');
+const { Events, ModalBuilder, SlashCommandBuilder, StringSelectMenuBuilder } = require('discord.js');
 const fetch = require('node-fetch');
 const User = require('../models/user.js');
-const { SelectMenu } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -48,7 +47,7 @@ module.exports = {
             .setTitle('Delete a domain');
 
           // Create a select menu
-          const selectMenu = new SelectMenu()
+          const selectMenu = new StringSelectMenuBuilder()
             .setCustomId('delete_select')
             .setPlaceholder('Select a domain')
             .addOptions(results);
