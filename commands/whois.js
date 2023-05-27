@@ -41,11 +41,11 @@ module.exports = {
         const embed = {
             title: `Whois Lookup: ${domain}.is-a.dev`,
             fields: [
-            { name: 'Owner', value: owner, inline: true },
-            { name: 'Description', value: description, inline: true },
-            { name: 'Repository', value: repo, inline: true },
-            { name: 'Owner Email', value: email, inline: true },
-            { name: 'CNAME', value: cname, inline: true },
+            { name: 'Owner', value: owner || 'Not available', inline: true },
+            { name: 'Description', value: description || 'Not available', inline: true },
+            { name: 'Repository', value: repo || 'Not available', inline: true },
+            { name: 'Owner Email', value: email || 'Not available', inline: true },
+            { name: 'CNAME', value: cname || 'Not available', inline: true },
             { name: 'MX Record', value: mx || 'Not available', inline: true },
             { name: 'TXT Record', value: txt || 'Not available', inline: true },
             { name: 'A Record', value: a || 'Not available', inline: true },
