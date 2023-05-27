@@ -1,0 +1,22 @@
+{
+  "name": "is-a-dev-discord",
+  "version": "2.0.0",
+  "description": "Discord bot to manage the creation of is-a-dev records",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewstech/is-a-dev-discord.git"
+  },
+  "keywords": [
+    "Discord"
+  ],
+  "author": "andrewstech",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrewstech/is-a-dev-discord/issues"
+  },
+  "homepage": "https://github.com/andrewstech/is-a-dev-discord#readme"
+}
