@@ -42,7 +42,7 @@ module.exports = {
                         .setColor("#00b0f4")
                         .setFooter({
                             text: "is-a.dev",
-                            iconURL: "https://raw-api.githubusercontent.com/is-a-dev/register/main/media/logo.png",
+                            iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
                         });
 
                     await interaction.reply({ embeds: [embed] });
