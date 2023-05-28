@@ -43,7 +43,7 @@ module.exports = {
                         return;
                     }
 
-                    if(record === "URL") return records.push(`**${record}** [${data.record[record]}](${data.record[record]})`);
+                    if(record === "URL") return records.push(`**${record}** ${data.record[record]}`);
 
                     records.push(`**${record}** ${data.record[record]}`);
                 })
