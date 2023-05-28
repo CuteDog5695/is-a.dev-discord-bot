@@ -7,7 +7,7 @@ module.exports = {
         .setDescription("Check if a domain is available.")
         .addStringOption((option) => option.setName("subdomain").setDescription("The subdomain to check.").setRequired(true)),
     async execute(interaction) {
-        const subdomain = interaction.options.getString("subdomain");
+        const subdomain = interaction.options.getString("subdomain").toLowerCase();
 
         if (subdomain.length <= 2 || subdomain.length > 64) return await interaction.reply("The subdomain length must be between 3 and 64 characters.")
 
