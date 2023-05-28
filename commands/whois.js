@@ -37,15 +37,15 @@ module.exports = {
                 Object.keys(data.record).forEach(record => {
                     if(record === "A" || record === "MX") {
                         data.record[record].forEach(r => {
-                            records.push(`${record} ${r}`);
+                            records.push(`**${record}** ${r}`);
                         })
 
                         return;
                     }
 
-                    if(record === "URL") return records.push(`${record} [${i.record[record]}](${i.record[record]})`);
+                    if(record === "URL") return records.push(`**${record}** [${i.record[record]}](${i.record[record]})`);
 
-                    records.push(`${record} ${data.record[record]}`);
+                    records.push(`**${record}** ${data.record[record]}`);
                 })
 
                 const embed = {
