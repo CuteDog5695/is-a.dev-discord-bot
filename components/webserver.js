@@ -53,7 +53,7 @@ server.get("/auth/handler", async (req, res) => {
     const email = emailData[0].email;
 
     if (await User.findOne({ userid: discordId })) {
-        await User.replaceOne({ userid: discordId }, { gittoken: User.generateHash(accessToken) });
+        await User.replaceOne({ userid: discordId }, { gittoken: accessToken });
 
         res.send("You are already logged in!");
         return;
@@ -63,7 +63,7 @@ server.get("/auth/handler", async (req, res) => {
         userid: discordId,
         githubid: username,
         email: email,
-        gittoken: User.generateHash(accessToken),
+        gittoken: accessToken,
     });
 
     res.send("You have successfully logged in! You can close this tab now.");
