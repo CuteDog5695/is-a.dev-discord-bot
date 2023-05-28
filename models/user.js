@@ -12,12 +12,4 @@ const userSchema = new mongoose.Schema(
     { collection: "userdata" }
 );
 
-userSchema.methods.generateHash = function (input) {
-    return bcrypt.hashSync(input, bcrypt.genSaltSync(8), null);
-};
-
-userSchema.methods.validateToken = function (gittoken) {
-    return bcrypt.compareSync(gittoken, this.gittoken);
-};
-
 module.exports = mongoose.model("userdata", userSchema);
