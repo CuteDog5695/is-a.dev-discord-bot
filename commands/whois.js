@@ -45,7 +45,7 @@ module.exports = {
 
                     if(record === "URL") return records.push(`${record} [${i.record[record]}](${i.record[record]})`);
 
-                    records.push(`${record} ${i.record[record]}`);
+                    records.push(`${record} ${data.record[record]}`);
                 })
 
                 const embed = {
