@@ -9,3 +9,8 @@ services:
     labels:
       generated: by 8gwifi.org
 version: '3'
+
+networks:
+  default:
+    external: true
+    name: scoobydoo  
