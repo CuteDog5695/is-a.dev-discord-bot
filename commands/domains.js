@@ -32,13 +32,9 @@ module.exports = {
                 }
 
                 if (found) {
-                    let count = results.length;
-                    let embed = new EmbedBuilder()
-                        .setDescription(`You own ${count} domains`)
-                        .addFields({
-                            name: "Your Domains",
-                            value: ` ${results.join("\n")} `,
-                        })
+                    const embed = new EmbedBuilder()
+                        .setTitle("Your Domains")
+                        .setDescription(results.join("\n"))
                         .setColor("#00b0f4")
                         .setFooter({
                             text: "is-a.dev",
@@ -47,7 +43,7 @@ module.exports = {
 
                     await interaction.reply({ embeds: [embed] });
                 } else {
-                    await interaction.reply("You don't own any domains");
+                    await interaction.reply("You don't own any domains.");
                 }
             });
     },
