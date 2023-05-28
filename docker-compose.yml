@@ -1,0 +1,11 @@
+services:
+  is-a-dev:
+    container_name: is-a-dev-bot
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    image: ghcr.io/andrewstech/is-a-dev-discord:main
+    labels:
+      generated: by 8gwifi.org
+version: '3'
