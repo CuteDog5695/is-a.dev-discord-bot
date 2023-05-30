@@ -41,22 +41,13 @@ client.on(Events.InteractionCreate, async (interaction) => {
         console.error(`No command matching ${interaction.commandName} was found.`);
         return;
     }
-    // React to the slect menu with the id delete_select
-    if (interaction.customId === "delete_select") {
-        console.log("delete_select");
-        console.log(interaction.message.id);
-        // Get the message that the select menu was used in
-        const message = await interaction.channel.messages.fetch(interaction.message.id);
-        // Get the message that the select menu was used in
-        const messageToDelete = await interaction.channel.messages.fetch(interaction.values[0]);
-        // Delete the message
-        messageToDelete.delete();
-        // Update the select menu to show that the message was deleted
-        interaction.update({
-            content: "Message deleted",
-            components: [message.components[0]],
-        });
-        return;
+    const { customId } = interaction;
+
+    if (customId === 'delete_select') {
+        // The select menu with the ID 'bck' was interacted with
+        // Add your reaction logic here
+        // For example, you can acknowledge the interaction with a reply
+        await interaction.reply('You selected the "delete" option!');
     }
 
     try {
