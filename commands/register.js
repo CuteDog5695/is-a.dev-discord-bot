@@ -18,7 +18,6 @@ module.exports = {
                     { name: 'A', value: 'A' },
                     { name: 'TXT', value: 'TXT' },
                 ))
-        )
         .addStringOption(option =>
             option.setName("record_string")
                 .setDescription("Enter the record string")
