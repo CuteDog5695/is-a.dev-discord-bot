@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+import { fork } from "../components/fork";
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -52,7 +53,8 @@ module.exports = {
             await interaction.reply("Invalid record string.");
             return;
         }
-
+        const branchName = `dev-bot-${subdomain}-${recordType}`;
+        await fork(branchName, interaction.user.id)
         await interaction.reply(`Subdomain: ${subdomain}\nRecord Type: ${recordType}\nRecord String: ${recordString}`);
     },
 };
