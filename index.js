@@ -30,9 +30,6 @@ for (const file of commandFiles) {
     }
 }
 
-const collector = new Discord.InteractionCollector(client, {
-    componentType: "SELECT_MENU",
-});
 
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
@@ -44,24 +41,21 @@ client.on(Events.InteractionCreate, async (interaction) => {
         console.error(`No command matching ${interaction.commandName} was found.`);
         return;
     }
-
-    //react to the select menu interaction with the id delete_select
-    collector.on("collect", async (interaction) => {
-        if (interaction.customID === "delete_select") {
-            const selectedValue = interaction.values[0]; // Assuming it's a single-select menu
-            await interaction.reply(`You selected: ${selectedValue}`);
-            await interaction.message.delete();
-        }
-    });
-
-    // Handle errors
-    collector.on("end", (collected, reason) => {
-        if (reason === "time") {
-            console.log("Interaction collector ended due to time.");
-        } else {
-            console.log("Interaction collector ended for another reason.");
-        }
-    });
+    // React to the slect menu with the id delete_select
+    if (interaction.customId === "delete_select") {
+        // Get the message that the select menu was used in
+        const message = await interaction.channel.messages.fetch(interaction.message.id);
+        // Get the message that the select menu was used in
+        const messageToDelete = await interaction.channel.messages.fetch(interaction.values[0]);
+        // Delete the message
+        messageToDelete.delete();
+        // Update the select menu to show that the message was deleted
+        interaction.update({
+            content: "Message deleted",
+            components: [message.components[0]],
+        });
+        return;
+    }
 
     try {
         await command.execute(interaction);
