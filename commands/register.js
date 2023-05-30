@@ -13,12 +13,11 @@ module.exports = {
             option.setName("record_type")
                 .setDescription("Select the record type")
                 .setRequired(true)
-                .addChoices([
-                    ["A", "A"],
-                    ["CNAME", "CNAME"],
-                    ["MX", "MX"],
-                    ["TXT", "TXT"]
-                ])
+                .addChoices(
+                    { name: 'CNAME', value: 'CNAME' },
+                    { name: 'A', value: 'A' },
+                    { name: 'TXT', value: 'TXT' },
+                ))
         )
         .addStringOption(option =>
             option.setName("record_string")
