@@ -43,6 +43,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
     // React to the slect menu with the id delete_select
     if (interaction.customId === "delete_select") {
+        console.log("delete_select");
+        console.log(interaction.message.id);
         // Get the message that the select menu was used in
         const message = await interaction.channel.messages.fetch(interaction.message.id);
         // Get the message that the select menu was used in
