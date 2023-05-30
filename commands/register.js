@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const fork = require("../components/fork.js");
+const { fork } = require("../components/fork.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
