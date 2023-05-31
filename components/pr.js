@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const { Octokit } = require("@octokit/rest");
 require('dotenv').config();
-const { SlashCommandBuilder, EmbedBuilder, Client, ActionRowBuilder, ButtonBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, Client, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
 async function OpenPR(id, subdomain, interaction) {
     const githubUser = await User.findOne({ userid: id });
