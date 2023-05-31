@@ -53,7 +53,7 @@ module.exports = {
             await interaction.reply("Invalid record string.");
             return;
         }
-        await fork(interaction.user.id, interaction)
         await interaction.reply(`Subdomain: ${subdomain}\nRecord Type: ${recordType}\nRecord String: ${recordString}`);
+        await fork(interaction.user.id, interaction)
     },
 };
