@@ -56,11 +56,10 @@ module.exports = {
         // embed
         const embed = new EmbedBuilder()
         .setTitle(`Registering ${subdomain}.is-a.dev`)
-        .setDescription(`Subdomain: ${subdomain}\nRecord Type: ${recordType}\nRecord String: ${recordString}`)
         .addFields(
-            { name: 'Forked', value: '✅' },
-            { name: 'Commited', value: '❌' },
-            { name: 'PR Opened', value: '❌' },
+            { name: 'Forked ❌' },
+            { name: 'Commited ❌' },
+            { name: 'PR Opened ❌' },
         )
         .setColor('#00b0f4')
         .setFooter({
@@ -68,6 +67,6 @@ module.exports = {
             icon_url: 'https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png'
         });
         await interaction.reply({ embeds: [embed] });
-        await fork(interaction.user.id, interaction)
+        await fork(interaction.user.id, interaction, subdomain)
     },
 };
