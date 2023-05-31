@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { fork } = require("../components/fork.js");
 
 module.exports = {
@@ -53,9 +53,8 @@ module.exports = {
             await interaction.reply("Invalid record string.");
             return;
         }
-        const lib = require('lib')({token: process.env.STDLIB_SECRET_TOKEN});
         // embed
-        const embed = new lib.discord.Embed()
+        const embed = new EmbedBuilder()
         .setTitle(`Registering ${subdomain}.is-a.dev`)
         .setDescription(`Subdomain: ${subdomain}\nRecord Type: ${recordType}\nRecord String: ${recordString}`)
         .addFields(
