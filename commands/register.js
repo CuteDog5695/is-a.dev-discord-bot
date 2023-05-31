@@ -53,8 +53,7 @@ module.exports = {
             await interaction.reply("Invalid record string.");
             return;
         }
-        const branchName = `dev-bot-${subdomain}-${recordType}`;
-        await fork(branchName, interaction.user.id, interaction)
+        await fork(interaction.user.id, interaction)
         await interaction.reply(`Subdomain: ${subdomain}\nRecord Type: ${recordType}\nRecord String: ${recordString}`);
     },
 };
