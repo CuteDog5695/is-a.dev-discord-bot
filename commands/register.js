@@ -29,6 +29,11 @@ module.exports = {
         const recordType = interaction.options.getString("record_type");
         const recordString = interaction.options.getString("record_string");
 
+        if (!interaction.member.roles.cache.some((role) => role.name === "Bot Beta Tester")) {
+            await interaction.reply("Only beta testers can use this command!");
+            return;
+        }
+
         let regexPattern;
 
         switch (recordType) {
