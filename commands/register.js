@@ -53,7 +53,22 @@ module.exports = {
             await interaction.reply("Invalid record string.");
             return;
         }
-        await interaction.reply(`Subdomain: ${subdomain}\nRecord Type: ${recordType}\nRecord String: ${recordString}`);
+        const lib = require('lib')({token: process.env.STDLIB_SECRET_TOKEN});
+        // embed
+        const embed = new lib.discord.Embed()
+        .setTitle(`Registering ${subdomain}.is-a.dev`)
+        .setDescription(`Subdomain: ${subdomain}\nRecord Type: ${recordType}\nRecord String: ${recordString}`)
+        .addFields(
+            { name: 'Forked', value: ':redcross:' },
+            { name: 'Commited', value: ':redcross:' },
+            { name: 'PR Opened', value: ':redcross:' },
+        )
+        .setColor('#00b0f4')
+        .setFooter({
+            text: 'is-a.dev',
+            icon_url: 'https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png'
+        });
+        await interaction.reply({ embeds: [embed] });
         await fork(interaction.user.id, interaction)
     },
 };
