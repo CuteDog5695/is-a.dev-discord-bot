@@ -44,3 +44,4 @@ async function OpenPR(id, subdomain, interaction) {
     await interaction.editReply({ embeds: [embed, PrBtn] });
     return pr;
 }
+exports.OpenPR = OpenPR;
