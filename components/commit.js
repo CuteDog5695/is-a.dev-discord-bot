@@ -7,9 +7,17 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     const token = githubUser.gittoken;
     const username = githubUser.githubid;
     const email = githubUser.email;
+    if (process.env.DEBUG) {
+        console.log('COMMIT FUNCTION.');
+        console.log('id: ' + id);
+        console.log('token: ' + token);
+        console.log('username: ' + username);
+        console.log('email: ' + email);
+    }
     const octokit = new Octokit({
         auth: token
     })
+
     content = `{
         "owner": {
            "username": "${username}",
