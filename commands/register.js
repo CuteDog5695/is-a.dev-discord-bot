@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
 const { fork } = require("../components/fork.js");
 
 module.exports = {
@@ -54,13 +54,14 @@ module.exports = {
             return;
         }
         // embed
+        const RedCross = client.emojis.cache.find(emoji => emoji.name === "redcross");
         const embed = new EmbedBuilder()
         .setTitle(`Registering ${subdomain}.is-a.dev`)
         .setDescription(`Subdomain: ${subdomain}\nRecord Type: ${recordType}\nRecord String: ${recordString}`)
         .addFields(
-            { name: 'Forked', value: ':redcross:' },
-            { name: 'Commited', value: ':redcross:' },
-            { name: 'PR Opened', value: ':redcross:' },
+            { name: 'Forked', value: RedCross },
+            { name: 'Commited', value: RedCross },
+            { name: 'PR Opened', value: RedCross },
         )
         .setColor('#00b0f4')
         .setFooter({
