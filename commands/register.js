@@ -54,14 +54,13 @@ module.exports = {
             return;
         }
         // embed
-        const RedCross = Client.emojis.cache.find(emoji => emoji.name === "redcross");
         const embed = new EmbedBuilder()
         .setTitle(`Registering ${subdomain}.is-a.dev`)
         .setDescription(`Subdomain: ${subdomain}\nRecord Type: ${recordType}\nRecord String: ${recordString}`)
         .addFields(
-            { name: 'Forked', value: RedCross },
-            { name: 'Commited', value: RedCross },
-            { name: 'PR Opened', value: RedCross },
+            { name: 'Forked', value: '✅' },
+            { name: 'Commited', value: '❌' },
+            { name: 'PR Opened', value: '❌' },
         )
         .setColor('#00b0f4')
         .setFooter({
