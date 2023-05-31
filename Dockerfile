@@ -19,4 +19,4 @@ RUN apt-get update && apt-get install -y \
 COPY . /usr/src/bot
 
 # Start me!
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
