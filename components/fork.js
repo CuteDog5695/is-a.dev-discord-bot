@@ -42,9 +42,9 @@ async function fork(id, interaction, subdomain) {
     const embed = new EmbedBuilder()
     .setTitle(`Registering ${subdomain}.is-a.dev`)
     .addFields(
-        { name: 'Forked ✅' },
-        { name: 'Commited ❌' },
-        { name: 'PR Opened ❌' },
+        { name: 'Forked ', value: '✅', inline: true },
+        { name: 'Commited ', value: '❌', inline: true },
+        { name: 'PR Opened ', value: '❌', inline: true },
     )
     .setColor('#00b0f4')
     .setFooter({

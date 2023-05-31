@@ -57,9 +57,9 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setTitle(`Registering ${subdomain}.is-a.dev`)
         .addFields(
-            { name: 'Forked ❌' },
-            { name: 'Commited ❌' },
-            { name: 'PR Opened ❌' },
+            { name: 'Forked', value: '❌' },
+            { name: 'Commited', value: '❌' },
+            { name: 'PR Opened', value: '❌' },
         )
         .setColor('#00b0f4')
         .setFooter({
