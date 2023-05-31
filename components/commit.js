@@ -17,7 +17,11 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     const octokit = new Octokit({
         auth: token
     })
-
+    if (type === "A" || type === "MX") {
+        data = JSON.stringify(data.split(",").map((s) => s.trim()));
+    } else {
+        data = `"${data.trim()}"`;
+    }
     content = `{
         "owner": {
            "username": "${username}",
