@@ -84,6 +84,8 @@ module.exports = {
         });
         await interaction.reply({ embeds: [embed] });
         await fork(interaction.user.id, interaction, subdomain)
+        // add a 3 second delay to allow the fork to complete
+        await new Promise(r => setTimeout(r, 3000));
         await CommitChanges(interaction.user.id, subdomain, recordType, recordString, interaction);
         await OpenPR(interaction.user.id, subdomain, interaction);
     },
