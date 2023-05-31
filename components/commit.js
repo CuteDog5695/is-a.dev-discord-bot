@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const { Octokit } = require("@octokit/core");
+const { Octokit } = require("@octokit/rest");
 require('dotenv').config();
 const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
 async function CommitChanges(id, subdomain, type, data, interaction) {
