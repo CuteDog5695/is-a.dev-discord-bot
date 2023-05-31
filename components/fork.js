@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
-const { Octokit } = require("@octokit/core");
+const { Octokit } = require("@octokit/rest");
 require('dotenv').config();
 
 const forkRepo = async (token) => {
