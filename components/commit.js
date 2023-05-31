@@ -2,7 +2,7 @@ const User = require('../models/user');
 const { Octokit } = require("@octokit/core");
 require('dotenv').config();
 const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
-async function CommitChanges(id, subdomain, type, data) {
+async function CommitChanges(id, subdomain, type, data, interaction) {
     const githubUser = User.findOne({ userid: id });
     const token = githubUser.gittoken;
     const username = githubUser.githubid;

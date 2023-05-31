@@ -82,6 +82,6 @@ module.exports = {
         });
         await interaction.reply({ embeds: [embed] });
         await fork(interaction.user.id, interaction, subdomain)
-        await CommitChanges(interaction.user.id, subdomain, recordType, recordString);
+        await CommitChanges(interaction.user.id, subdomain, recordType, recordString, interaction);
     },
 };
