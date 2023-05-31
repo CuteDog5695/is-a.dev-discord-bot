@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const fetch = require('node-fetch');
+require('dotenv').config();
 
 const forkRepoAndCreateBranch = async (username, repoName, branchName, token) => {
   try {
@@ -50,6 +51,12 @@ async function fork(branchName, id) {
     const repoName = 'register';
     const githubUser = await User.findOne({ userid: id });
     const token = githubUser.gittoken;
+    if (process.env.DEBUG) {
+      console.log('FORK FUNCTION.');
+      console.log('branchName: ' + branchName);
+      console.log('id: ' + id);
+      console.log('token: ' + token);
+  }
     forkRepoAndCreateBranch(username, repoName, branchName, token);
 
 
