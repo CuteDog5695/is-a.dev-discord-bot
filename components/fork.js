@@ -17,11 +17,11 @@ const forkRepoAndCreateBranch = async (username, repoName, branchName, token) =>
       headers: {
         'X-GitHub-Api-Version': '2022-11-28'
       }
-    })
-    if (!forked.ok) {
-      throw new Error(`Failed to fork the repository: ${forked.status} ${forked.statusText}`);
-    }
+    });
     const cloneResponse = forked.data.clone_url;
+    if (process.env.DEBUG) {
+      console.log('FORKED REPO: ' + cloneResponse);
+    }
 
     // Create a new branch
     const createBranchResponse = await fetch(`https://api.github.com/repos/${cloneResponse}/git/refs`, {
