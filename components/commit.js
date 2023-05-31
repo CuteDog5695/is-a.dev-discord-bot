@@ -31,7 +31,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     const record = Buffer.from(content).toString('base64');
     const commit = await octokit.repos.createOrUpdateFileContents({
         owner: username,
-        repo: repository,
+        repo: "register",
         path: "domains/" + subdomain.toLowerCase() + ".is-a.dev.json",
         message: `feat(domain): ${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev`,
         content: record,
