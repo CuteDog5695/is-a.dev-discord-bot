@@ -35,19 +35,19 @@ module.exports = {
 
                 const records = [];
 
-                Object.keys(data.record).forEach(record => {
-                    if(record === "A" || record === "MX") {
-                        data.record[record].forEach(r => {
+                Object.keys(data.record).forEach((record) => {
+                    if (record === "A" || record === "MX") {
+                        data.record[record].forEach((r) => {
                             records.push(`**${record}** ${r}`);
-                        })
+                        });
 
                         return;
                     }
 
-                    if(record === "URL") return records.push(`**${record}** ${data.record[record]}`);
+                    if (record === "URL") return records.push(`**${record}** ${data.record[record]}`);
 
                     records.push(`**${record}** ${data.record[record]}`);
-                })
+                });
 
                 const embed = {
                     title: `Whois: ${domain}.is-a.dev`,
@@ -55,7 +55,7 @@ module.exports = {
                     fields: [
                         { name: "Owner Username", value: owner || "*None*", inline: true },
                         { name: "Owner Email", value: email || "*None*", inline: true },
-                        { name: "Records", value: records.join("\n"), inline: true }
+                        { name: "Records", value: records.join("\n"), inline: true },
                     ],
                     color: 0x00ffff,
                     timestamp: new Date(),

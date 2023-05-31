@@ -4,9 +4,7 @@ const auth = require("../components/auth.js");
 const User = require("../models/user.js");
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("login")
-        .setDescription("Login with GitHub."),
+    data: new SlashCommandBuilder().setName("login").setDescription("Login with GitHub."),
     async execute(interaction) {
         if (!interaction.member.roles.cache.some((role) => role.name === "Bot Beta Tester")) return await interaction.reply("Only beta testers can use this command!");
 

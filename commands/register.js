@@ -8,37 +8,15 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("register")
         .setDescription("Register an is-a.dev Subdomain!")
-        .addStringOption((option) =>
-            option
-                .setName("subdomain")
-                .setDescription("Enter the subdomain")
-                .setRequired(true)
-        )
-        .addStringOption((option) =>
-            option
-                .setName("record_type")
-                .setDescription("Select the record type")
-                .setRequired(true)
-                .addChoices(
-                    { name: "A", value: "A" },
-                    { name: "CNAME", value: "CNAME" },
-                    { name: "MX", value: "MX" },
-                    { name: "TXT", value: "TXT" }
-                )
-        )
-        .addStringOption((option) =>
-            option
-                .setName("record_string")
-                .setDescription("Enter the record value(s)")
-                .setRequired(true)
-        ),
+        .addStringOption((option) => option.setName("subdomain").setDescription("Enter the subdomain").setRequired(true))
+        .addStringOption((option) => option.setName("record_type").setDescription("Select the record type").setRequired(true).addChoices({ name: "A", value: "A" }, { name: "CNAME", value: "CNAME" }, { name: "MX", value: "MX" }, { name: "TXT", value: "TXT" }))
+        .addStringOption((option) => option.setName("record_string").setDescription("Enter the record value(s)").setRequired(true)),
     async execute(interaction) {
         const subdomains = interaction.options.getString("subdomain");
         const recordType = interaction.options.getString("record_type");
         const recordString = interaction.options.getString("record_string");
 
-        if (!interaction.member.roles.cache.some((role) => role.name === "Bot Beta Tester"))
-            return await interaction.reply("Only beta testers can use this command!");
+        if (!interaction.member.roles.cache.some((role) => role.name === "Bot Beta Tester")) return await interaction.reply("Only beta testers can use this command!");
 
         const githubUser = await User.findOne({ userid: interaction.user.id });
 
@@ -63,24 +41,15 @@ module.exports = {
                 return await interaction.reply("Invalid record type.");
         }
 
-        if (!regexPattern.test(recordString))
-            return await interaction.reply("Invalid record string.");
+        if (!regexPattern.test(recordString)) return await interaction.reply("Invalid record string.");
 
         // Embed
         const subdomain = subdomains.replace(/\.is-a\.dev$/, "");
 
-        const embed = new EmbedBuilder()
-            .setTitle(`Registering ${subdomain}.is-a.dev`)
-            .addFields(
-                { name: "Forked", value: "❌", inline: true },
-                { name: "Commited", value: "❌", inline: true },
-                { name: "PR Opened", value: "❌", inline: true }
-            )
-            .setColor("#00b0f4")
-            .setFooter({
-                text: "is-a.dev",
-                icon_url: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png"
-            });
+        const embed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).addFields({ name: "Forked", value: "❌", inline: true }, { name: "Commited", value: "❌", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setColor("#00b0f4").setFooter({
+            text: "is-a.dev",
+            icon_url: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
+        });
 
         await interaction.reply({ embeds: [embed] });
         await fork(interaction.user.id, interaction, subdomain);

@@ -30,7 +30,6 @@ for (const file of commandFiles) {
     }
 }
 
-
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
@@ -43,7 +42,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
     const { customId } = interaction;
 
-    if (customId === 'delete_select') {
+    if (customId === "delete_select") {
         // The select menu with the ID 'bck' was interacted with
         // Add your reaction logic here
         // For example, you can acknowledge the interaction with a reply

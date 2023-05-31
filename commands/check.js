@@ -9,7 +9,7 @@ module.exports = {
     async execute(interaction) {
         const subdomain = interaction.options.getString("subdomain").toLowerCase();
 
-        if (subdomain.length <= 2 || subdomain.length > 64) return await interaction.reply("The subdomain length must be between 3 and 64 characters.")
+        if (subdomain.length <= 2 || subdomain.length > 64) return await interaction.reply("The subdomain length must be between 3 and 64 characters.");
 
         try {
             const response = await fetch(`https://api.github.com/repos/is-a-dev/register/contents/domains/${subdomain}.json`, {

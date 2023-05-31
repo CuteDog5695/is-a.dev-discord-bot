@@ -83,7 +83,7 @@ server.post("/api/email", upload.none(), (req, res) => {
     const embed = {
         type: "rich",
         author: {
-            name: `${body.from}`
+            name: `${body.from}`,
         },
         title: `${body.subject}`,
         description: `${body.text}`,

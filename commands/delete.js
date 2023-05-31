@@ -4,9 +4,7 @@ const fetch = require("node-fetch");
 const User = require("../models/user.js");
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("delete")
-        .setDescription("Delete a domain."),
+    data: new SlashCommandBuilder().setName("delete").setDescription("Delete a domain."),
     async execute(interaction) {
         if (!interaction.member.roles.cache.some((role) => role.name === "Bot Beta Tester")) {
             await interaction.reply("Only beta testers can use this command!");
