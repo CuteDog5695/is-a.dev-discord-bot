@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
 const { fork } = require("../components/fork.js");
+const User = require("../models/user.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -31,6 +32,13 @@ module.exports = {
 
         if (!interaction.member.roles.cache.some((role) => role.name === "Bot Beta Tester")) {
             await interaction.reply("Only beta testers can use this command!");
+            return;
+        }
+
+        const githubUser = await User.findOne({ userid: interaction.user.id });
+
+        if (!githubUser) {
+            await interaction.reply("You are not logged in!");
             return;
         }
 
