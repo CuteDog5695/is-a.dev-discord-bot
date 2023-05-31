@@ -1,34 +1,34 @@
 const User = require('../models/user');
-const fetch = require('node-fetch');
+const { Octokit } = require("@octokit/core");
 require('dotenv').config();
 
 const forkRepoAndCreateBranch = async (username, repoName, branchName, token) => {
   try {
     // Fork the repository
-    const forkResponse = await fetch(`https://api.github.com/repos/${username}/${repoName}/forks`, {
-      method: 'POST',
+    const octokit = new Octokit({
+      auth: token
+    })
+    
+    const forked = await octokit.request('POST /repos/{owner}/{repo}/forks', {
+      owner: 'is-a-dev',
+      repo: 'register',
+      name: 'register',
+      default_branch_only: true,
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token
+        'X-GitHub-Api-Version': '2022-11-28'
       }
-    });
-
-    if (!forkResponse.ok) {
-      throw new Error(`Failed to fork the repository: ${forkResponse.status} ${forkResponse.statusText}`);
+    })
+    if (!forked.ok) {
+      throw new Error(`Failed to fork the repository: ${forked.status} ${forked.statusText}`);
     }
-
-    const forkedRepoUrl = (await forkResponse.json()).clone_url;
-
-    // Clone the forked repository
-    const cloneResponse = await fetch(forkedRepoUrl);
-    // Handle cloning logic here
+    const cloneResponse = forked.data.clone_url;
 
     // Create a new branch
     const createBranchResponse = await fetch(`https://api.github.com/repos/${cloneResponse}/git/refs`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': {token}
+        'Authorization': token
       },
       body: JSON.stringify({
         ref: `refs/heads/${branchName}`,
