@@ -66,7 +66,7 @@ server.get("/auth/handler", async (req, res) => {
         gittoken: accessToken,
     });
 
-    res.sendFile("web/logged-in.html", { root: path.join(__dirname) });
+    res.send("You have been logged in. You can now close this tab.");
 });
 
 server.post("/api/email", upload.none(), (req, res) => {
