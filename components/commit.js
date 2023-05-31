@@ -32,6 +32,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
        "username": "${username}",
        "email": "${email}"
    },
+
    "record": {
        "${type}": ${data.toLowerCase()}
    }
@@ -43,7 +44,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     const commit = await octokit.repos.createOrUpdateFileContents({
         owner: username,
         repo: "register",
-        path: "domains/" + subdomain.toLowerCase() + ".is-a.dev.json",
+        path: `domains/${subdomain.toLowerCase()}.json`,
         message: `feat(domain): ${subdomain
             .toLowerCase()
             .replace(/\.[^/.]+$/, "")}.is-a.dev`,
@@ -61,9 +62,9 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     const embed = new EmbedBuilder()
         .setTitle(`Registering ${subdomain}.is-a.dev`)
         .addFields(
-            { name: "Forked ", value: "✅", inline: true },
-            { name: "Commited ", value: "✅", inline: true },
-            { name: "PR Opened ", value: "❌", inline: true }
+            { name: "Forked", value: "✅", inline: true },
+            { name: "Commited", value: "✅", inline: true },
+            { name: "PR Opened", value: "❌", inline: true }
         )
         .setColor("#00b0f4")
         .setFooter({
