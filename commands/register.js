@@ -27,7 +27,7 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction) {
-        const subdomain = interaction.options.getString("subdomain");
+        const subdomains = interaction.options.getString("subdomain");
         const recordType = interaction.options.getString("record_type");
         const recordString = interaction.options.getString("record_string");
 
@@ -68,6 +68,7 @@ module.exports = {
             return;
         }
         // embed
+        const subdomain = subdomains.replace(/\.is-a\.dev$/, "");
         const embed = new EmbedBuilder()
         .setTitle(`Registering ${subdomain}.is-a.dev`)
         .addFields(

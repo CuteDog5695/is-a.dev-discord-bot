@@ -29,16 +29,21 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
    }
    `
     const record = Buffer.from(content).toString('base64');
-    const commit = octokit.request('POST /repos/{owner}/{repo}/contents/records/{path}', {
+    const { data } = await octokit.repos.createOrUpdateFileContents({
         owner: username,
-        repo: 'register',
-        path: `${subdomain}.json`,
-        message: `Add ${type} record for ${subdomain}`,
+        repo: repository,
+        path: "domains/" + subdomain.toLowerCase() + ".is-a.dev.json",
+        message: `feat(domain): ${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev`,
         content: record,
-        headers: {
-            'X-GitHub-Api-Version': '2022-11-28'
-        }
-    })
+        committer: {
+            name: username,
+            email: email,
+        },
+        author: {
+            name: username,
+            email: email,
+        },
+    });
     const embed = new EmbedBuilder()
     .setTitle(`Registering ${subdomain}.is-a.dev`)
     .addFields(
