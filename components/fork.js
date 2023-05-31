@@ -9,7 +9,7 @@ const forkRepoAndCreateBranch = async (username, repoName, branchName, token) =>
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': {token}
+        'Authorization': token
       }
     });
 
