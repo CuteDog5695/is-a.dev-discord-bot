@@ -2,7 +2,7 @@ const User = require('../models/user');
 const { Octokit } = require("@octokit/core");
 require('dotenv').config();
 
-const forkRepoAndCreateBranch = async (username, repoName, branchName, token) => {
+const forkRepo = async (token) => {
   try {
     // Fork the repository
     const octokit = new Octokit({
@@ -22,42 +22,24 @@ const forkRepoAndCreateBranch = async (username, repoName, branchName, token) =>
     if (process.env.DEBUG) {
       console.log('FORKED REPO: ' + cloneResponse);
     }
-
-    // Create a new branch
-    const createBranchResponse = await fetch(`https://api.github.com/repos/${cloneResponse}/git/refs`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token
-      },
-      body: JSON.stringify({
-        ref: `refs/heads/${branchName}`,
-        sha: 'main' // Replace 'main' with the commit or branch you want to base the new branch on
-      })
-    });
-
-    if (!createBranchResponse.ok) {
-      throw new Error(`Failed to create the new branch: ${createBranchResponse.status} ${createBranchResponse.statusText}`);
-    }
-
-    console.log(`New branch "${branchName}" created successfully.`);
+    return cloneResponse;
   } catch (error) {
-    console.error('An error occurred:', error);
+    console.log(error);
   }
+
 };
 
-async function fork(branchName, id) {
-    const username = 'is-a-dev';
-    const repoName = 'register';
+async function fork(id, interaction) {
     const githubUser = await User.findOne({ userid: id });
     const token = githubUser.gittoken;
     if (process.env.DEBUG) {
       console.log('FORK FUNCTION.');
-      console.log('branchName: ' + branchName);
       console.log('id: ' + id);
       console.log('token: ' + token);
   }
-    forkRepoAndCreateBranch(username, repoName, branchName, token);
+    const responce = await forkRepo(token);
+    await interaction.editReply(`Forked repo: ${responce}`);
+    return responce;
 
 
 }
