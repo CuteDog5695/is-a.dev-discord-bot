@@ -1,7 +1,8 @@
 const User = require('../models/user');
 const { Octokit } = require("@octokit/core");
 require('dotenv').config();
-function CommitChanges(id, subdomain, type, data) {
+const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
+async function CommitChanges(id, subdomain, type, data) {
     const githubUser = User.findOne({ userid: id });
     const token = githubUser.gittoken;
     const username = githubUser.githubid;
@@ -30,5 +31,19 @@ function CommitChanges(id, subdomain, type, data) {
             'X-GitHub-Api-Version': '2022-11-28'
         }
     })
+    const embed = new EmbedBuilder()
+    .setTitle(`Registering ${subdomain}.is-a.dev`)
+    .addFields(
+        { name: 'Forked ', value: '✅', inline: true },
+        { name: 'Commited ', value: '✅', inline: true },
+        { name: 'PR Opened ', value: '❌', inline: true },
+    )
+    .setColor('#00b0f4')
+    .setFooter({
+        text: 'is-a.dev',
+        icon_url: 'https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png'
+    });
+    await interaction.editReply({ embeds: [embed] });
     return commit;
 }
+exports.CommitChanges = CommitChanges;

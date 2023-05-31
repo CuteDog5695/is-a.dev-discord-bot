@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
 const { fork } = require("../components/fork.js");
+const { CommitChanges } = require("../components/commit.js");
 const User = require("../models/user.js");
 
 module.exports = {
@@ -81,5 +82,6 @@ module.exports = {
         });
         await interaction.reply({ embeds: [embed] });
         await fork(interaction.user.id, interaction, subdomain)
+        await CommitChanges(interaction.user.id, subdomain, recordType, recordString);
     },
 };
