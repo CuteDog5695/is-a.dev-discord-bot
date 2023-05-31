@@ -29,10 +29,10 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
    }
    `
     const record = Buffer.from(content).toString('base64');
-    const commit = octokit.request('POST /repos/{owner}/{repo}/contents/{path}', {
+    const commit = octokit.request('POST /repos/{owner}/{repo}/contents/records/{path}', {
         owner: username,
         repo: 'register',
-        path: `records/${subdomain}.json`,
+        path: `${subdomain}.json`,
         message: `Add ${type} record for ${subdomain}`,
         content: record,
         headers: {
