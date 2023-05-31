@@ -29,7 +29,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
    }
    `
     const record = Buffer.from(content).toString('base64');
-    const { data } = await octokit.repos.createOrUpdateFileContents({
+    const commit = await octokit.repos.createOrUpdateFileContents({
         owner: username,
         repo: repository,
         path: "domains/" + subdomain.toLowerCase() + ".is-a.dev.json",
