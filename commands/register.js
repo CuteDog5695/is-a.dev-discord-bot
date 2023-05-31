@@ -54,7 +54,7 @@ module.exports = {
             return;
         }
         // embed
-        const RedCross = client.emojis.cache.find(emoji => emoji.name === "redcross");
+        const RedCross = Client.emojis.cache.find(emoji => emoji.name === "redcross");
         const embed = new EmbedBuilder()
         .setTitle(`Registering ${subdomain}.is-a.dev`)
         .setDescription(`Subdomain: ${subdomain}\nRecord Type: ${recordType}\nRecord String: ${recordString}`)
