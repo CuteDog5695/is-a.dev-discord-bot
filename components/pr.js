@@ -42,7 +42,7 @@ async function OpenPR(id, subdomain, interaction) {
     const PrBtn = new ActionRowBuilder().addComponents(new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel("View PR").setURL(PrUrl));
 
     await interaction.editReply({ embeds: [embed] });
-    await interaction.editReply({ embeds: [PrBtn] });
+    await interaction.editReply({ components: [PrBtn] });
     return pr;
 }
 exports.OpenPR = OpenPR;
