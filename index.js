@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 
-const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder } = require("discord.js");
+const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder, ActivityType } = require("discord.js");
 const mongoose = require("mongoose");
 const keepAlive = require("./components/webserver.js");
 const Discord = require("discord.js");
@@ -73,6 +73,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
 // When the client is ready, run this code (only once)
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, (c) => {
+    client.user.setPresence({
+        activities: [{ name: `Free Is-A.dev Subdomains`, type: ActivityType.Watching }],
+        status: 'dnd',
+    });
+    
     console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
