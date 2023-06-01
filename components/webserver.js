@@ -7,14 +7,14 @@ const User = require("../models/user.js");
 const ejs = require("ejs");
 require("dotenv").config();
 
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
+
 
 const GITHUB_ID = process.env.GITHUB_ID;
 const GITHUB_SECRET = process.env.GITHUB_SECRET;
 
 const upload = multer();
 const server = express();
+server.set('view engine', 'ejs');
 
 
 server.get("/auth/handler", async (req, res) => {
