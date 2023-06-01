@@ -3,10 +3,10 @@ const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder().setName("beta").setDescription("Launches a modal"),
   async execute(interaction) {
-    await interaction.reply("Please wait...");
+    
     const member = interaction.member;
 
-    await interaction.editReply({
+    const modal = ({
       content: "Please Wait!",
       components: [
         {
@@ -48,5 +48,6 @@ module.exports = {
         },
       ],
     });
+    await interaction.showModal(modal);
   },
 };
