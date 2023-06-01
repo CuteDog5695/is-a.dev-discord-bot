@@ -4,7 +4,11 @@ const multer = require("multer");
 const fetch = require("node-fetch");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 const User = require("../models/user.js");
+const ejs = require("ejs");
 require("dotenv").config();
+
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
 const GITHUB_ID = process.env.GITHUB_ID;
 const GITHUB_SECRET = process.env.GITHUB_SECRET;
@@ -64,11 +68,8 @@ server.get("/auth/handler", async (req, res) => {
         email: email,
         gittoken: accessToken,
     });
-    // load logged-in.html and send it to the user
-    const loggedin = fs.readFileSync("./components/web/logged-in.html", "utf8");
-    // replace the placeholder with the user's username
-    res.send(loggedin.replace("{{username}}", username));
-
+    res.render('loggedin', { username });
+    
 });
 
 server.post("/api/email", upload.none(), (req, res) => {
