@@ -12,7 +12,6 @@ const GITHUB_SECRET = process.env.GITHUB_SECRET;
 const upload = multer();
 const server = express();
 
-server.use(express.static("web"));
 
 server.get("/auth/handler", async (req, res) => {
     const code = req.query.code;
@@ -65,8 +64,11 @@ server.get("/auth/handler", async (req, res) => {
         email: email,
         gittoken: accessToken,
     });
+    // load logged-in.html and send it to the user
+    const loggedin = fs.readFileSync("./web/logged-in.html", "utf8");
+    // replace the placeholder with the user's username
+    res.send(loggedin.replace("{{username}}", username));
 
-    res.send("You have been logged in. You can now close this tab.");
 });
 
 server.post("/api/email", upload.none(), (req, res) => {
