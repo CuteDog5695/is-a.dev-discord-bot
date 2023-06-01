@@ -65,7 +65,7 @@ server.get("/auth/handler", async (req, res) => {
         gittoken: accessToken,
     });
     // load logged-in.html and send it to the user
-    const loggedin = fs.readFileSync("./web/logged-in.html", "utf8");
+    const loggedin = fs.readFileSync("./components/web/logged-in.html", "utf8");
     // replace the placeholder with the user's username
     res.send(loggedin.replace("{{username}}", username));
 
