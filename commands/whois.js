@@ -29,11 +29,19 @@ module.exports = {
             } else {
                 const data = await response.json();
 
-                const owner = data.owner.username;
-                const email = data.owner.email;
                 const fileURL = `https://github.com/is-a-dev/register/blob/main/domains/${domain}.json`;
 
                 const records = [];
+                const contact = [];
+
+                Object.keys(data.owner).forEach((owner) => {
+                    if (owner === "username") return contact.push(`**${owner}** ${data.owner[owner]}`);
+                    if (owner === "email") return contact.push(`**${owner}** ${data.owner[owner]}`);
+                    if (owner === "discord") return contact.push(`**${owner}** ${data.owner[owner]}`);
+                    if (owner === "twitter") return contact.push(`**${owner}** ${data.owner[owner]}`);
+                    if (owner === "reddit") return contact.push(`**${owner}** ${data.owner[owner]}`);
+                    if (owner === "note") return contact.push(`**${owner}** ${data.owner[owner]}`);
+                });
 
                 Object.keys(data.record).forEach((record) => {
                     if (record === "A" || record === "MX") {
@@ -53,8 +61,7 @@ module.exports = {
                     title: `Whois: ${domain}.is-a.dev`,
                     url: fileURL,
                     fields: [
-                        { name: "Owner Username", value: owner || "*None*", inline: true },
-                        { name: "Owner Email", value: email || "*None*", inline: true },
+                        { name: "Contact", value: contact.join("\n"), inline: true },
                         { name: "Records", value: records.join("\n"), inline: true },
                     ],
                     color: 0x00ffff,
