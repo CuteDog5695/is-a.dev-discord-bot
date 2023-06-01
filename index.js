@@ -34,8 +34,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
     //if (!interaction.isChatInputCommand()) return;
     if (interaction.customId === 'feedback') {
         // Get the values from the interaction
-        const improve = interaction.values.get('improve');
-        const suggest = interaction.values.get('suggest');
+        const improve = interaction.fields.getTextInputValue('improve');
+        const suggest = interaction.fields.getTextInputValue('suggest');
         // Send the values to the channel #feedback
         const channel = interaction.guild.channels.cache.find(channel => channel.name === 'bot-feedback');
         const embed = new Discord.MessageEmbed()
