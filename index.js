@@ -31,7 +31,7 @@ for (const file of commandFiles) {
 }
 
 client.on(Events.InteractionCreate, async (interaction) => {
-    if (!interaction.isChatInputCommand()) return;
+    //if (!interaction.isChatInputCommand()) return;
     if (interaction.customId === 'feedback') {
         // Get the values from the interaction
         const improve = interaction.values.get('improve');
