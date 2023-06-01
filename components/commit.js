@@ -30,7 +30,8 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     content = `{
     "owner": {
        "username": "${username}",
-       "email": "${email}"
+       "email": "${email}",
+       "note": "This record was created by is-a.dev Discord bot via discord id: ${id}"
    },
 
    "record": {
