@@ -12,7 +12,7 @@ const GITHUB_SECRET = process.env.GITHUB_SECRET;
 const upload = multer();
 const server = express();
 
-server.use(express.static("public"));
+server.use(express.static("web"));
 
 server.get("/auth/handler", async (req, res) => {
     const code = req.query.code;
