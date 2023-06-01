@@ -1,6 +1,8 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
+
+
+const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 const mongoose = require("mongoose");
 const keepAlive = require("./components/webserver.js");
 const Discord = require("discord.js");
@@ -38,7 +40,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         const suggest = interaction.fields.getTextInputValue('suggest');
         // Send the values to the channel #feedback
         const channel = interaction.guild.channels.cache.find(channel => channel.name === 'bot-feedback');
-        const embed = new Discord.MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle('Feedback')
             .setDescription(`Improvements: ${improve}\nSuggestions: ${suggest}`)
             .setColor('#00FF00')
