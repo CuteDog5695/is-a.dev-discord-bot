@@ -43,10 +43,47 @@ module.exports = {
                     const row = new ActionRowBuilder().addComponents(dropdown);
 
                     // Create the text input components
-                    await interaction.reply({
+                    const response = await interaction.reply({
                         content: "Choose the domian you want to delete",
                         components: [row],
                     });
+                    const collectorFilter = i => i.user.id === interaction.user.id;
+                    try {
+                        const selection = await response.awaitMessageComponent({ filter: collectorFilter, time: 60000 });
+                        if (selection.customId === "delete_select") {
+                            const domain = selection.values[0];
+                            const confirm = new ButtonBuilder()
+                                .setCustomId("confirm")
+                                .setLabel("Confirm Delete")
+                                .setStyle(ButtonStyle.Danger);
+                            
+                            const cancel = new ButtonBuilder()
+                                .setCustomId("cancel")
+                                .setLabel("Cancel")
+                                .setStyle(ButtonStyle.Secondary);
+                            
+                            const row = new ActionRowBuilder()
+                                .addComponents(cancel, confirm);
+                            
+                            await interaction.editReply({ content: `Are you sure you want to delete ${domain}?`, components: [row] });
+                            const collectorFilter = i => i.user.id === interaction.user.id;
+                            try {
+                                const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60000 });
+                                if (confirmation.customId === 'confirm') {
+                                    await confirmation.update({ content: `Deleted ${domain}.`, components: [] });
+                                } else if (confirmation.customId === 'cancel') {
+                                    await confirmation.update({ content: 'Action cancelled', components: [] });
+                                }
+                            } catch (e) {
+                                await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
+                                return;
+                            }
+                        }
+
+                    } catch (e) {
+                        await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
+                        return;
+                    }
                 }
             });
     },
