@@ -37,7 +37,7 @@ module.exports = {
             {
                 type: "text",
                 text: "5. You will not use the bot to break any of Discord's Terms of Service.",
-            }
+            },
             {
               type: "button",
               label: "Start Testing",
