@@ -8,7 +8,7 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.member.roles.cache.some((role) => role.name === "Bot Beta Tester")) return await interaction.reply("Only beta testers can use this command!");
 
-        if (await User.findOne({ userid: interaction.user.id })) return await interaction.reply("You are already logged in!");
+        if (await User.findOne({ userid: interaction.user.id })) return await interaction.reply({content: "You are already logged in!", ephemeral: true});
 
         const authUrl = auth.getAccessToken(interaction.user.id);
 

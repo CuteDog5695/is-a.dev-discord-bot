@@ -6,7 +6,7 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.member.roles.cache.some((role) => role.name === "Bot Beta Tester")) return await interaction.reply("Only beta testers can use this command!");
 
-        if (! await User.findOne({ userid: interaction.user.id })) return await interaction.reply("You are not logged in!");
+        if (! await User.findOne({ userid: interaction.user.id })) return await interaction.reply({content: "You are not logged in!", ephemeral: true});
 
         const confirm = new ButtonBuilder()
 			.setCustomId('confirm')
@@ -22,10 +22,10 @@ module.exports = {
 			.addComponents(cancel, confirm);
 
         //await User.findOneAndDelete({ userid: interaction.user.id });
-
         const response = await interaction.reply({
 			content: `Are you sure you want to logout?`,
 			components: [row],
+            ephemeral: true
 		});
 
         const collectorFilter = i => i.user.id === interaction.user.id;
