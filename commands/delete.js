@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder } = require("discord.js");
+const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, MessageSelectMenu } = require("discord.js");
 
 const fetch = require("node-fetch");
 const User = require("../models/user.js");
@@ -38,10 +38,10 @@ module.exports = {
                     return;
                 } else {
                     // Create a select menu
-                    const select = new StringSelectMenuBuilder()
-                        .setCustomId('delete')
-                        .setPlaceholder('Choose a domain to delete!')
-                        .addOptions(results);
+                    const select = new MessageSelectMenu()
+                    .setCustomId('your_select_menu_id')
+                    .setPlaceholder('Select an option')
+                    .addOptions(results);
 
                     const row = new ActionRowBuilder().addComponents(select);
 

@@ -40,14 +40,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
         console.error(`No command matching ${interaction.commandName} was found.`);
         return;
     }
-    console.log(interaction);
-
-    if (customId === "delete_select") {
-        // The select menu with the ID 'bck' was interacted with
-        // Add your reaction logic here
-        // For example, you can acknowledge the interaction with a reply
-        await interaction.reply('You selected the "delete" option!');
-    }
 
     try {
         await command.execute(interaction);
