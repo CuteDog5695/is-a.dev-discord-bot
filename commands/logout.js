@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require("discord.js");
 const User = require("../models/user.js");
 
 module.exports = {
@@ -8,7 +8,40 @@ module.exports = {
 
         if (! await User.findOne({ userid: interaction.user.id })) return await interaction.reply("You are not logged in!");
 
-        await User.findOneAndDelete({ userid: interaction.user.id });
-        await interaction.reply("You have been logged out!");
+        const confirm = new ButtonBuilder()
+			.setCustomId('confirm')
+			.setLabel('Confirm Logout')
+			.setStyle(ButtonStyle.Danger);
+
+		const cancel = new ButtonBuilder()
+			.setCustomId('cancel')
+			.setLabel('Cancel')
+			.setStyle(ButtonStyle.Secondary);
+
+		const row = new ActionRowBuilder()
+			.addComponents(cancel, confirm);
+
+        //await User.findOneAndDelete({ userid: interaction.user.id });
+
+        const response = await interaction.reply({
+			content: `Are you sure you want to logout?`,
+			components: [row],
+		});
+
+        const collectorFilter = i => i.user.id === interaction.user.id;
+
+        try {
+            const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60000 });
+            if (confirmation.customId === 'confirm') {
+                await User.findOneAndDelete({ userid: interaction.user.id });
+                await confirmation.update({ content: `Logged out.`, components: [] });
+            } else if (confirmation.customId === 'cancel') {
+                await confirmation.update({ content: 'Action cancelled', components: [] });
+            }
+        } catch (e) {
+            await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
+            return;
+        }
+
     },
 };

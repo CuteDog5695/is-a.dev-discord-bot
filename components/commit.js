@@ -67,6 +67,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
             { name: "Commited", value: "✅", inline: true },
             { name: "PR Opened", value: "❌", inline: true }
         )
+        .setDescription(`Your domain has been generated! Please wait for a staff member to review your PR.`)
         .setColor("#00b0f4")
         .setFooter({
             text: "is-a.dev",
