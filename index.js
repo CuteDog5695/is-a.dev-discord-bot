@@ -41,6 +41,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         return;
     }
     const { customId } = interaction;
+    console.log(customId);
 
     if (customId === "delete_select") {
         // The select menu with the ID 'bck' was interacted with
