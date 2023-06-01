@@ -38,10 +38,13 @@ module.exports = {
                     return;
                 } else {
                     // Create a select menu
-                    const select = new MessageSelectMenu()
-                    .setCustomId('your_select_menu_id')
-                    .setPlaceholder('Select an option')
-                    .addOptions(results);
+                    const select = new MessageActionRow()
+                    .addComponents(
+                      new MessageSelectMenu()
+                        .setCustomId('delete')
+                        .setPlaceholder('Select an option')
+                        .addOptions(results),
+                    );
 
                     const row = new ActionRowBuilder().addComponents(select);
 
