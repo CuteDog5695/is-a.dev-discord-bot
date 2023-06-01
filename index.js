@@ -32,6 +32,21 @@ for (const file of commandFiles) {
 
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
+    if (interaction.customId === 'feedback') {
+        // Get the values from the interaction
+        const improve = interaction.values.get('improve');
+        const suggest = interaction.values.get('suggest');
+        // Send the values to the channel #feedback
+        const channel = interaction.guild.channels.cache.find(channel => channel.name === 'bot-feedback');
+        const embed = new Discord.MessageEmbed()
+            .setTitle('Feedback')
+            .setDescription(`Improvements: ${improve}\nSuggestions: ${suggest}`)
+            .setColor('#00FF00')
+            .setTimestamp();
+        channel.send({ embeds: [embed] });
+        // Send a reply to the user
+		await interaction.reply({ content: 'Your submission was received successfully!' });
+	}
 
     const command = interaction.client.commands.get(interaction.commandName);
     console.log(interaction.commandName);
