@@ -38,9 +38,12 @@ module.exports = {
                     return;
                 } else {
                     // Create a select menu
-                    const dropdown = new StringSelectMenuBuilder().setCustomId("delete_select").setPlaceholder("Select a domain").addOptions(results);
+                    const select = new StringSelectMenuBuilder()
+                        .setCustomId('delete')
+                        .setPlaceholder('Choose a domain to delete!')
+                        .addOptions(results);
 
-                    const row = new ActionRowBuilder().addComponents(dropdown);
+                    const row = new ActionRowBuilder().addComponents(select);
 
                     // Create the text input components
                     const response = await interaction.reply({
@@ -50,7 +53,7 @@ module.exports = {
                     const collectorFilter = i => i.user.id === interaction.user.id;
                     try {
                         const selection = await response.awaitMessageComponent({ filter: collectorFilter, time: 60000 });
-                        if (selection.customId === "delete_select") {
+                        if (selection.customId === "delete") {
                             const domain = selection.values[0];
                             const confirm = new ButtonBuilder()
                                 .setCustomId("confirm")
