@@ -31,7 +31,7 @@ async function OpenPR(id, subdomain, interaction) {
     const pr = await octokit.pulls.create({
         owner: "is-a-dev",
         repo: "register",
-        title: `Automated PR: Register ${subdomain
+        title: `Register ${subdomain
             .toLowerCase()
             .replace(/\.[^/.]+$/, "")}.is-a.dev`,
         head: `${username}:main`,
