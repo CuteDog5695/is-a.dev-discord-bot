@@ -6,7 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("template")
         .setDescription("Premade domain templates!")
-        .addStringOption((option) => option.setName("templates").setDescription("Select the template").setRequired(true).addChoices({ name: "Email Forwarder", value: "EmailForward" }, { name: "Github Pages", value: "github" })),
+        .addStringOption((option) => option.setName("templates").setDescription("Select the template").setRequired(true).addChoices({ name: "Email Forwarder", value: "EmailForward" }, { name: "Github Pages and Email Forwarder", value: "EmailGithub" })),
     async execute(interaction) {
         if (!interaction.member.roles.cache.some((role) => role.name === "Bot Beta Tester")) return await interaction.reply("Only beta testers can use this command!");
 
@@ -20,7 +20,7 @@ module.exports = {
             case "EmailForward":
                 await ForwardMailModal(interaction);
                 break;
-            case "github":
+            case "EmailGithub":
                 await interaction.reply("Github Pages");
                 break;
             default:

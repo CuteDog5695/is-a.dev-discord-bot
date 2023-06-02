@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const keepAlive = require("./components/webserver.js");
 const Discord = require("discord.js");
 const { ForwardMailGen } = require("./templates/forwardmail/gen.js");
+const { EmailGithubGen } = require("./templates/forwardmail-github/gen.js");
 
 require("dotenv").config();
 
@@ -55,6 +56,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
 	}
     if (interaction.customId === 'emailforward') {
         ForwardMailGen(interaction);
+    }
+    if (interaction.customId === 'EmailGithub') {
+        EmailGithubGen(interaction);
     }
 
     const command = interaction.client.commands.get(interaction.commandName);
