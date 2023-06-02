@@ -28,7 +28,7 @@ async function ForwardMailGen(interaction) {
     
        "record": {
             "MX": ["mx1.forwardemail.net", "mx2.forwardemail.net"],
-            "TXT": "forward-email=${ForwardEmail}",
+            "TXT": "forward-email=${ForwardEmail}"
 
        }
     }
