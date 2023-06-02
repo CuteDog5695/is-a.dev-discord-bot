@@ -12,7 +12,7 @@ const {
     ButtonStyle,
 } = require("discord.js");
 
-async function OpenPR(id, subdomain, interaction) {
+async function OpenPR(id, subdomain, interaction, extra) {
     const githubUser = await User.findOne({ userid: id });
     const token = githubUser.gittoken;
     const username = githubUser.githubid;
@@ -57,12 +57,28 @@ async function OpenPR(id, subdomain, interaction) {
                 "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
         })
 
-    const PrBtn = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-            .setStyle(ButtonStyle.Link)
-            .setLabel("Pull Request")
-            .setURL(PrUrl)
-    );
+
+    if (extra) {
+        const PrBtn = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+                .setStyle(ButtonStyle.Link)
+                .setLabel("Pull Request")
+                .setURL(PrUrl),
+            new ButtonBuilder()
+                .setStyle(ButtonStyle.Link)
+                .setLabel(extra.label)
+                .setURL(extra.url)
+        );        
+    }
+    else {
+        const PrBtn = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+                .setStyle(ButtonStyle.Link)
+                .setLabel("Pull Request")
+                .setURL(PrUrl)
+        );
+    }
+
 
     await interaction.editReply({ embeds: [embed] });
     await interaction.editReply({ components: [PrBtn] });

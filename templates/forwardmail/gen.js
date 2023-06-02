@@ -70,7 +70,12 @@ async function ForwardMailGen(interaction) {
         });
 
     await interaction.editReply({ embeds: [embed] });
-    await OpenPR(interaction.user.id, subdomain, interaction);
+    let extra = {
+        label: "Info",
+        url: `https://register-bot.is-a.dev/guides/forwarder?email=${email}&domain=${subdomain}`
+    }
+    await OpenPR(interaction.user.id, subdomain, interaction, extra);
+    
 
 }
 

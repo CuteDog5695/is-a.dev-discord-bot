@@ -72,6 +72,13 @@ server.get("/auth/handler", async (req, res) => {
     
 });
 
+server.get("/guides/forwarder", (req, res) => {
+    // get query params from url and store in variables
+    const email = req.query.email;
+    const subdomain = req.query.domain;
+    res.render('emailforwarder', { email, subdomain });
+});
+
 server.post("/api/email", upload.none(), (req, res) => {
     const body = req.body;
 
