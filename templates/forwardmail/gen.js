@@ -1,6 +1,7 @@
 const User = require("../../models/user.js");
 const { fork } = require("../../components/fork.js");
 const { OpenPR } = require("../../components/pr.js");
+const { Octokit } = require("@octokit/rest");
 const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
 async function ForwardMailGen(interaction) {
     const ForwardEmail = interaction.fields.getTextInputValue('emailaddress');
@@ -17,6 +18,7 @@ async function ForwardMailGen(interaction) {
     const username = githubUser.githubid;
     const email = githubUser.email;
     const id = interaction.user.id;
+    const octokit = new Octokit({ auth: token });
     content = `{
         "owner": {
            "username": "${username}",
