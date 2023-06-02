@@ -5,6 +5,12 @@ const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
 async function ForwardMailGen(interaction) {
     const ForwardEmail = interaction.fields.getTextInputValue('emailaddress');
     const subdomain = interaction.fields.getTextInputValue('subdomain');
+    const embeds = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).addFields({ name: "Forked", value: "❌", inline: true }, { name: "Commited", value: "❌", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setColor("#00b0f4").setFooter({
+        text: "is-a.dev",
+        icon_url: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
+    });
+
+    await interaction.reply({ embeds: [embeds] });
     await fork(interaction.user.id, interaction, subdomain);
     const githubUser = await User.findOne({ userid: id });
     const token = githubUser.gittoken;
