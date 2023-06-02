@@ -16,6 +16,7 @@ async function ForwardMailGen(interaction) {
     const token = githubUser.gittoken;
     const username = githubUser.githubid;
     const email = githubUser.email;
+    const id = interaction.user.id;
     content = `{
         "owner": {
            "username": "${username}",
