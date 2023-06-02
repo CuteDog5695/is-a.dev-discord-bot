@@ -58,6 +58,10 @@ async function OpenPR(id, subdomain, interaction, extra) {
         })
 
 
+    
+
+
+    await interaction.editReply({ embeds: [embed] });
     if (extra) {
         const PrBtn = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
@@ -68,7 +72,8 @@ async function OpenPR(id, subdomain, interaction, extra) {
                 .setStyle(ButtonStyle.Link)
                 .setLabel(extra.label)
                 .setURL(extra.url)
-        );        
+        );
+        await interaction.editReply({ components: [PrBtn] });        
     }
     else {
         const PrBtn = new ActionRowBuilder().addComponents(
@@ -77,11 +82,8 @@ async function OpenPR(id, subdomain, interaction, extra) {
                 .setLabel("Pull Request")
                 .setURL(PrUrl)
         );
+        await interaction.editReply({ components: [PrBtn] });
     }
-
-
-    await interaction.editReply({ embeds: [embed] });
-    await interaction.editReply({ components: [PrBtn] });
     return pr;
 }
 
