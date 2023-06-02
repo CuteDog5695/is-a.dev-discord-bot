@@ -6,6 +6,7 @@ const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder, ActivityTyp
 const mongoose = require("mongoose");
 const keepAlive = require("./components/webserver.js");
 const Discord = require("discord.js");
+const { ForwardMailGen } = require("./templates/forwardmail/gen.js");
 
 require("dotenv").config();
 
@@ -52,6 +53,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
         // Send a reply to the user
 		await interaction.reply({ content: 'Your submission was received successfully!' });
 	}
+    if (interaction.customId === 'emailforward') {
+        ForwardMailGen(interaction);
+    }
 
     const command = interaction.client.commands.get(interaction.commandName);
     console.log(interaction.commandName);
