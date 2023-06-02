@@ -38,13 +38,15 @@ client.on(Events.InteractionCreate, async (interaction) => {
         // Get the values from the interaction
         const improve = interaction.fields.getTextInputValue('improve');
         const suggest = interaction.fields.getTextInputValue('suggest');
+        const username = interaction.user.username;
+        const avatar = interaction.user.avatarURL;
         // Send the values to the channel #feedback
         const channel = interaction.guild.channels.cache.find(channel => channel.name === 'bot-feedback');
         const embed = new EmbedBuilder()
             .setTitle('Feedback')
             .setDescription(`Improvements: ${improve}\nSuggestions: ${suggest}`)
             .setColor('#00FF00')
-            .setFooter('Feedback from ' + interaction.user.tag, interaction.user.avatarURL)
+            .setFooter('Feedback from ${username}', '${avatar}')
             .setTimestamp();
         channel.send({ embeds: [embed] });
         // Send a reply to the user
