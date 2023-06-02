@@ -1,4 +1,4 @@
-const { User } = require("../../models/user.js");
+const User = require("../../models/user.js");
 const { fork } = require("../../components/fork.js");
 const { OpenPR } = require("../../components/pr.js");
 const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
@@ -12,7 +12,7 @@ async function ForwardMailGen(interaction) {
 
     await interaction.reply({ embeds: [embeds] });
     await fork(interaction.user.id, interaction, subdomain);
-    const githubUser = await User.findOne({ userid: id });
+    const githubUser = await User.findOne({ userid: interaction.user.id });
     const token = githubUser.gittoken;
     const username = githubUser.githubid;
     const email = githubUser.email;
@@ -30,6 +30,8 @@ async function ForwardMailGen(interaction) {
        }
     }
     `;
+    // add a 3 second delay to allow the fork to complete
+    await new Promise((r) => setTimeout(r, 3000));
     const record = Buffer.from(content).toString("base64");
     const commit = await octokit.repos.createOrUpdateFileContents({
         owner: username,
