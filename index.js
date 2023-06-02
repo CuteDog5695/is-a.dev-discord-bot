@@ -44,8 +44,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
             .setTitle('Feedback')
             .setDescription(`Improvements: ${improve}\nSuggestions: ${suggest}`)
             .setColor('#00FF00')
+            .setFooter('Feedback from ' + interaction.user.tag, interaction.user.avatarURL)
             .setTimestamp();
-            .setFooter('Feedback from ' + interaction.user.tag, interaction.user.avatarURL);
         channel.send({ embeds: [embed] });
         // Send a reply to the user
 		await interaction.reply({ content: 'Your submission was received successfully!' });
