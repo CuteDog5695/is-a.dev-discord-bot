@@ -7,10 +7,7 @@ module.exports = {
         .setName("domains")
         .setDescription("Lists all domains registered by you!"),
     async execute(interaction) {
-        if (!interaction.member.roles.cache.some((role) => role.id === "1057991860439765073")) {
-            await interaction.reply("Only beta testers can use this command!");
-            return;
-        }
+
 
         const githubUser = await User.findOne({ userid: interaction.user.id });
 

@@ -3,7 +3,6 @@ const { SlashCommandBuilder, ActionRowBuilder, Events, ModalBuilder, TextInputBu
 module.exports = {
   data: new SlashCommandBuilder().setName("feedback").setDescription("Give feedback and suggestions!"),
   async execute(interaction) {
-    if (!interaction.member.roles.cache.some((role) => role.id === "1057991860439765073")) return await interaction.reply("Only beta testers can use this command!");
     const modal = new ModalBuilder()
 			.setCustomId('feedback')
 			.setTitle('Bot Feedback');

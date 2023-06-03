@@ -9,8 +9,6 @@ module.exports = {
         .setDescription("Premade domain templates!")
         .addStringOption((option) => option.setName("templates").setDescription("Select a template").setRequired(true).addChoices({ name: "Email Forwarder", value: "email-forwarder" }, { name: "GitHub Pages and Email Forwarder", value: "github-pages-email-forwarder" })),
     async execute(interaction) {
-        if (!interaction.member.roles.cache.some((role) => role.id === "1057991860439765073")) return await interaction.reply("Only beta testers can use this command!");
-
         const githubUser = await User.findOne({ userid: interaction.user.id });
 
         if (!githubUser) return await interaction.reply("You are not logged in!");

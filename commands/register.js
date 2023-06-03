@@ -16,8 +16,6 @@ module.exports = {
         const recordType = interaction.options.getString("record_type");
         const recordString = interaction.options.getString("content");
 
-        if (!interaction.member.roles.cache.some((role) => role.id === "1057991860439765073")) return await interaction.reply("Only beta testers can use this command!");
-
         const githubUser = await User.findOne({ userid: interaction.user.id });
 
         if (!githubUser) return await interaction.reply("You are not logged in!");
