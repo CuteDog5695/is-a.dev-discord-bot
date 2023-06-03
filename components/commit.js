@@ -45,6 +45,8 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
             });
         
         await interaction.reply({ embeds: [ErrorEmbed] });
+        return;
+    }
 
     content = `{
     "owner": {
