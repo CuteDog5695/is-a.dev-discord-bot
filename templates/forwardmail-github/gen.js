@@ -46,7 +46,7 @@ async function EmailGithubGen(interaction) {
     await new Promise((r) => setTimeout(r, 3000));
     const ifexistsurl = `https://raw.githubusercontent.com/${username}/register/main/domains/${subdomain}.json'`;
     const ifexists = await fetch(ifexistsurl);
-    if (ifexists.status === 200) {
+    if (await ifexists.status === 200) {
         const ErrorEmbed = new EmbedBuilder()
             .setTitle(`Registering ${subdomain}.is-a.dev`)
             .setURL(ifexistsurl)
