@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, Client, ButtonBuilder } = require("discord.js");
 const { fork } = require("../components/fork.js");
+const auth = require("../components/auth.js");
 const { CommitChanges } = require("../components/commit.js");
 const { OpenPR } = require("../components/pr.js");
 const User = require("../models/user.js");
@@ -18,7 +19,10 @@ module.exports = {
 
         const githubUser = await User.findOne({ userid: interaction.user.id });
 
-        if (!githubUser) return await interaction.reply("You are not logged in!");
+        const authUrl = auth.getAccessToken(interaction.user.id);
+        const loginBtn = new ActionRowBuilder().addComponents(new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel("Login with GitHub").setURL(authUrl));
+        // add text reply if user is not logged in. along with login button
+        if (!githubUser) return await interaction.reply({ content: `Please login first`, components: [loginBtn], ephemeral: true });
 
         let regexPattern;
 
