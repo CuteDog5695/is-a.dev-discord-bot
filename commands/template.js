@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 const User = require("../models/user.js");
 const { ForwardMailModal } = require("../templates/forwardmail/modal.js");
 const { EmailGithub } = require("../templates/forwardmail-github/modal.js");
