@@ -125,7 +125,6 @@ server.get('/pr/merged/:pr', function(req, res){
             repo: 'register',
             pull_number: pr
         }).then(async ({ data }) => {
-            if (data.merged == true) {
                 const PRD = await Prdata.findOne({ prid: pr })
                 if (PRD.merged == true) {
                     res.send('PR is already merged!')
@@ -145,9 +144,8 @@ server.get('/pr/merged/:pr', function(req, res){
 
                     res.send('PR is now merged!')
                 }
-            } else {
-                res.send('PR is not merged!')
-            }
+        }).catch((err) => {
+            res.send('PR not found!')
         })
     }
 })
