@@ -3,8 +3,11 @@ const fs = require("fs");
 const multer = require("multer");
 const fetch = require("node-fetch");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
+const { Octokit } = require("@octokit/rest");
 const User = require("../models/user.js");
+const Prdata = require("../models/prdata.js");
 const ejs = require("ejs");
+const { getServers } = require("dns/promises");
 require("dotenv").config();
 
 
@@ -108,6 +111,47 @@ server.post("/api/email", upload.none(), (req, res) => {
 
     return res.status(200).send();
 });
+
+// Notify API
+server.get('/pr/merged/:pr', function(req, res){
+    var pr = req.params.pr;
+    const BOT_TOKEN = process.env.BOT_TOKEN
+    const octokit = new Octokit({
+        auth: BOT_TOKEN
+    })
+    if (pr) {
+        octokit.pulls.get({
+            owner: 'is-a-dev',
+            repo: 'register',
+            pull_number: pr
+        }).then(({ data }) => {
+            if (data.merged == true) {
+                const PRD = Prdata.findOne({ prid: pr })
+                if (PRD.merged == true) {
+                    res.send('PR is already merged!')
+                } else {
+                    Prdata.replaceOne({ prid: pr }, { merged: true })
+                    fetch('https://raw.githubusercontent.com/is-a-dev/team-docs/main/pr-merged.md')
+                    .then(response => response.text())
+                    .then(data => {
+                        // Do something with your data
+                        octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
+                            owner: 'is-a-dev',
+                            repo: 'register',
+                            issue_number: pr,
+                            body: data
+                        })
+                    });
+
+                    res.send('PR is now merged!')
+                }
+                res.send('PR is merged!')
+            } else {
+                res.send('PR is not merged!')
+            }
+        })
+    }
+})
 
 function keepAlive() {
     server.listen(3000, () => {
