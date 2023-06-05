@@ -124,18 +124,18 @@ server.get('/pr/merged/:pr', function(req, res){
             owner: 'is-a-dev',
             repo: 'register',
             pull_number: pr
-        }).then(({ data }) => {
+        }).then(async ({ data }) => {
             if (data.merged == true) {
-                const PRD = Prdata.findOne({ prid: pr })
+                const PRD = await Prdata.findOne({ prid: pr })
                 if (PRD.merged == true) {
                     res.send('PR is already merged!')
                 } else {
-                    Prdata.replaceOne({ prid: pr }, { merged: true })
-                    fetch('https://raw.githubusercontent.com/is-a-dev/team-docs/main/pr-merged.md')
+                    await Prdata.replaceOne({ prid: pr }, { merged: true })
+                    await fetch('https://raw.githubusercontent.com/is-a-dev/team-docs/main/pr-merged.md')
                     .then(response => response.text())
                     .then(data => {
                         // Do something with your data
-                        octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
+                        await octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
                             owner: 'is-a-dev',
                             repo: 'register',
                             issue_number: pr,
@@ -145,7 +145,6 @@ server.get('/pr/merged/:pr', function(req, res){
 
                     res.send('PR is now merged!')
                 }
-                res.send('PR is merged!')
             } else {
                 res.send('PR is not merged!')
             }
