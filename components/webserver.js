@@ -136,7 +136,7 @@ server.get('/pr/merged/:pr', async function(req, res){
         });
         await prdata.create({
             prid: pr,
-            merged: false
+            merged: true
         })
         res.send('PR Not Found, Created PR Data')
     } else {
