@@ -8,6 +8,7 @@ const User = require("../models/user.js");
 const Prdata = require("../models/prdata.js");
 const ejs = require("ejs");
 const { getServers } = require("dns/promises");
+const prdata = require("../models/prdata.js");
 require("dotenv").config();
 
 
@@ -113,41 +114,36 @@ server.post("/api/email", upload.none(), (req, res) => {
 });
 
 // Notify API
-server.get('/pr/merged/:pr', function(req, res){
+server.get('/pr/merged/:pr', async function(req, res){
     var pr = req.params.pr;
     const BOT_TOKEN = process.env.BOT_TOKEN
     const octokit = new Octokit({
         auth: BOT_TOKEN
     })
-    if (pr) {
-        octokit.pulls.get({
-            owner: 'is-a-dev',
-            repo: 'register',
-            pull_number: pr
-        }).then(async ({ data }) => {
-                const PRD = await Prdata.findOne({ prid: pr })
-                if (PRD.merged == true) {
-                    res.send('PR is already merged!')
-                } else {
-                    await Prdata.replaceOne({ prid: pr }, { merged: true })
-                    await fetch('https://raw.githubusercontent.com/is-a-dev/team-docs/main/pr-merged.md')
-                    .then(response => response.text())
-                    .then(async data => {
-                        // Do something with your data
-                        await octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
-                            owner: 'is-a-dev',
-                            repo: 'register',
-                            issue_number: pr,
-                            body: data
-                        })
-                    });
-
-                    res.send('PR is now merged!')
-                }
-        }).catch((err) => {
-            res.send('PR not found!')
+    const PRDATA = await Prdata.findOne({ prid: pr });
+    if (!PRDATA) {
+        await fetch('https://raw.githubusercontent.com/is-a-dev/team-docs/main/pr-merged.md')
+        .then(response => response.text())
+        .then(data => {
+            // Do something with your data
+            console.log(data);
+            octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
+                owner: 'is-a-dev',
+                repo: 'register',
+                issue_number: pr,
+                body: data
+            })
+        });
+        await prdata.create({
+            prid: pr,
+            merged: false
         })
+        res.send('PR Not Found, Created PR Data')
+    } else {
+        res.send('PR Found, Checking Status')
     }
+
+
 })
 
 function keepAlive() {
