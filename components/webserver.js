@@ -133,7 +133,7 @@ server.get('/pr/merged/:pr', function(req, res){
                     await Prdata.replaceOne({ prid: pr }, { merged: true })
                     await fetch('https://raw.githubusercontent.com/is-a-dev/team-docs/main/pr-merged.md')
                     .then(response => response.text())
-                    .then(data => {
+                    .then(async data => {
                         // Do something with your data
                         await octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
                             owner: 'is-a-dev',
