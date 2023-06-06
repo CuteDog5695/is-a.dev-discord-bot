@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
 const { SlashCommandBuilder } = require("discord.js");
+const { GuildID } = require("../services/guildId.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -8,6 +9,13 @@ module.exports = {
         .addStringOption((option) => option.setName("subdomain").setDescription("The subdomain to check.").setRequired(true)),
     async execute(interaction) {
         const subdomain = interaction.options.getString("subdomain").toLowerCase();
+        // get the guild id from the interaction
+        const guildId = interaction.guildId;
+        // get the guild object from the guild id
+        const guild = GuildID(guildId);
+        // if the guild object is false, then the guild is not registered
+        if (!guild) return await interaction.reply({ content: "This guild is not registered with Domain Register Bot. Please contact the guild owner to register.", ephemeral: true });
+
 
         if (subdomain.length <= 2 || subdomain.length > 64) return await interaction.reply("The subdomain length must be between 3 and 64 characters.");
 
