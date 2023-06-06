@@ -9,7 +9,7 @@ module.exports = {
         .addStringOption((option) => option.setName("domain").setDescription("The domain to lookup.").setRequired(true)),
 
     async execute(interaction) {
-        const domain = interaction.options.getString("domain").toLowerCase();
+        const domain = interaction.options.getString("domain").toLowerCase().replace(/\.is-a\.dev$/, "");
 
         if (!(await Maintainers.findOne({ userid: interaction.user.id }))) {
             // make text appear in ephemeral message
