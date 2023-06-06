@@ -13,7 +13,7 @@ require("dotenv").config();
 
 // Sentry
 Sentry.init({
-    dsn: "https://b1b24111bcb94399843e16fbe3e2b053@o1276241.ingest.sentry.io/4505311557124096",
+    dsn: "https://2854c55af6ab42ffb6f840091e3b235c@o575799.ingest.sentry.io/4505311662309376",
   
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
