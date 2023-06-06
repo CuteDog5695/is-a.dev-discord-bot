@@ -9,6 +9,7 @@ module.exports = {
         .addUserOption((option) => option.setName("user").setDescription("The user to add or remove.").setRequired(true)),
     async execute(interaction) {
         if (interaction.user.id !== "598245488977903688") return await interaction.reply("Only the bot owner can use this command!");
+        
 
         const add = interaction.options.getBoolean("add");
         const user = interaction.options.getUser("user");

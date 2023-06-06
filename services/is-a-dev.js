@@ -1,6 +1,9 @@
 const isADev = {
     "domains": ["is-a.dev"],
-    "repository": "https://github.com/is-a-dev/register",
+    "name": "is-a.dev",
+    "github": "is-a-dev",
+    "repository": "register",
+    "logo": "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
     "description": "A free domain registration service for developers.",
     "guildID": "830872854677422150",
     "record": {

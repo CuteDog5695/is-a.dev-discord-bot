@@ -4,6 +4,7 @@ const auth = require("../components/auth.js");
 const { CommitChanges } = require("../components/commit.js");
 const { OpenPR } = require("../components/pr.js");
 const User = require("../models/user.js");
+const { GuildID } = require("../services/guildId.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -16,6 +17,12 @@ module.exports = {
         const subdomains = interaction.options.getString("subdomain");
         const recordType = interaction.options.getString("record_type");
         const recordString = interaction.options.getString("content");
+        const guildId = interaction.guildId;
+        // get the guild object from the guild id
+        const guild = GuildID(guildId);
+        // if the guild object is false, then the guild is not registered
+        if (!guild) return await interaction.reply({ content: "This guild is not registered with Domain Register Bot. Please contact the guild owner to register.", ephemeral: true });
+
 
         const githubUser = await User.findOne({ userid: interaction.user.id });
 
