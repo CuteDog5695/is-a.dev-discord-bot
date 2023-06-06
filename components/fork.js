@@ -2,6 +2,7 @@ const User = require("../models/user");
 const { EmbedBuilder } = require("discord.js");
 const { Octokit } = require("@octokit/core");
 require("dotenv").config();
+const Sentry = require("@sentry/node");
 
 const forkRepo = async (token) => {
     try {
@@ -32,6 +33,7 @@ const forkRepo = async (token) => {
 async function fork(id, interaction, subdomain) {
     const githubUser = await User.findOne({ userid: id });
     const token = githubUser.gittoken;
+    Sentry.setUser({ Discord: id });
     if (process.env.DEBUG) {
         console.log("FORK FUNCTION.");
         console.log("id: " + id);
