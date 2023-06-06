@@ -3,11 +3,38 @@ const path = require("node:path");
 
 const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder, ActivityType } = require("discord.js");
 const mongoose = require("mongoose");
+const Sentry = require("@sentry/node");
 const keepAlive = require("./components/webserver.js");
 const { ForwardMailGen } = require("./templates/forwardmail/gen.js");
 const { EmailGithubGen } = require("./templates/forwardmail-github/gen.js");
 
 require("dotenv").config();
+
+
+// Sentry
+Sentry.init({
+    dsn: "https://b1b24111bcb94399843e16fbe3e2b053@o1276241.ingest.sentry.io/4505311557124096",
+  
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
+  });
+  
+  const transaction = Sentry.startTransaction({
+    op: "test",
+    name: "My First Test Transaction",
+  });
+  
+  setTimeout(() => {
+    try {
+      foo();
+    } catch (e) {
+      Sentry.captureException(e);
+    } finally {
+      transaction.finish();
+    }
+  }, 99);
 
 const mongoDB = process.env.MONGO_DB;
 
