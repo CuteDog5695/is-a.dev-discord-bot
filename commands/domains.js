@@ -4,12 +4,8 @@ const auth = require("../components/auth.js");
 const User = require("../models/user.js");
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("domains")
-        .setDescription("Lists all domains registered by you!"),
+    data: new SlashCommandBuilder().setName("domains").setDescription("Lists all domains registered by you!"),
     async execute(interaction) {
-
-
         const githubUser = await User.findOne({ userid: interaction.user.id });
 
         const authUrl = auth.getAccessToken(interaction.user.id);
@@ -33,14 +29,10 @@ module.exports = {
                 }
 
                 if (found) {
-                    const embed = new EmbedBuilder()
-                        .setTitle("Your Domains")
-                        .setDescription(results.join("\n"))
-                        .setColor("#00b0f4")
-                        .setFooter({
-                            text: "is-a.dev",
-                            iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
-                        });
+                    const embed = new EmbedBuilder().setTitle("Your Domains").setDescription(results.join("\n")).setColor("#00b0f4").setFooter({
+                        text: "is-a.dev",
+                        iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
+                    });
 
                     await interaction.reply({ embeds: [embed] });
                 } else {

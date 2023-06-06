@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, Client, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 const { fork } = require("../components/fork.js");
 const auth = require("../components/auth.js");
 const { CommitChanges } = require("../components/commit.js");

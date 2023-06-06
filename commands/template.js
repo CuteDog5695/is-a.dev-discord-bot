@@ -14,6 +14,7 @@ module.exports = {
 
         const authUrl = auth.getAccessToken(interaction.user.id);
         const loginBtn = new ActionRowBuilder().addComponents(new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel("Login with GitHub").setURL(authUrl));
+
         // add text reply if user is not logged in. along with login button
         if (!githubUser) return await interaction.reply({ content: `Please login first`, components: [loginBtn], ephemeral: true });
 

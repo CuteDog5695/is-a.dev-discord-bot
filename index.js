@@ -1,11 +1,9 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
-
 const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder, ActivityType } = require("discord.js");
 const mongoose = require("mongoose");
 const keepAlive = require("./components/webserver.js");
-const Discord = require("discord.js");
 const { ForwardMailGen } = require("./templates/forwardmail/gen.js");
 const { EmailGithubGen } = require("./templates/forwardmail-github/gen.js");
 
@@ -36,28 +34,29 @@ for (const file of commandFiles) {
 
 client.on(Events.InteractionCreate, async (interaction) => {
     //if (!interaction.isChatInputCommand()) return;
-    if (interaction.customId === 'feedback') {
+    if (interaction.customId === "feedback") {
         // Get the values from the interaction
-        const improve = interaction.fields.getTextInputValue('improve');
-        const suggest = interaction.fields.getTextInputValue('suggest');
+        const improve = interaction.fields.getTextInputValue("improve");
+        const suggest = interaction.fields.getTextInputValue("suggest");
         const username = interaction.user.username;
-        const avatar = interaction.user.avatarURL;
+
         // Send the values to the channel #feedback
-        const channel = interaction.guild.channels.cache.find(channel => channel.name === 'bot-feedback');
+        const channel = interaction.guild.channels.cache.find((channel) => channel.name === "bot-feedback");
         const embed = new EmbedBuilder()
-            .setTitle('Feedback')
+            .setTitle("Feedback")
             .setDescription(`Improvements: ${improve}\nSuggestions: ${suggest}`)
-            .setColor('#00FF00')
+            .setColor("#00FF00")
             .setFooter({ text: `Feedback from ${username}` })
             .setTimestamp();
         channel.send({ embeds: [embed] });
         // Send a reply to the user
-		await interaction.reply({ content: 'Your submission was received successfully!' });
-	}
-    if (interaction.customId === 'emailforward') {
+        await interaction.reply({ content: "Your submission was received successfully!" });
+    }
+
+    if (interaction.customId === "emailforward") {
         ForwardMailGen(interaction);
     }
-    if (interaction.customId === 'EmailGithub') {
+    if (interaction.customId === "EmailGithub") {
         EmailGithubGen(interaction);
     }
 
@@ -86,9 +85,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
 client.once(Events.ClientReady, (c) => {
     client.user.setPresence({
         activities: [{ name: `Free Is-A.dev Subdomains`, type: ActivityType.Watching }],
-        status: 'dnd',
+        status: "dnd",
     });
-    
+
     console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 

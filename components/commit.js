@@ -3,7 +3,7 @@ const { Octokit } = require("@octokit/rest");
 
 require("dotenv").config();
 
-const { SlashCommandBuilder, EmbedBuilder, Client } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 async function CommitChanges(id, subdomain, type, data, interaction) {
     const githubUser = await User.findOne({ userid: id });
@@ -26,24 +26,16 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     } else {
         data = `"${data.trim()}"`;
     }
+
     const ifexistsurl = `https://raw.githubusercontent.com/${username}/register/main/domains/${subdomain}.json'`;
     const ifexists = await fetch(ifexistsurl);
+
     if (ifexists.status === 200) {
-        const ErrorEmbed = new EmbedBuilder()
-            .setTitle(`Registering ${subdomain}.is-a.dev`)
-            .setURL(ifexistsurl)
-            .setDescription(`This domain already exists!`)
-            .addFields(
-                { name: "Forked", value: "✅", inline: true },
-                { name: "Commited", value: "❌", inline: true },
-                { name: "PR Opened", value: "❌", inline: true }
-            )
-            .setColor("#FF0000")
-            .setFooter({
-                text: "is-a.dev",
-                iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
-            });
-        
+        const ErrorEmbed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).setURL(ifexistsurl).setDescription(`This domain already exists!`).addFields({ name: "Forked", value: "✅", inline: true }, { name: "Commited", value: "❌", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setColor("#FF0000").setFooter({
+            text: "is-a.dev",
+            iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
+        });
+
         await interaction.reply({ embeds: [ErrorEmbed] });
         return;
     }
@@ -67,9 +59,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
         owner: username,
         repo: "register",
         path: `domains/${subdomain.toLowerCase()}.json`,
-        message: `feat(domain): ${subdomain
-            .toLowerCase()
-            .replace(/\.[^/.]+$/, "")}.is-a.dev`,
+        message: `feat(domain): ${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev`,
         content: record,
         committer: {
             name: username,
@@ -81,20 +71,10 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
         },
     });
 
-    const embed = new EmbedBuilder()
-        .setTitle(`Registering ${subdomain}.is-a.dev`)
-        .addFields(
-            { name: "Forked", value: "✅", inline: true },
-            { name: "Commited", value: "✅", inline: true },
-            { name: "PR Opened", value: "❌", inline: true }
-        )
-        .setDescription(`Your domain has been generated! Please wait for a staff member to review your PR.`)
-        .setColor("#00b0f4")
-        .setFooter({
-            text: "is-a.dev",
-            icon_url:
-                "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
-        });
+    const embed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).addFields({ name: "Forked", value: "✅", inline: true }, { name: "Commited", value: "✅", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setDescription(`Your domain has been generated! Please wait for a staff member to review your PR.`).setColor("#00b0f4").setFooter({
+        text: "is-a.dev",
+        icon_url: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
+    });
 
     await interaction.editReply({ embeds: [embed] });
     return commit;

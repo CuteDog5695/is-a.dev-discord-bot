@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageEmbed } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const fetch = require("node-fetch");
 const Maintainers = require("../models/maintainers.js");
 

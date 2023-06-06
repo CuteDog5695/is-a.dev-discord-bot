@@ -1,25 +1,19 @@
 const express = require("express");
-const fs = require("fs");
 const multer = require("multer");
 const fetch = require("node-fetch");
-const { EmbedBuilder, WebhookClient } = require("discord.js");
+const { WebhookClient } = require("discord.js");
 const { Octokit } = require("@octokit/rest");
 const User = require("../models/user.js");
 const Prdata = require("../models/prdata.js");
-const ejs = require("ejs");
-const { getServers } = require("dns/promises");
 const prdata = require("../models/prdata.js");
 require("dotenv").config();
-
-
 
 const GITHUB_ID = process.env.GITHUB_ID;
 const GITHUB_SECRET = process.env.GITHUB_SECRET;
 
 const upload = multer();
 const server = express();
-server.set('view engine', 'ejs');
-
+server.set("view engine", "ejs");
 
 server.get("/auth/handler", async (req, res) => {
     const code = req.query.code;
@@ -72,15 +66,15 @@ server.get("/auth/handler", async (req, res) => {
         email: email,
         gittoken: accessToken,
     });
-    res.render('loggedin', { username });
-    
+
+    res.render("logged-in", { username });
 });
 
 server.get("/guides/forwarder", (req, res) => {
     // get query params from url and store in variables
     const email = req.query.email;
     const subdomain = req.query.domain;
-    res.render('emailforwarder', { email, subdomain });
+    res.render("email-forwarder", { email, subdomain });
 });
 
 server.post("/api/email", upload.none(), (req, res) => {
@@ -114,37 +108,41 @@ server.post("/api/email", upload.none(), (req, res) => {
 });
 
 // Notify API
-server.get('/pr/merged/:pr', async function(req, res){
+server.get("/pr/merged/:pr", async function (req, res) {
     var pr = req.params.pr;
-    const BOT_TOKEN = process.env.BOT_TOKEN
+
+    const BOT_TOKEN = process.env.BOT_TOKEN;
+
     const octokit = new Octokit({
-        auth: BOT_TOKEN
-    })
+        auth: BOT_TOKEN,
+    });
+
     const PRDATA = await Prdata.findOne({ prid: pr });
+
     if (!PRDATA) {
-        await fetch('https://raw.githubusercontent.com/is-a-dev/team-docs/main/pr-merged.md')
-        .then(response => response.text())
-        .then(data => {
-            // Do something with your data
-            console.log(data);
-            octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
-                owner: 'is-a-dev',
-                repo: 'register',
-                issue_number: pr,
-                body: data
-            })
-        });
+        await fetch("https://raw.githubusercontent.com/is-a-dev/team-docs/main/pr-merged.md")
+            .then((response) => response.text())
+            .then((data) => {
+                // Do something with your data
+                console.log(data);
+                octokit.request("POST /repos/{owner}/{repo}/issues/{issue_number}/comments", {
+                    owner: "is-a-dev",
+                    repo: "register",
+                    issue_number: pr,
+                    body: data,
+                });
+            });
+
         await prdata.create({
             prid: pr,
-            merged: true
-        })
-        res.send('PR Not Found, Created PR Data')
+            merged: true,
+        });
+
+        res.send("PR Not Found, Created PR Data");
     } else {
-        res.send('PR Found, Checking Status')
+        res.send("PR Found, Checking Status");
     }
-
-
-})
+});
 
 function keepAlive() {
     server.listen(3000, () => {
