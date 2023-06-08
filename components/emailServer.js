@@ -9,7 +9,7 @@ const SMTPserver = new SMTPServer({
         // Check if the provided credentials are valid
         const user = await Email.findOne({ username, passkey: password }).exec();
   
-        if (!user || domain !== user.domain) {
+        if (!user) {
           callback(new Error("Invalid username or password"));
           console.log("SMTP: INVALID CREDENTIALS")
         } else {
