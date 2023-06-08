@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require("discord.js");
 const fetch = require("node-fetch");
 const Maintainers = require("../models/maintainers.js");
+const { GuildID } = require("../services/guildId.js");
+
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,6 +11,12 @@ module.exports = {
         .addStringOption((option) => option.setName("domain").setDescription("The domain to lookup.").setRequired(true)),
 
     async execute(interaction) {
+        const guildId = interaction.guildId;
+        // get the guild object from the guild id
+        const guild = GuildID(guildId);
+        // if the guild object is false, then the guild is not registered
+        if (!guild) return await interaction.reply({ content: "This guild is not registered with Domain Register Bot. Please contact the guild owner to register.", ephemeral: true });
+
         const domain = interaction.options.getString("domain").toLowerCase().replace(/\.is-a\.dev$/, "");
 
         if (!(await Maintainers.findOne({ userid: interaction.user.id }))) {

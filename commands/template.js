@@ -4,6 +4,7 @@ const { ForwardMailModal } = require("../templates/forwardmail/modal.js");
 const { EmailGithub } = require("../templates/forwardmail-github/modal.js");
 const { Replit } = require("../templates/replit/modal.js");
 const auth = require("../components/auth.js");
+const { GuildID } = require("../services/guildId.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,6 +12,12 @@ module.exports = {
         .setDescription("Premade domain templates!")
         .addStringOption((option) => option.setName("templates").setDescription("Select a template").setRequired(true).addChoices({ name: "Email Forwarder", value: "email-forwarder" }, { name: "GitHub Pages and Email Forwarder", value: "github-pages-email-forwarder" }, { name: "Replit.com with is-a.dev subdomain [CNAME]", value: "replit" })),
     async execute(interaction) {
+        const guildId = interaction.guildId;
+        // get the guild object from the guild id
+        const guild = GuildID(guildId);
+        // if the guild object is false, then the guild is not registered
+        if (!guild) return await interaction.reply({ content: "This guild is not registered with Domain Register Bot. Please contact the guild owner to register.", ephemeral: true });
+
         const githubUser = await User.findOne({ userid: interaction.user.id });
 
         const authUrl = auth.getAccessToken(interaction.user.id);
