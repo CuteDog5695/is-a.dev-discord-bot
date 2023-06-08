@@ -118,7 +118,7 @@ mongoose
         console.error("Error connecting to the database:", error);
     });
 
-SMTP();
+//SMTP(); off for now
 keepAlive();
 
 // Log in to Discord with your client's token
