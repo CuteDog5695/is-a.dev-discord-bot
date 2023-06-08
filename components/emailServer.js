@@ -11,6 +11,7 @@ const SMTPserver = new SMTPServer({
       email.findOne({ username, passkey: password }, (err, user) => {
         if (err || !user) {
           callback(new Error("Invalid username or password"));
+          console.log("Invalid username or password")
         } else {
           callback(null, { user });
         }
