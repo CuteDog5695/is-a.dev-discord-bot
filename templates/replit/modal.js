@@ -10,7 +10,7 @@ async function Replit(interaction) {
     const replurl = new TextInputBuilder()
         .setCustomId("replurl")
         // The label is the prompt the user sees for this input
-        .setLabel("What's the address to point the subdomain to? [CNAME]")
+        .setLabel("What's the address to point the subdomain to?")
         // Short means only a single line of text
         .setStyle(TextInputStyle.Short);
 
