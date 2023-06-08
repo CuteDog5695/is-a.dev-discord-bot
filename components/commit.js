@@ -58,7 +58,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     const commit = await octokit.repos.createOrUpdateFileContents({
         owner: username,
         repo: "register",
-        path: "domains/" + subdomain.toLowerCase(),,
+        path: "domains/" + subdomain.toLowerCase(),
         message: `feat(domain): ${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev`,
         content: record,
         committer: {
