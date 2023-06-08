@@ -77,6 +77,13 @@ server.get("/guides/forwarder", (req, res) => {
     res.render("email-forwarder", { email, subdomain });
 });
 
+server.get("/guides/replit", (req, res) => {
+    // get query param
+    const replurl = req.query.repl;
+    const subdomain = req.query.domain;
+    res.render("replit", { replurl, subdomain })
+})
+
 server.post("/api/email", upload.none(), (req, res) => {
     const body = req.body;
 

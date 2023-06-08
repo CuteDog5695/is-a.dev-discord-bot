@@ -2,6 +2,7 @@ const { SlashCommandBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = re
 const User = require("../models/user.js");
 const { ForwardMailModal } = require("../templates/forwardmail/modal.js");
 const { EmailGithub } = require("../templates/forwardmail-github/modal.js");
+const { Replit } = require("../templates/replit/modal.js");
 const auth = require("../components/auth.js");
 const { GuildID } = require("../services/guildId.js");
 
@@ -9,7 +10,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("template")
         .setDescription("Premade domain templates!")
-        .addStringOption((option) => option.setName("templates").setDescription("Select a template").setRequired(true).addChoices({ name: "Email Forwarder", value: "email-forwarder" }, { name: "GitHub Pages and Email Forwarder", value: "github-pages-email-forwarder" })),
+        .addStringOption((option) => option.setName("templates").setDescription("Select a template").setRequired(true).addChoices({ name: "Email Forwarder", value: "email-forwarder" }, { name: "GitHub Pages and Email Forwarder", value: "github-pages-email-forwarder" }, { name: "Replit.com with is-a.dev subdomain [CNAME]", value: "replit" })),
     async execute(interaction) {
         const guildId = interaction.guildId;
         // get the guild object from the guild id
@@ -33,6 +34,9 @@ module.exports = {
                 break;
             case "github-pages-email-forwarder":
                 await EmailGithub(interaction);
+                break;
+            case "replit":
+                await Replit(interaction);
                 break;
             default:
                 return await interaction.reply("Invalid template.");
