@@ -44,12 +44,12 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     "owner": {
        "username": "${username}",
        "email": "${email}",
-       "note": "This record was created by is-a.dev Discord bot via discord id: ${id}"
-   },
+       "discord": "${id}"
+    },
 
-   "record": {
-       "${type}": ${data.toLowerCase()}
-   }
+    "record": {
+        "${type}": ${data.toLowerCase()}
+    }
 }
 `;
 
@@ -58,7 +58,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     const commit = await octokit.repos.createOrUpdateFileContents({
         owner: username,
         repo: "register",
-        path: "domains/" + subdomain.toLowerCase(),
+        path: "domains/" + subdomain.toLowerCase() + ".json",
         message: `feat(domain): ${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev`,
         content: record,
         committer: {

@@ -21,15 +21,13 @@ async function OpenPR(id, subdomain, interaction, extra) {
 
     const octokit = new Octokit({ auth: token });
 
-    // William dont edit this part
-    // Ok
     const pr = await octokit.pulls.create({
         owner: "is-a-dev",
         repo: "register",
         title: `BETA: Register ${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev`,
         head: `${username}:main`,
         base: "main",
-        body: `Added ${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev using the Discord bot.`,
+        body: `Added \`${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev\` using the Discord bot.`,
     });
 
     const PrUrl = pr.data.html_url;
@@ -40,6 +38,7 @@ async function OpenPR(id, subdomain, interaction, extra) {
     });
 
     await interaction.editReply({ embeds: [embed] });
+
     if (extra) {
         const PrBtn = new ActionRowBuilder().addComponents(new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel("Pull Request").setURL(PrUrl), new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel(extra.label).setURL(extra.url));
         await interaction.editReply({ components: [PrBtn] });
