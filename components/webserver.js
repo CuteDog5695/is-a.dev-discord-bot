@@ -117,6 +117,7 @@ server.post ('/api/email', upload.none(), (req, res) => {
         {
             "name": `Reply command`,
             "value": `/send-email ${emailAddress}`
+        }
       ]
     }
   
