@@ -91,6 +91,17 @@ server.post ('/api/email', upload.none(), (req, res) => {
     console.log(`To: ${body.to}`);
     console.log(`Subject: ${body.subject}`);
     console.log(`Text: ${body.text}`);
+    const text = "andrew beadman <andrew@win11react.com>";
+    const emailRegex = /<([^>]+)>/;
+    const match = text.match(emailRegex);
+    let emailAddress;
+
+    if (match && match[1]) {
+         emailAddress = match[1];
+        console.log(emailAddress);
+    } else {
+        console.log("No email address found.");
+    }
     // send to discord webhook
     const webhookClient = new WebhookClient({ url: process.env.webhook });
     const embed = {
@@ -102,13 +113,16 @@ server.post ('/api/email', upload.none(), (req, res) => {
         {
           "name": `Message`,
           "value": `${body.text}`
-        }
+        },
+        {
+            "name": `Reply command`,
+            "value": `/send-email ${emailAddress}`
       ]
     }
   
     webhookClient.send({
       content: 'NEW EMAIL',
-      username: 'IS-A-DEV-TECH-SUPPORT',
+      username: 'Is-a.dev',
       avatarURL: 'https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png',
       embeds: [embed],
     });

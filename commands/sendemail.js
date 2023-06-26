@@ -19,7 +19,8 @@ module.exports = {
             // The label is the prompt the user sees for this input
             .setLabel("To email?")
             // Short means only a single line of text
-            .setStyle(TextInputStyle.Short);
+            .setStyle(TextInputStyle.Short)
+
 
         const subject = new TextInputBuilder()
             .setCustomId("subject")
