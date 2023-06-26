@@ -91,7 +91,7 @@ server.post ('/api/email', upload.none(), (req, res) => {
     console.log(`To: ${body.to}`);
     console.log(`Subject: ${body.subject}`);
     console.log(`Text: ${body.text}`);
-    const text = "andrew beadman <andrew@win11react.com>";
+    const text = body.from;
     const emailRegex = /<([^>]+)>/;
     const match = text.match(emailRegex);
     let emailAddress;
