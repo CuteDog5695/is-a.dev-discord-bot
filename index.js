@@ -9,6 +9,7 @@ const SMTP = require("./components/emailServer.js");
 const { ForwardMailGen } = require("./templates/forwardmail/gen.js");
 const { EmailGithubGen } = require("./templates/forwardmail-github/gen.js");
 const { ReplitGen } = require("./templates/replit/gen.js");
+const { adminSendEmails } = require("./components/adminSendEmails.js");
 
 require("dotenv").config();
 
@@ -76,6 +77,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
     if (interaction.customId === "Replit") {
         ReplitGen(interaction);
+    }
+    if (interaction.customId === "sendemail") {
+        adminSendEmails(interaction);
     }
 
     const command = interaction.client.commands.get(interaction.commandName);

@@ -9,7 +9,7 @@ module.exports = {
             await interaction.reply({ content: "Only maintainers can use this command!", ephemeral: true });
             return;
         }
-        const modal = new ModalBuilder().setCustomId("email").setTitle("Send Email");
+        const modal = new ModalBuilder().setCustomId("sendemail").setTitle("Send Email");
 
         // Add components to modal
 
