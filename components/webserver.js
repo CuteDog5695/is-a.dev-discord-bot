@@ -84,33 +84,37 @@ server.get("/guides/replit", (req, res) => {
     res.render("replit", { replurl, subdomain })
 })
 
-server.post("/api/email", upload.none(), (req, res) => {
+server.post ('/api/email', upload.none(), (req, res) => {
     const body = req.body;
-
+  
     console.log(`From: ${body.from}`);
     console.log(`To: ${body.to}`);
     console.log(`Subject: ${body.subject}`);
     console.log(`Text: ${body.text}`);
-
     // send to discord webhook
     const webhookClient = new WebhookClient({ url: process.env.webhook });
-
     const embed = {
-        type: "rich",
-        author: {
-            name: `${body.from}`,
-        },
-        title: `${body.subject}`,
-        description: `${body.text}`,
-        color: "#0096ff",
-    };
-
+      "type": "rich",
+      "title": `Email from: ${body.from}`,
+      "description": `Subject: ${body.subject}`,
+      "color": 0x00FFFF,
+      "fields": [
+        {
+          "name": `Message`,
+          "value": `${body.text}`
+        }
+      ]
+    }
+  
     webhookClient.send({
-        username: "is-a.dev Email",
-        avatarURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
-        embeds: [embed],
+      content: 'NEW EMAIL',
+      username: 'IS-A-DEV-TECH-SUPPORT',
+      avatarURL: 'https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png',
+      embeds: [embed],
     });
-
+  
+  
+  
     return res.status(200).send();
 });
 
