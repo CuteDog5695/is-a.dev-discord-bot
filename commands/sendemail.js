@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, T
 const Maintainers = require("../models/maintainers.js");
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("send email").setDescription("Maintainers send emails!"),
+    data: new SlashCommandBuilder().setName("send-email").setDescription("Maintainers send emails!"),
     async execute(interaction) {
         if (!(await Maintainers.findOne({ userid: interaction.user.id }))) {
             // make text appear in ephemeral message
