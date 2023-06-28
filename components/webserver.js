@@ -122,7 +122,6 @@ server.post ('/api/email', upload.none(), (req, res) => {
     }
   
     webhookClient.send({
-      content: 'NEW EMAIL',
       username: 'Is-a.dev',
       avatarURL: 'https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png',
       embeds: [embed],
