@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
+const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle  } = require("discord.js");
 async function DeleteDomain(interaction) {
     const domain = interaction.values[0];
     const username = interaction.user.username;
