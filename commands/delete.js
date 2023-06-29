@@ -46,10 +46,11 @@ module.exports = {
                     const row = new ActionRowBuilder().addComponents(select);
 
                     // Create the text input components
-                    const response = await interaction.reply({
+                    await interaction.reply({
                         content: "Choose the domian you want to delete",
                         components: [row],
                     });
+
                     
 
                 }

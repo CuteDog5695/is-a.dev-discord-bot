@@ -1,6 +1,10 @@
 const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle  } = require("discord.js");
+const { compile } = require("ejs");
 async function DeleteDomain(interaction) {
     const domain = interaction.values[0];
+    console.log(domain);
+    console.log(interaction);
+    console.log(interaction.user);
     const username = interaction.user.username;
     const confirm = new ButtonBuilder()
             .setCustomId("confirm")
@@ -17,4 +21,6 @@ async function DeleteDomain(interaction) {
 
     await interaction.editReply({ content: `Are you sure you want to delete ${domain}?`, components: [row] });
 }
+
+
 exports.DeleteDomain = DeleteDomain;
