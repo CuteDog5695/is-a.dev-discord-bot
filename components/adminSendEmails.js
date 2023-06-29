@@ -6,7 +6,10 @@ function adminSendEmails(interaction) {
     const email = interaction.fields.getTextInputValue("email");
     const subject = interaction.fields.getTextInputValue("subject");
     const message = interaction.fields.getTextInputValue("message");
-    const htmlmessage = `<p>${message}</p>`
+    const htmlmessage = `<p>${message}</p>
+    
+    <p> This email was sent on behalf of Is-a.dev from ${interaction.member.user.username}</p>
+    `
     const msg = {
         to: email, // Change to your recipient
         from: adminemail, // Change to your verified sender
