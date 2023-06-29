@@ -13,50 +13,30 @@ module.exports = {
         const emailSubject = interaction.options.getString("subject");
         const modal = new ModalBuilder().setCustomId("sendemail").setTitle("Send Email");
 
-        // Add components to modal
+        if (!emailAddress) {
+            const emailAddress = "email"
+        }
+        if (!emailSubject) {
+            const emailSubject = "subject"
+        }
+
 
         // Create the text input components
-        let email;
-        let subject;
-        console.log(emailAddress);
-        console.log(emailSubject);
-        console.log(email);
-        console.log(subject);
-        if (emailAddress) {
-             email = new TextInputBuilder()
-                .setCustomId("email")
-                // The label is the prompt the user sees for this input
-                .setLabel("To email?")
-                .setValue(emailAddress)
-                // Short means only a single line of text
-                .setStyle(TextInputStyle.Short);
-            modal.addComponents(new ActionRowBuilder().addComponents(email));
-        }
-        else {
-             email = new TextInputBuilder()
-                .setCustomId("email")
-                // The label is the prompt the user sees for this input
-                .setLabel("To email?")
-                // Short means only a single line of text
-                .setStyle(TextInputStyle.Short)
-        }    
+        const email = new TextInputBuilder()
+            .setCustomId("email")
+            // The label is the prompt the user sees for this input
+            .setLabel("To email?")
+            .setValue(emailAddress)
+            // Short means only a single line of text
+            .setStyle(TextInputStyle.Short)
 
-        if (emailSubject) {
 
-             subject = new TextInputBuilder()
-                .setCustomId("subject")
-                .setLabel("What is the email subject?")
-                .setValue(emailSubject)
-                // Paragraph means multiple lines of text.
-                .setStyle(TextInputStyle.Short);
-        }
-        else {
-             subject = new TextInputBuilder()
-                .setCustomId("subject")
-                .setLabel("What is the email subject?")
-                // Paragraph means multiple lines of text.
-                .setStyle(TextInputStyle.Short);
-        }
+        const subject = new TextInputBuilder()
+            .setCustomId("subject")
+            .setLabel("What is the email subject?")
+            .setValue(emailSubject)
+            // Paragraph means multiple lines of text.
+            .setStyle(TextInputStyle.Short);
 
         const message = new TextInputBuilder()
             .setCustomId("message")
@@ -70,8 +50,6 @@ module.exports = {
         const firstActionRow = new ActionRowBuilder().addComponents(email);
         const secondActionRow = new ActionRowBuilder().addComponents(subject);
         const thirdActionRow = new ActionRowBuilder().addComponents(message);
-        email = null;
-        subject = null;
 
         // Add inputs to the modal
         modal.addComponents(firstActionRow, secondActionRow, thirdActionRow);
