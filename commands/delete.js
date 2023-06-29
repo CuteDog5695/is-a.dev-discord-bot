@@ -38,7 +38,7 @@ module.exports = {
                     return;
                 } else {
                     // Create a select menu
-                    const select = new MessageActionRow()
+                    const select = new ActionRowBuilder()
                     .addComponents(
                       new MessageSelectMenu()
                         .setCustomId('delete')
