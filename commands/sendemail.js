@@ -18,6 +18,10 @@ module.exports = {
         // Create the text input components
         let email;
         let subject;
+        console.log(emailAddress);
+        console.log(emailSubject);
+        console.log(email);
+        console.log(subject);
         if (emailAddress) {
              email = new TextInputBuilder()
                 .setCustomId("email")
@@ -66,6 +70,8 @@ module.exports = {
         const firstActionRow = new ActionRowBuilder().addComponents(email);
         const secondActionRow = new ActionRowBuilder().addComponents(subject);
         const thirdActionRow = new ActionRowBuilder().addComponents(message);
+        email = null;
+        subject = null;
 
         // Add inputs to the modal
         modal.addComponents(firstActionRow, secondActionRow, thirdActionRow);
