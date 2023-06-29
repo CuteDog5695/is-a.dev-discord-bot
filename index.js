@@ -111,7 +111,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 client.once(Events.ClientReady, (c) => {
     client.user.setPresence({
         activities: [{ name: `Free Is-A.dev Subdomains`, type: ActivityType.Watching }],
-        status: "dnd",
+        status: "online",
     });
 
     console.log(`Ready! Logged in as ${c.user.tag}`);
