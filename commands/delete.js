@@ -38,13 +38,10 @@ module.exports = {
                     return;
                 } else {
                     // Create a select menu
-                    const select = new ActionRowBuilder()
-                    .addComponents(
-                      new MessageSelectMenu()
+                    const select = new StringSelectMenuBuilder()
                         .setCustomId('delete')
-                        .setPlaceholder('Select an option')
-                        .addOptions(results),
-                    );
+                        .setPlaceholder('Choose a domain to delete!')
+                        .addOptions(results);
 
                     const row = new ActionRowBuilder().addComponents(select);
 
