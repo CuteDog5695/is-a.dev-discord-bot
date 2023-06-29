@@ -2,13 +2,14 @@ const { SlashCommandBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, T
 const Maintainers = require("../models/maintainers.js");
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("send-email").setDescription("Maintainers send emails!"),
+    data: new SlashCommandBuilder().setName("send-email").setDescription("Maintainers send emails!").addStringOption((option) => option.setName("email").setDescription("Email to send to").setRequired(false)),
     async execute(interaction) {
         if (!(await Maintainers.findOne({ userid: interaction.user.id }))) {
             // make text appear in ephemeral message
             await interaction.reply({ content: "Only maintainers can use this command!", ephemeral: true });
             return;
         }
+        const emailAddress = interaction.options.getString("email");
         const modal = new ModalBuilder().setCustomId("sendemail").setTitle("Send Email");
 
         // Add components to modal
@@ -18,6 +19,7 @@ module.exports = {
             .setCustomId("email")
             // The label is the prompt the user sees for this input
             .setLabel("To email?")
+            .setValue(emailAddress)
             // Short means only a single line of text
             .setStyle(TextInputStyle.Short)
 
