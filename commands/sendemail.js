@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, T
 const Maintainers = require("../models/maintainers.js");
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("send-email").setDescription("Maintainers send emails!").addStringOption((option) => option.setName("email").setDescription("Email to send to").setRequired(false), (option) => option.setName("subject").setDescription("Subject of email").setRequired(false)),
+    data: new SlashCommandBuilder().setName("send-email").setDescription("Maintainers send emails!").addStringOption((option) => option.setName("email").setDescription("Email to send to").setRequired(false)).addStringOption((option) => option.setName("subject").setDescription("Subject of email").setRequired(false)),
     async execute(interaction) {
         if (!(await Maintainers.findOne({ userid: interaction.user.id }))) {
             // make text appear in ephemeral message
@@ -17,6 +17,7 @@ module.exports = {
 
         // Create the text input components
         let email;
+        let subject;
         if (emailAddress) {
              email = new TextInputBuilder()
                 .setCustomId("email")
@@ -38,7 +39,7 @@ module.exports = {
 
         if (emailSubject) {
 
-            const subject = new TextInputBuilder()
+             subject = new TextInputBuilder()
                 .setCustomId("subject")
                 .setLabel("What is the email subject?")
                 .setValue(emailSubject)
@@ -46,7 +47,7 @@ module.exports = {
                 .setStyle(TextInputStyle.Short);
         }
         else {
-            const subject = new TextInputBuilder()
+             subject = new TextInputBuilder()
                 .setCustomId("subject")
                 .setLabel("What is the email subject?")
                 // Paragraph means multiple lines of text.
