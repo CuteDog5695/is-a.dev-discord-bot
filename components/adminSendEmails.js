@@ -13,6 +13,9 @@ function adminSendEmails(interaction) {
         subject: subject,
         text: message,
         html: htmlmessage,
+        headers: {
+            "List-Unsubscribe": `<mailto:unsub@maintainers.is-a.dev?subject=Unsubscribe&body=Unsubscribe%20me%20from%20all%20emails%20from%20is-a.dev%20please.>`
+        }    
       }
       sgMail
       .send(msg)
