@@ -18,7 +18,7 @@ async function DeleteDomain(interaction) {
             .addComponents(cancel, confirm);
 
     const response = await interaction.reply({
-            content: `Are you sure you want to logout?`,
+            content: `Are you sure you want to delete ${domain}?`,
             components: [row],
             ephemeral: true,
     });
