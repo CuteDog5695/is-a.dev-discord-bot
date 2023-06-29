@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, T
 const Maintainers = require("../models/maintainers.js");
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("send-email").setDescription("Maintainers send emails!").addStringOption((option) => option.setName("email").setDescription("Email to send to").setRequired(false)),
+    data: new SlashCommandBuilder().setName("send-email").setDescription("Maintainers send emails!").addStringOption((option) => option.setName("email").setDescription("Email to send to").setRequired(false), (option) => option.setName("subject").setDescription("Subject of email").setRequired(false)),
     async execute(interaction) {
         if (!(await Maintainers.findOne({ userid: interaction.user.id }))) {
             // make text appear in ephemeral message
@@ -10,25 +10,48 @@ module.exports = {
             return;
         }
         const emailAddress = interaction.options.getString("email");
+        const emailSubject = interaction.options.getString("subject");
         const modal = new ModalBuilder().setCustomId("sendemail").setTitle("Send Email");
 
         // Add components to modal
 
         // Create the text input components
-        const email = new TextInputBuilder()
-            .setCustomId("email")
-            // The label is the prompt the user sees for this input
-            .setLabel("To email?")
-            .setValue(emailAddress)
-            // Short means only a single line of text
-            .setStyle(TextInputStyle.Short)
 
+        if (emailAddress) {
+            const email = new TextInputBuilder()
+                .setCustomId("email")
+                // The label is the prompt the user sees for this input
+                .setLabel("To email?")
+                .setValue(emailAddress)
+                // Short means only a single line of text
+                .setStyle(TextInputStyle.Short);
+            modal.addComponents(new ActionRowBuilder().addComponents(email));
+        }
+        else {
+            const email = new TextInputBuilder()
+                .setCustomId("email")
+                // The label is the prompt the user sees for this input
+                .setLabel("To email?")
+                // Short means only a single line of text
+                .setStyle(TextInputStyle.Short)
+        }    
 
-        const subject = new TextInputBuilder()
-            .setCustomId("subject")
-            .setLabel("What is the email subject?")
-            // Paragraph means multiple lines of text.
-            .setStyle(TextInputStyle.Short);
+        if (emailSubject) {
+
+            const subject = new TextInputBuilder()
+                .setCustomId("subject")
+                .setLabel("What is the email subject?")
+                .setValue(emailSubject)
+                // Paragraph means multiple lines of text.
+                .setStyle(TextInputStyle.Short);
+        }
+        else {
+            const subject = new TextInputBuilder()
+                .setCustomId("subject")
+                .setLabel("What is the email subject?")
+                // Paragraph means multiple lines of text.
+                .setStyle(TextInputStyle.Short);
+        }
 
         const message = new TextInputBuilder()
             .setCustomId("message")
