@@ -6,11 +6,13 @@ function adminSendEmails(interaction) {
     const email = interaction.fields.getTextInputValue("email");
     const subject = interaction.fields.getTextInputValue("subject");
     const message = interaction.fields.getTextInputValue("message");
+    const htmlmessage = `<p>${message}</p><% Unsubscribe Here %>`
     const msg = {
         to: email, // Change to your recipient
         from: adminemail, // Change to your verified sender
         subject: subject,
         text: message,
+        html: htmlmessage,
       }
       sgMail
       .send(msg)
