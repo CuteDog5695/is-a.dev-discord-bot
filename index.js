@@ -81,6 +81,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
     if (interaction.customId === "sendemail") {
         adminSendEmails(interaction);
     }
+    if (interaction.customId === "delete") {
+        console.log("delete");
+    }
 
     const command = interaction.client.commands.get(interaction.commandName);
     console.log(interaction.commandName);
