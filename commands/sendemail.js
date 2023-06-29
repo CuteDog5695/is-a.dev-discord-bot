@@ -16,9 +16,9 @@ module.exports = {
         // Add components to modal
 
         // Create the text input components
-
+        let email;
         if (emailAddress) {
-            const email = new TextInputBuilder()
+             email = new TextInputBuilder()
                 .setCustomId("email")
                 // The label is the prompt the user sees for this input
                 .setLabel("To email?")
@@ -28,7 +28,7 @@ module.exports = {
             modal.addComponents(new ActionRowBuilder().addComponents(email));
         }
         else {
-            const email = new TextInputBuilder()
+             email = new TextInputBuilder()
                 .setCustomId("email")
                 // The label is the prompt the user sees for this input
                 .setLabel("To email?")
