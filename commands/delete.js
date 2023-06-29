@@ -2,12 +2,14 @@ const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, MessageS
 
 const fetch = require("node-fetch");
 const User = require("../models/user.js");
+const Maintainers = require("../models/maintainers.js");
 
 module.exports = {
     data: new SlashCommandBuilder().setName("delete").setDescription("Delete a domain."),
     async execute(interaction) {
-        if (!interaction.member.roles.cache.some((role) => role.name === "Bot Beta Tester")) {
-            await interaction.reply("Only beta testers can use this command!");
+        if (!(await Maintainers.findOne({ userid: interaction.user.id }))) {
+            // make text appear in ephemeral message
+            await interaction.reply({ content: "Only maintainers can use this command!", ephemeral: true });
             return;
         }
         const githubUser = await User.findOne({ userid: interaction.user.id });
