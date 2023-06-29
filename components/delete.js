@@ -17,7 +17,7 @@ async function DeleteDomain(interaction) {
     const row = new ActionRowBuilder()
             .addComponents(cancel, confirm);
 
-    await interaction.editReply({ content: `Are you sure you want to delete ${domain}?` });
+    await interaction.editreply({ content: `Are you sure you want to delete ${domain}?`, components: [row] });
 }
 
 
