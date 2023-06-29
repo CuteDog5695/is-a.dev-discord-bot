@@ -49,6 +49,7 @@ module.exports = {
                     await interaction.reply({
                         content: "Choose the domian you want to delete",
                         components: [row],
+                        ephemeral: true,
                     });
 
                     

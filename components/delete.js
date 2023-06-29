@@ -22,6 +22,19 @@ async function DeleteDomain(interaction) {
             components: [row],
             ephemeral: true,
     });
+    const collectorFilter = (i) => i.user.id === interaction.user.id;
+    try {
+        const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60000 });
+        if (confirmation.customId === "confirm") {
+            await confirmation.update({ content: `Delete.`, components: [] });
+        } else if (confirmation.customId === "cancel") {
+            await confirmation.update({ content: "Action cancelled", components: [] });
+        }
+    } catch (e) {
+        await interaction.editReply({ content: "Confirmation not received within 1 minute, cancelling", components: [] });
+        return;
+    }
+    
 }
 
 
