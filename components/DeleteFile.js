@@ -14,7 +14,9 @@ async function DeleteFile(domain, interaction) {
             console.log(err);
         });
         // get the sha var from the json
-    
+    console.log("DEBUG:");
+    console.log(username);
+    console.log(domain);
     console.log(file);
     const sha = file.sha;
     console.log(sha);
