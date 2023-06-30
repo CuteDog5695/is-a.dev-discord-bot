@@ -28,7 +28,7 @@ async function DeleteFile(domains, interaction) {
         message: `Delete ${domain}.is-a.dev`,
         sha: sha,
     });
-    const embed = new EmbedBuilder().setTitle(`Deleting ${subdomain}.is-a.dev`).addFields({ name: "Forked", value: "✅", inline: true }, { name: "Commited", value: "✅", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setDescription(`Please wait for a staff member to review your PR.`).setColor("#00b0f4").setFooter({
+    const embed = new EmbedBuilder().setTitle(`Deleting ${domain}.is-a.dev`).addFields({ name: "Forked", value: "✅", inline: true }, { name: "Commited", value: "✅", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setDescription(`Please wait for a staff member to review your PR.`).setColor("#00b0f4").setFooter({
         text: "is-a.dev",
         icon_url: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
     });
