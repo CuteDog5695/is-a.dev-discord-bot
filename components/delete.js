@@ -30,10 +30,11 @@ async function DeleteDomain(interaction) {
         const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60000 });
         if (confirmation.customId === "confirm") {
             await confirmation.update({ content: `Delete.`, components: [] });
-            fork(interaction.user.id, interaction, domain);
+            await fork(interaction.user.id, interaction, domain);
             await new Promise((r) => setTimeout(r, 3000));
-            DeleteFile(domain, interaction);
-            deletePR(interaction, domain);
+            await DeleteFile(domain, interaction);
+            await new Promise((r) => setTimeout(r, 3000));
+            await deletePR(interaction, domain);
         } else if (confirmation.customId === "cancel") {
             await confirmation.update({ content: "Action cancelled", components: [] });
         }

@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 async function deletePR(interaction, subdomain) {
+    const id = interaction.user.id;
     const githubUser = await User.findOne({ userid: id });
     const token = githubUser.gittoken;
     const username = githubUser.githubid;
