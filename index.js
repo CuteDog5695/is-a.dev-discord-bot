@@ -110,7 +110,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, (c) => {
     client.user.setPresence({
-        activities: [{ name: `Free Is-A.dev Subdomains`, type: ActivityType.Watching }],
+        activities: [{ name: `Registering Subdomains`, type: ActivityType.Watching }],
         status: "online",
     });
 

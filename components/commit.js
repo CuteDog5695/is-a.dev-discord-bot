@@ -36,7 +36,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
             iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
         });
 
-        await interaction.reply({ embeds: [ErrorEmbed] });
+        await interaction.editReply({ embeds: [ErrorEmbed] });
         return;
     }
 
