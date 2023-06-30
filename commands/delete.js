@@ -7,11 +7,6 @@ const Maintainers = require("../models/maintainers.js");
 module.exports = {
     data: new SlashCommandBuilder().setName("delete").setDescription("Delete a domain."),
     async execute(interaction) {
-        if (!(await Maintainers.findOne({ userid: interaction.user.id }))) {
-            // make text appear in ephemeral message
-            await interaction.reply({ content: "Only maintainers can use this command!", ephemeral: true });
-            return;
-        }
         const githubUser = await User.findOne({ userid: interaction.user.id });
 
         if (!githubUser) {
