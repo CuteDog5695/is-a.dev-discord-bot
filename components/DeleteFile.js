@@ -1,12 +1,13 @@
 const { Octokit } = require("@octokit/rest");
 const User = require("../models/user");
 const { EmbedBuilder } = require("discord.js");
-async function DeleteFile(domain, interaction) {
+async function DeleteFile(domains, interaction) {
     const id = interaction.user.id;
     const githubUser = await User.findOne({ userid: id });
     const token = githubUser.gittoken;
     const username = githubUser.githubid;
     const octokit = new Octokit({ auth: token });
+    const domain = domains.replace(/\.is-a\.dev$/, "");
     // get the file sha
     const file = await fetch(`https://api.github.com/repos/${username}/register/contents/domains/${domain}.json`)
         .then((res) => res.json())
