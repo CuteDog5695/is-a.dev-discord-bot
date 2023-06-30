@@ -12,6 +12,7 @@ async function DeleteFile(domain, interaction) {
         repo: "register",
         path: `domains/${domain}.json`,
     });
+    console.log(file);
     const sha = file.data.sha;
     const deletefile = await octokit.repos.deleteFile({
         owner: githubUser.githubid,
