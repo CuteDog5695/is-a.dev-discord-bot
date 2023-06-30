@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle  } = require("discord.js");
 const { fork } = require("./delfork.js");
 const { DeleteFile } = require("./DeleteFile.js");
+const { deletePR } = require("./deletePr.js");
 async function DeleteDomain(interaction) {
     const domain = interaction.values[0];
     console.log(domain);
@@ -32,6 +33,7 @@ async function DeleteDomain(interaction) {
             fork(interaction.user.id, interaction, domain);
             await new Promise((r) => setTimeout(r, 3000));
             DeleteFile(domain, interaction);
+            deletePR(interaction, domain);
         } else if (confirmation.customId === "cancel") {
             await confirmation.update({ content: "Action cancelled", components: [] });
         }
