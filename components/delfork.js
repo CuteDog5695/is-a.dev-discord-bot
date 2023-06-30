@@ -5,7 +5,7 @@ require("dotenv").config();
 const Sentry = require("@sentry/node");
 const { GuildID } = require("../services/guildId.js");
 
-const forkDelete = async (token, guild) => {
+const forkRepo = async (token, guild) => {
     try {
         // Fork the repository
         const username = guild.github;
