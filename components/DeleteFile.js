@@ -5,15 +5,19 @@ async function DeleteFile(domain, interaction) {
     const id = interaction.user.id;
     const githubUser = await User.findOne({ userid: id });
     const token = githubUser.gittoken;
+    const username = githubUser.githubid;
     const octokit = new Octokit({ auth: token });
     // get the file sha
-    const file = await octokit.repos.getContent({
-        owner: githubUser.githubid,
-        repo: "register",
-        path: `domains/${domain}.json`,
-    });
+    const file = await fetch(`https://api.github.com/repos/${username}/register/contents/domains/${domain}.json`)
+        .then((res) => res.json())
+        .catch((err) => {
+            console.log(err);
+        });
+        // get the sha var from the json
+    
     console.log(file);
-    const sha = file.data.sha;
+    const sha = file.sha;
+    console.log(sha);
     const deletefile = await octokit.repos.deleteFile({
         owner: githubUser.githubid,
         repo: "register",
