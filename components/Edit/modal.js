@@ -20,7 +20,7 @@ async function EditModal(interaction) {
 
             if (record === "URL") return records.push(`**${record}** ${data.record[record]}`);
 
-            records.push(`**${record}** ${data.record[record]}`);
+            records.push(`${data.record[record]}`);
         });
         const recordC = records.join(", ");
         const modal = new ModalBuilder().setCustomId("editmodal").setTitle(`Edit: ${domains}`);
