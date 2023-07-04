@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, T
 async function EditModal(interaction) {
         const domains = interaction.values[0];
         const domain = domains.replace(/\.is-a\.dev$/, "");
-        const modal = new ModalBuilder().setCustomId("editmodal").setTitle(domain).setDescription("Please fill out the form below to edit your domain.");
+        const modal = new ModalBuilder().setCustomId("editmodal").setTitle("domain").setDescription("Please fill out the form below to edit your domain.");
         const recordContent = new TextInputBuilder()
             .setCustomId("content")
             .setLabel("What is the new content?")
