@@ -22,15 +22,15 @@ async function EditModal(interaction) {
 
             records.push(`**${record}** ${data.record[record]}`);
         });
+        const recordC = records.join(", ");
         const modal = new ModalBuilder().setCustomId("editmodal").setTitle(`Edit: ${domains}`);
         const recordContent = new TextInputBuilder()
             .setCustomId(domain)
             .setLabel("What is the new content?")
             .setRequired(true)
-            .setValue(records)
+            .setValue(recordC)
             // Paragraph means multiple lines of text.
             .setStyle(TextInputStyle.Short);
-        records = []
         const secondActionRow = new ActionRowBuilder().addComponents(recordContent);
 
         // Add inputs to the modal
