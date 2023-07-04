@@ -11,6 +11,7 @@ const { EmailGithubGen } = require("./templates/forwardmail-github/gen.js");
 const { ReplitGen } = require("./templates/replit/gen.js");
 const { adminSendEmails } = require("./components/adminSendEmails.js");
 const { DeleteDomain } = require("./components/delete.js");
+const { EditModal } = require("./components/Edit/modal.js");
 
 require("dotenv").config();
 
@@ -84,6 +85,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
     if (interaction.customId === "delete") {
         DeleteDomain(interaction);
+    }
+    if (interaction.customId === "edit") {
+        EditModal(interaction);
     }
 
     const command = interaction.client.commands.get(interaction.commandName);
