@@ -3,6 +3,7 @@ const fetch = require("node-fetch");
 const auth = require("../components/auth.js");
 const User = require("../models/user.js");
 const { GuildID } = require("../services/guildId.js");
+const Maintainers = require("../models/maintainers.js");
 
 module.exports = {
     data: new SlashCommandBuilder().setName("domains").setDescription("Lists all domains registered by you!"),
@@ -14,19 +15,42 @@ module.exports = {
         // if the guild object is false, then the guild is not registereds
         if (!guild) return await interaction.reply({ content: "This guild is not registered with Domain Register Bot. Please contact the guild owner to register.", ephemeral: true });
         const githubUser = await User.findOne({ userid: interaction.user.id });
+        const maintainers = await Maintainers.findOne({ userid: interaction.user.id });
 
         const authUrl = auth.getAccessToken(interaction.user.id);
         const loginBtn = new ActionRowBuilder().addComponents(new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel("Login with GitHub").setURL(authUrl));
         // add text reply if user is not logged in. along with login button
         if (!githubUser) return await interaction.reply({ content: `Please login first`, components: [loginBtn], ephemeral: true });
+        let found = false;
+        let results = [];
+        if (maintainers) {
+            const maintainer = "is-a-dev";
+
+            fetch("https://raw-api.is-a.dev")
+                .then((response) => response.json())
+                .then(async (data) => {
+                    
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i].owner.username.toLowerCase() === maintainer.toLowerCase()) {
+                            results.push(data[i].domain);
+                            found = true;
+                        }
+                    }    
+                });
+            
+
+            
+
+        }
+
+
 
         const username = githubUser.githubid;
 
         fetch("https://raw-api.is-a.dev")
             .then((response) => response.json())
             .then(async (data) => {
-                let found = false;
-                let results = [];
+                
 
                 for (let i = 0; i < data.length; i++) {
                     if (data[i].owner.username.toLowerCase() === username.toLowerCase()) {
