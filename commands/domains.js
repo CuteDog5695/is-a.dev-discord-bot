@@ -61,10 +61,7 @@ module.exports = {
 
                 if (found) {
                     if (maintainers) {
-                        const embed = new EmbedBuilder().setTitle("Your Domains").setDescription(results.join("\n")).addFields({
-                            "name:": "Staff Domains",
-                            "value:": staffresults.join("\n"),
-                        }).setColor("#00b0f4").setFooter({
+                        const embed = new EmbedBuilder().setTitle("Your Domains").setDescription(results.join("\n")).addFields({ name: 'Staff Domains', value: staffresults.join("\n") }).setColor("#00b0f4").setFooter({
                             text: "is-a.dev",
                             iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
                         });
