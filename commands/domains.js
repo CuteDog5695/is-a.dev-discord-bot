@@ -23,6 +23,7 @@ module.exports = {
         if (!githubUser) return await interaction.reply({ content: `Please login first`, components: [loginBtn], ephemeral: true });
         let found = false;
         let results = [];
+        let staffresults = [];
         if (maintainers) {
             const maintainer = "is-a-dev";
 
@@ -32,7 +33,7 @@ module.exports = {
                     
                     for (let i = 0; i < data.length; i++) {
                         if (data[i].owner.username.toLowerCase() === maintainer.toLowerCase()) {
-                            results.push(data[i].domain);
+                            staffresults.push(data[i].domain);
                         }
                     }    
                 });
@@ -59,12 +60,24 @@ module.exports = {
                 }
 
                 if (found) {
-                    const embed = new EmbedBuilder().setTitle("Your Domains").setDescription(results.join("\n")).setColor("#00b0f4").setFooter({
-                        text: "is-a.dev",
-                        iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
-                    });
+                    if (maintainers) {
+                        const embed = new EmbedBuilder().setTitle("Your Domains").setDescription(results.join("\n")).addFields({
+                            "name:": "Staff Domains",
+                            "value:": staffresults.join("\n"),
+                        }).setColor("#00b0f4").setFooter({
+                            text: "is-a.dev",
+                            iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
+                        });
 
-                    await interaction.reply({ embeds: [embed] });
+                        await interaction.reply({ embeds: [embed] });
+                    } else {
+                        const embed = new EmbedBuilder().setTitle("Your Domains").setDescription(results.join("\n")).setColor("#00b0f4").setFooter({
+                            text: "is-a.dev",
+                            iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
+                        });
+
+                        await interaction.reply({ embeds: [embed] });
+                    }    
                 } else {
                     await interaction.reply("You don't own any domains.");
                 }
