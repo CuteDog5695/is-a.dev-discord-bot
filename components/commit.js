@@ -6,6 +6,7 @@ require("dotenv").config();
 const { EmbedBuilder } = require("discord.js");
 
 async function CommitChanges(id, subdomain, type, data, interaction) {
+    let pass = "fail";
     const githubUser = await User.findOne({ userid: id });
     const token = githubUser.gittoken;
     const username = githubUser.githubid;
@@ -79,7 +80,8 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
     });
 
     await interaction.editReply({ embeds: [embed] });
-    return commit;
+    pass = "true";
+    return pass;
 }
 
 exports.CommitChanges = CommitChanges;
