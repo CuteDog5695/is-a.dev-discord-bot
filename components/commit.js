@@ -27,8 +27,10 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
         data = `"${data.trim()}"`;
     }
 
-    const ifexistsurl = `https://raw.githubusercontent.com/${username}/register/main/domains/${subdomain}.json'`;
+    const ifexistsurl = `https://raw.githubusercontent.com/${username}/register/main/domains/${subdomain}.json`;
     const ifexists = await fetch(ifexistsurl);
+    console.log(ifexistsurl);
+    console.log(ifexists.status);
 
     if (ifexists.status === 200) {
         const ErrorEmbed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).setURL(ifexistsurl).setDescription(`This domain already exists!`).addFields({ name: "Forked", value: "✅", inline: true }, { name: "Commited", value: "❌", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setColor("#FF0000").setFooter({
