@@ -8,6 +8,7 @@ async function EditModal(interaction) {
                 },
             });
         const data = await response.json();
+        console.log(data);
         const records = [];
         Object.keys(data.record).forEach((record) => {
             if (record === "A" || record === "MX") {
