@@ -67,6 +67,5 @@ module.exports = {
         await new Promise((r) => setTimeout(r, 3000));
         const commit = await CommitChanges(interaction.user.id, subdomain, recordType, recordString, interaction);
         if (commit === "fail") return;
-        await OpenPR(interaction.user.id, subdomain, interaction);
     },
 };

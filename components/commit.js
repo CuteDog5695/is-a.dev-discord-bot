@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const { Octokit } = require("@octokit/rest");
+const { OpenPR } = require("../components/pr.js");
 
 require("dotenv").config();
 
@@ -81,6 +82,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
 
     await interaction.editReply({ embeds: [embed] });
     pass = "true";
+    await OpenPR(interaction.user.id, subdomain, interaction);
     return pass;
 }
 
