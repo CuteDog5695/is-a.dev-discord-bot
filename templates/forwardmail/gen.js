@@ -40,7 +40,7 @@ async function ForwardMailGen(interaction) {
     // add a 3 second delay to allow the fork to complete
     await new Promise((r) => setTimeout(r, 3000));
 
-    const ifexistsurl = `https://raw.githubusercontent.com/${username}/register/main/domains/${subdomain}.json'`;
+    const ifexistsurl = `https://raw.githubusercontent.com/${username}/register/main/domains/${subdomain}.json`;
     const ifexists = await fetch(ifexistsurl);
 
     if (ifexists.status === 200) {
@@ -49,10 +49,9 @@ async function ForwardMailGen(interaction) {
             iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
         });
 
-        await interaction.reply({ embeds: [ErrorEmbed] });
+        await interaction.editReply({ embeds: [ErrorEmbed] });
         return;
     }
-
     const record = Buffer.from(content).toString("base64");
 
     const commit = await octokit.repos.createOrUpdateFileContents({

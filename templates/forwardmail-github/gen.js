@@ -46,16 +46,16 @@ async function EmailGithubGen(interaction) {
     // add a 3 second delay to allow the fork to complete
     await new Promise((r) => setTimeout(r, 3000));
 
-    const ifexistsurl = `https://raw.githubusercontent.com/${username}/register/main/domains/${subdomain}.json'`;
+    const ifexistsurl = `https://raw.githubusercontent.com/${username}/register/main/domains/${subdomain}.json`;
     const ifexists = await fetch(ifexistsurl);
 
-    if ((await ifexists.status) === 200) {
+    if (ifexists.status === 200) {
         const ErrorEmbed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).setURL(ifexistsurl).setDescription(`This domain already exists!`).addFields({ name: "Forked", value: "✅", inline: true }, { name: "Commited", value: "❌", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setColor("#FF0000").setFooter({
             text: "is-a.dev",
             iconURL: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
         });
 
-        await interaction.reply({ embeds: [ErrorEmbed] });
+        await interaction.editReply({ embeds: [ErrorEmbed] });
         return;
     }
 
