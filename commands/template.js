@@ -11,7 +11,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("template")
         .setDescription("Premade domain templates!")
-        .addStringOption((option) => option.setName("templates").setDescription("Select a template").setRequired(true).addChoices({ name: "Email Forwarder", value: "email-forwarder" }, { name: "GitHub Pages and Email Forwarder", value: "github-pages-email-forwarder" }, { name: "Replit.com with is-a.dev subdomain [CNAME]", value: "replit" })),
+        .addStringOption((option) => option.setName("templates").setDescription("Select a template").setRequired(true).addChoices({ name: "Email Forwarder", value: "email-forwarder" }, { name: "GitHub Pages and Email Forwarder", value: "github-pages-email-forwarder" }, { name: "Replit.com with is-a.dev subdomain [CNAME]", value: "replit" }, { name: "HashNode with is-a.dev subdomain", value: "hashnode" })),
     async execute(interaction) {
         const guildId = interaction.guildId;
         // get the guild object from the guild id
