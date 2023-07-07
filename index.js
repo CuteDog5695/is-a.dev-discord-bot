@@ -9,6 +9,7 @@ const SMTP = require("./components/emailServer.js");
 const { ForwardMailGen } = require("./templates/forwardmail/gen.js");
 const { EmailGithubGen } = require("./templates/forwardmail-github/gen.js");
 const { ReplitGen } = require("./templates/replit/gen.js");
+const { HashnodeGen } = require("./templates/hashnode/gen.js");
 const { adminSendEmails } = require("./components/adminSendEmails.js");
 const { DeleteDomain } = require("./components/delete.js");
 const { EditModal } = require("./components/Edit/modal.js");
@@ -79,6 +80,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
     if (interaction.customId === "Replit") {
         ReplitGen(interaction);
+    }
+    if (interaction.customId === "hashnode") {
+        HashnodeGen(interaction);
     }
     if (interaction.customId === "sendemail") {
         adminSendEmails(interaction);

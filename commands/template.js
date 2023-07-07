@@ -3,6 +3,7 @@ const User = require("../models/user.js");
 const { ForwardMailModal } = require("../templates/forwardmail/modal.js");
 const { EmailGithub } = require("../templates/forwardmail-github/modal.js");
 const { Replit } = require("../templates/replit/modal.js");
+const { HashNode } = require("../templates/hashnode/modal.js");
 const auth = require("../components/auth.js");
 const { GuildID } = require("../services/guildId.js");
 
@@ -37,6 +38,9 @@ module.exports = {
                 break;
             case "replit":
                 await Replit(interaction);
+                break;
+            case "hashnode":
+                await HashNode(interaction);
                 break;
             default:
                 return await interaction.reply("Invalid template.");
