@@ -46,6 +46,9 @@ module.exports = {
             case "TXT":
                 regexPattern = /^.*$/;
                 break;
+            case "URL":
+                regexPattern = /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$/;
+                break;
             default:
                 return await interaction.reply("Invalid record type.");
         }
