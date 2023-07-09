@@ -24,6 +24,23 @@ const forkRepo = async (token, guild) => {
                 "X-GitHub-Api-Version": "2022-11-28",
             },
         });
+        if (forked.status !== 202) {
+            console.log("Fork failed");
+            const ErrorEmbed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).setDescription(`Fork failed!`).addFields({ name: "Forked", value: "❌", inline: true }, { name: "Commited", value: "❌", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setColor("#FF0000").setFooter({
+                text: "is-a.dev",
+                iconURL: logo,
+            });
+            await interaction.editReply({ embeds: [ErrorEmbed] });
+            return;
+        }
+        else {
+            const embed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).addFields({ name: "Forked ", value: "✅", inline: true }, { name: "Commited ", value: "❌", inline: true }, { name: "PR Opened ", value: "❌", inline: true }).setColor("#00b0f4").setFooter({
+                text: "is-a.dev",
+                icon_url: guild.logo,
+            });
+            await interaction.editReply({ embeds: [embed] });
+        }
+            
         const cloneResponse = forked.data.clone_url;
         if (process.env.DEBUG) {
             console.log("FORKED REPO: " + cloneResponse);
@@ -46,11 +63,6 @@ async function fork(id, interaction, subdomain) {
         console.log("token: " + token);
     }
     const responce = await forkRepo(token, guild);
-    const embed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).addFields({ name: "Forked ", value: "✅", inline: true }, { name: "Commited ", value: "❌", inline: true }, { name: "PR Opened ", value: "❌", inline: true }).setColor("#00b0f4").setFooter({
-        text: "is-a.dev",
-        icon_url: guild.logo,
-    });
-    await interaction.editReply({ embeds: [embed] });
     return responce;
 }
 exports.fork = fork;

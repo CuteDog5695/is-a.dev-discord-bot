@@ -25,6 +25,7 @@ module.exports = {
 
 
         const githubUser = await User.findOne({ userid: interaction.user.id });
+        const username = githubUser.githubid;
 
         const authUrl = auth.getAccessToken(interaction.user.id);
         const loginBtn = new ActionRowBuilder().addComponents(new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel("Login with GitHub").setURL(authUrl));
