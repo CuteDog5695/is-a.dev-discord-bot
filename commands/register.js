@@ -65,7 +65,8 @@ module.exports = {
         });
 
         await interaction.reply({ embeds: [embed] });
-        await fork(interaction.user.id, interaction, subdomain);
+        const forked = await fork(interaction.user.id, interaction, subdomain);
+        if (forked === "false") return;
 
         // add a 3 second delay to allow the fork to complete
         await new Promise((r) => setTimeout(r, 3000));

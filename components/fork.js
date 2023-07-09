@@ -5,7 +5,7 @@ require("dotenv").config();
 const Sentry = require("@sentry/node");
 const { GuildID } = require("../services/guildId.js");
 
-const forkRepo = async (token, guild) => {
+const forkRepo = async (token, guild, pass) => {
     try {
         // Fork the repository
         const username = guild.github;
@@ -39,13 +39,14 @@ const forkRepo = async (token, guild) => {
                 icon_url: guild.logo,
             });
             await interaction.editReply({ embeds: [embed] });
+            pass = "true";
         }
             
         const cloneResponse = forked.data.clone_url;
         if (process.env.DEBUG) {
             console.log("FORKED REPO: " + cloneResponse);
         }
-        return cloneResponse;
+        return pass;
     } catch (error) {
         console.log(error);
     }
@@ -62,7 +63,8 @@ async function fork(id, interaction, subdomain) {
         console.log("id: " + id);
         console.log("token: " + token);
     }
-    const responce = await forkRepo(token, guild);
-    return responce;
+    let pass = "false";
+    const responce = await forkRepo(token, guild, pass);
+    return pass;
 }
 exports.fork = fork;
