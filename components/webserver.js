@@ -7,6 +7,7 @@ const User = require("../models/user.js");
 const Prdata = require("../models/prdata.js");
 const prdata = require("../models/prdata.js");
 const { ListDomains } = require("./web/listDomains.js");
+const { CheckDomain } = require("./web/CheckDomain.js");
 require("dotenv").config();
 
 const GITHUB_ID = process.env.GITHUB_ID;
@@ -89,6 +90,12 @@ server.get("/api/domains", async (req, res) => {
     const username = req.query.username;
     const domains = await ListDomains(username);
     res.send(domains);
+});
+
+server.get("/api/check-domain", async (req, res) => {
+    const domain = req.query.domain;
+    const result = await CheckDomain(domain);
+    res.send(result);
 });
 
 
