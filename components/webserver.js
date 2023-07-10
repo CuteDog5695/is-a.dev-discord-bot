@@ -8,6 +8,7 @@ const Prdata = require("../models/prdata.js");
 const prdata = require("../models/prdata.js");
 const { ListDomains } = require("./web/listDomains.js");
 const { CheckDomain } = require("./web/CheckDomain.js");
+const { CountDomains } = require("./web/CountDomains.js");
 require("dotenv").config();
 
 const GITHUB_ID = process.env.GITHUB_ID;
@@ -95,6 +96,11 @@ server.get("/api/domains", async (req, res) => {
 server.get("/api/check-domain", async (req, res) => {
     const domain = req.query.domain;
     const result = await CheckDomain(domain);
+    res.send(result);
+});
+
+server.get("/api/count-domains", async (req, res) => {
+    const result = await CountDomains();
     res.send(result);
 });
 
