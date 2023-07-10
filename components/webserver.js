@@ -6,6 +6,7 @@ const { Octokit } = require("@octokit/rest");
 const User = require("../models/user.js");
 const Prdata = require("../models/prdata.js");
 const prdata = require("../models/prdata.js");
+const { ListDomains } = require("./web/listDomains.js");
 require("dotenv").config();
 
 const GITHUB_ID = process.env.GITHUB_ID;
@@ -83,6 +84,13 @@ server.get("/guides/replit", (req, res) => {
     const subdomain = req.query.domain;
     res.render("replit", { replurl, subdomain })
 })
+
+server.get("/api/domains", async (req, res) => {
+    const username = req.query.username;
+    const domains = await ListDomains(username);
+    res.send(domains);
+});
+
 
 server.post ('/api/email', upload.none(), (req, res) => {
     const body = req.body;
