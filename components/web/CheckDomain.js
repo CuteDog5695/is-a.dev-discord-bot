@@ -7,10 +7,12 @@ async function CheckDomain(domain) {
         },
     });
     if (response.status === 404) {
-        return true;
+        const json = { "status": "available" };
+        return json;
     }
     else {
-        return false;
+        const json = { "status": "unavalible" };
+        return json;
     }
 }
 
