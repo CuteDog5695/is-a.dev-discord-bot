@@ -8,7 +8,7 @@ const Prdata = require("../models/prdata.js");
 const prdata = require("../models/prdata.js");
 const { ListDomains } = require("./web/listDomains.js");
 const { CheckDomain } = require("./web/CheckDomain.js");
-const { CountDomains } = require("./web/CountDomains.js");
+const { CountDomains } = require("./web/Count.js");
 require("dotenv").config();
 
 const GITHUB_ID = process.env.GITHUB_ID;

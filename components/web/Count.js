@@ -1,5 +1,5 @@
-function CountDomains() {
-  fetch("https://raw-api.is-a.dev")
+async function CountDomains() {
+  await fetch("https://raw-api.is-a.dev")
     .then((response) => response.json())
     .then(async (data) => {
         let count = 0;
