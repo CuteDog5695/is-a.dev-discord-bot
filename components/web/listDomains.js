@@ -1,6 +1,6 @@
-function ListDomains(username) {
+async function ListDomains(username) {
     let results = [];
-    fetch("https://raw-api.is-a.dev")
+    await fetch("https://raw-api.is-a.dev")
             .then((response) => response.json())
             .then(async (data) => {
                 
@@ -14,3 +14,4 @@ function ListDomains(username) {
             });
     return results;
 }
+exports.ListDomains = ListDomains;
