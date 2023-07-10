@@ -5,7 +5,6 @@ const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder, ActivityTyp
 const mongoose = require("mongoose");
 const Sentry = require("@sentry/node");
 const keepAlive = require("./components/webserver.js");
-const SMTP = require("./components/emailServer.js");
 const { ForwardMailGen } = require("./templates/forwardmail/gen.js");
 const { EmailGithubGen } = require("./templates/forwardmail-github/gen.js");
 const { ReplitGen } = require("./templates/replit/gen.js");
