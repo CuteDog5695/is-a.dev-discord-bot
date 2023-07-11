@@ -5,6 +5,7 @@ async function CheckDomain(subdomain) {
             "User-Agent": "is-a-dev-bot",
         },
     });
+    console.log(response.status);
     if (response.status === 404) {
         const json = { "status": "available" };
         return json;

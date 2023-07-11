@@ -5,6 +5,7 @@ async function DomainInfo(domain){
             "User-Agent": "is-a-dev-bot",
         },
     });
+    console.log(response);
     if (response.status === 404) {
         return `The domain ${domain}.is-a.dev is not registered!`;
     } else {
