@@ -1,5 +1,5 @@
 async function DomainInfo(domain){
-    const domains = domain.toLowerCase().replace(/\.is-a\.dev$/, "");
+    const domains = domain.replace(/\.is-a\.dev$/, "");
     const response = await fetch(`https://raw.githubusercontent.com/is-a-dev/register/main/domains/${domains}.json`, {
         headers: {
             "User-Agent": "is-a-dev-bot",

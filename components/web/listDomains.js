@@ -13,7 +13,7 @@ async function ListDomains(username) {
             for (let i = 0; i < data.length; i++) {
                 // Iterates over each element in the data array
                 
-                if (data[i].owner.username.toLowerCase() === username.toLowerCase()) {
+                if (data[i].owner.username === username) {
                     // Checks if the username (case-insensitive) matches the current data record's owner
                     
                     const record = data[i].record;
