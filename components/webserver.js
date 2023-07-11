@@ -9,6 +9,7 @@ const prdata = require("../models/prdata.js");
 const { ListDomains } = require("./web/listDomains.js");
 const { CheckDomain } = require("./web/CheckDomain.js");
 const { CountDomains } = require("./web/Count.js");
+const { DomainInfo } = require("./web/DomainInfo.js");
 require("dotenv").config();
 
 const GITHUB_ID = process.env.GITHUB_ID;
@@ -88,7 +89,22 @@ server.get("/guides/replit", (req, res) => {
 })
 
 server.get("/api/domains", async (req, res) => {
+    const domain = req.query.domain;
     const username = req.query.username;
+    if (!domain && !username) {
+        res.send("No domain or username provided.");
+        return;
+    }
+    if (domain) {
+        const domains = await DomainInfo(domain);
+        res.send(domains);
+        return;
+    }
+    if (username) {
+        const domains = await ListDomains(username);
+        res.send(domains);
+        return;
+    }
     const domains = await ListDomains(username);
     res.send(domains);
 });
