@@ -1,5 +1,3 @@
-const { listeners } = require("../../models/prdata");
-
 async function CheckDomain(subdomain) {
     // check if domain is available
     let response = null
@@ -9,12 +7,12 @@ async function CheckDomain(subdomain) {
         },
     });
     console.log(response.status);
-    if (response.status === 404) {
-        const json = { "status": "available" };
+    if (response.status === 200) {
+        const json = { "status": "unavalible" };
         return json;
     }
     else {
-        const json = { "status": "unavalible" };
+        const json = { "status": "available" };
         return json;
     }
 }
