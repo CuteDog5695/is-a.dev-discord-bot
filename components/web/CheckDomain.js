@@ -1,20 +1,20 @@
 async function CheckDomain(subdomain) {
     // check if domain is available
-    let response = null
-     response = await fetch(`https://api.github.com/repos/is-a-dev/register/contents/domains/${subdomain}.json`, {
-        headers: {
-            "User-Agent": "is-a-dev",
-        },
-    });
-    console.log(response.status);
-    if (response.status === 200) {
-        const jsonu = { "status": "unavalible" };
-        return jsonu;
-    }
-    else {
-        const jsonp = { "status": "available" };
-        return jsonp;
-    }
+    let result = false;
+    await fetch("https://raw-api.is-a.dev",)
+        .then((response) => response.json())
+        .then(async (data) => {
+            result = data.some((item) => item.domain === subdomain);
+            if (result) {
+                const da = { "domain": subdomain, "available": false };
+                return da;
+            }
+            else {
+                const db = { "domain": subdomain, "available": true };
+                return db;
+            }
+        });
+     ;
 }
 
 exports.CheckDomain = CheckDomain;

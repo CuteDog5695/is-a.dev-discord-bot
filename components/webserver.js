@@ -169,6 +169,21 @@ server.post ('/api/email', upload.none(), (req, res) => {
     return res.status(200).send();
 });
 
+server.post("/api/register", upload.none(), async (req, res) => {
+    const body = req.body;
+    const username = req.headers.username;  
+    const apikey = req.headers.apikey;
+    const email = req.headers.email;
+    const subdomain = req.headers.subdomain;
+    if (!username || !apikey || !subdomain) {
+        res.send("No username, apikey, or subdomain provided.");
+        return;
+    }
+    //send response and status code
+    res.status(500).send({"ERROR": "This endpoint is currently disabled."});
+    //res.send("body: " + JSON.stringify(body) + "\nusername: " + username + "\napikey: " + apikey + "\nemail: " + email + "\nsubdomain: " + subdomain);
+});
+
 // Notify API
 server.get("/pr/merged/:pr", async function (req, res) {
     var pr = req.params.pr;
