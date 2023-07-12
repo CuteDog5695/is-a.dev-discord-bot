@@ -10,6 +10,7 @@ const { ListDomains } = require("./web/listDomains.js");
 const { CheckDomain } = require("./web/CheckDomain.js");
 const { CountDomains } = require("./web/Count.js");
 const { DomainInfo } = require("./web/DomainInfo.js");
+const { WebFork } = require("./web/fork.js");
 require("dotenv").config();
 
 const GITHUB_ID = process.env.GITHUB_ID;
@@ -167,6 +168,16 @@ server.post ('/api/email', upload.none(), (req, res) => {
   
   
     return res.status(200).send();
+});
+
+server.get("/api/fork", async (req, res) => {
+    const apikey = req.query.apikey;
+    if (!apikey) {
+        res.send("No apikey provided.");
+        return;
+    }
+    const result = await WebFork(apikey);
+    res.send(result);
 });
 
 server.post("/api/register", upload.none(), async (req, res) => {
