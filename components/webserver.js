@@ -173,7 +173,7 @@ server.post ('/api/email', upload.none(), (req, res) => {
 server.get("/api/fork", async (req, res) => {
     const apikey = req.query.apikey;
     if (!apikey) {
-        res.send("No apikey provided.");
+        res.json({ Error: 'No Apikey provided' })
         return;
     }
     const result = await WebFork(apikey);
