@@ -11,6 +11,7 @@ const { CheckDomain } = require("./web/CheckDomain.js");
 const { CountDomains } = require("./web/Count.js");
 const { DomainInfo } = require("./web/DomainInfo.js");
 const { WebFork } = require("./web/fork.js");
+const { RegisterDomain } = require("./web/Register.js");
 require("dotenv").config();
 
 const GITHUB_ID = process.env.GITHUB_ID;
@@ -190,8 +191,22 @@ server.post("/api/register", upload.none(), async (req, res) => {
         res.send("No username, apikey, or subdomain provided.");
         return;
     }
+    const jsonData = JSON.parse(body);
+    const content = jsonData.CONTENT;
+    const type = jsonData.TYPE;
+
+    const result = await RegisterDomain(subdomain, type, username, email, apikey, content);
+    // if result json contains ERROR, send error
+    if (result.ERROR) {
+        res.status(500).send(result);
+        return;
+    }
+    else {
+        res.status(202).res.send(result);
+        return;
+    }
     //send response and status code
-    res.status(500).send({"ERROR": "This endpoint is currently disabled."});
+    //res.status(500).send({"ERROR": "This endpoint is currently disabled."});
     //res.send("body: " + JSON.stringify(body) + "\nusername: " + username + "\napikey: " + apikey + "\nemail: " + email + "\nsubdomain: " + subdomain);
 });
 
