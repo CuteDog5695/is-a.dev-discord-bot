@@ -173,11 +173,11 @@ server.post ('/api/email', upload.none(), (req, res) => {
 });
 
 server.get("/api/fork", async (req, res) => {
-    const DisableFork = await controller.findOne({ name: "DisableFork" });
-    if (DisableFork.status === "true") {
-        res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
-        return;
-    }
+    //const DisableFork = await controller.findOne({ name: "DisableFork" });
+    //if (DisableFork.status === "true") {
+   //     res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
+   //     return;
+    //}
     const apikey = req.query.apikey;
     if (!apikey) {
         res.json({ Error: 'No Apikey provided' })
@@ -189,10 +189,10 @@ server.get("/api/fork", async (req, res) => {
 
 server.post("/api/register", upload.none(), async (req, res) => {
     const DisableRegister = await controller.findOne({ name: "DisableRegister" });
-    if (DisableRegister.status === "true") {
-        res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
-        return;
-    }
+    //if (DisableRegister.status === "true") {
+    //    res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
+    //    return;
+    //}
     const body = req.body.content;
     const username = req.headers.username;  
     const apikey = req.headers.apikey;
@@ -202,6 +202,8 @@ server.post("/api/register", upload.none(), async (req, res) => {
         res.send("No username, apikey, or subdomain provided.");
         return;
     }
+    res.status(500).send({"ERROR": "This endpoint is currently disabled."});
+    return;
     const jsonData = JSON.parse(body);
     const content = jsonData.CONTENT;
     const type = jsonData.TYPE;
@@ -217,7 +219,7 @@ server.post("/api/register", upload.none(), async (req, res) => {
         return;
     }
     //send response and status code
-    //res.status(500).send({"ERROR": "This endpoint is currently disabled."});
+    //
     //res.send("body: " + JSON.stringify(body) + "\nusername: " + username + "\napikey: " + apikey + "\nemail: " + email + "\nsubdomain: " + subdomain);
 });
 
