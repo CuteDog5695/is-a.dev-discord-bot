@@ -175,7 +175,7 @@ server.post ('/api/email', upload.none(), (req, res) => {
 server.get("/api/fork", async (req, res) => {
     const DisableFork = await controller.findOne({ name: "DisableFork" });
     if (DisableFork.status === "true") {
-        res.status(500).send({ "ERROR": "This endpoint is currently disabled." });
+        res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
         return;
     }
     const apikey = req.query.apikey;
@@ -190,7 +190,7 @@ server.get("/api/fork", async (req, res) => {
 server.post("/api/register", upload.none(), async (req, res) => {
     const DisableRegister = await controller.findOne({ name: "DisableRegister" });
     if (DisableRegister.status === "true") {
-        res.status(500).send({ "ERROR": "This endpoint is currently disabled." });
+        res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
         return;
     }
     const body = req.body.content;
