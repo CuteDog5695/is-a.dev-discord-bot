@@ -13,6 +13,7 @@ const { DomainInfo } = require("./web/DomainInfo.js");
 const { WebFork } = require("./web/fork.js");
 const { RegisterDomain } = require("./web/Register.js");
 require("dotenv").config();
+const controller = require("../models/control.js");
 
 const GITHUB_ID = process.env.GITHUB_ID;
 const GITHUB_SECRET = process.env.GITHUB_SECRET;
@@ -172,6 +173,11 @@ server.post ('/api/email', upload.none(), (req, res) => {
 });
 
 server.get("/api/fork", async (req, res) => {
+    const DisableFork = await controller.findOne({ name: "DisableFork" });
+    if (DisableFork.status === "true") {
+        res.status(500).send({ "ERROR": "This endpoint is currently disabled." });
+        return;
+    }
     const apikey = req.query.apikey;
     if (!apikey) {
         res.json({ Error: 'No Apikey provided' })
@@ -182,7 +188,12 @@ server.get("/api/fork", async (req, res) => {
 });
 
 server.post("/api/register", upload.none(), async (req, res) => {
-    const body = req.body;
+    const DisableRegister = await controller.findOne({ name: "DisableRegister" });
+    if (DisableRegister.status === "true") {
+        res.status(500).send({ "ERROR": "This endpoint is currently disabled." });
+        return;
+    }
+    const body = req.body.content;
     const username = req.headers.username;  
     const apikey = req.headers.apikey;
     const email = req.headers.email;
