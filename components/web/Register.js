@@ -1,6 +1,6 @@
 const Octokit = require("@octokit/rest");
 async function RegisterDomain(subdomain, type, username, email, apikey, recordString) {
-    switch (recordType) {
+    switch (type) {
         case "A":
             regexPattern = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
             break;
