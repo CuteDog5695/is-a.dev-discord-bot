@@ -187,7 +187,7 @@ server.get("/api/fork", async (req, res) => {
     res.send(result);
 });
 
-server.post("/api/register", upload.none(), async (req, res) => {
+server.get("/api/register", upload.none(), async (req, res) => {
     //if (DisableRegister.status === "true") {
     //    res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
     //    return;
