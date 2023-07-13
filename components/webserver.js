@@ -1,4 +1,5 @@
 const express = require("express");
+var cors = require('cors')
 const multer = require("multer");
 const fetch = require("node-fetch");
 const { WebhookClient } = require("discord.js");
@@ -21,6 +22,7 @@ const GITHUB_SECRET = process.env.GITHUB_SECRET;
 const upload = multer();
 const server = express();
 server.set("view engine", "ejs");
+server.use(cors())
 
 server.get("/auth/handler", async (req, res) => {
     const code = req.query.code;
@@ -260,11 +262,7 @@ server.get("/pr/merged/:pr", async function (req, res) {
     }
 });
 
-server.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+
 
 function keepAlive() {
     server.listen(3000, () => {
