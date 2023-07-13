@@ -193,16 +193,17 @@ server.post("/api/register", upload.none(), async (req, res) => {
     //    return;
     //}
     console.log('Got body:', req.body);
+    if (!req.body.username || !req.body.apikey || !req.body.subdomain) {
+        res.send("No username, apikey, or subdomain provided.");
+        return;
+    }
     const type = req.body.type;
     const contents = req.body.content;
     const username = req.body.username;
     const apikey = req.body.apikey;
     const email = req.body.email;
     const subdomain = req.body.subdomain;
-    if (!username || !apikey || !subdomain) {
-        res.send("No username, apikey, or subdomain provided.");
-        return;
-    }
+    
     //res.status(500).send({"ERROR": "This endpoint is currently disabled."});
     //return;
     
