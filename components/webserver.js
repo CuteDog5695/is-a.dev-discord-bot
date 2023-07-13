@@ -198,7 +198,7 @@ server.post("/api/register", upload.none(), async (req, res) => {
         return;
     }
     const type = req.body.type;
-    const contents = req.body.content;
+    const content = req.body.content;
     const username = req.body.username;
     const apikey = req.body.apikey;
     const email = req.body.email;
