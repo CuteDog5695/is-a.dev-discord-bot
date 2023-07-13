@@ -192,7 +192,8 @@ server.post("/api/register", upload.none(), async (req, res) => {
     //    res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
     //    return;
     //}
-    const body = req.body.content;
+    const body = req.body;
+    console.log(body);
     const username = body.username;
     const apikey = body.apikey;
     const email = body.email;
