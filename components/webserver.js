@@ -195,10 +195,10 @@ server.post("/api/register", upload.none(), async (req, res) => {
     console.log('Got body:', req.body);
     const type = req.body.type;
     const contents = req.body.content;
-    const username = body.username;
-    const apikey = body.apikey;
-    const email = body.email;
-    const subdomain = body.subdomain;
+    const username = req.body.username;
+    const apikey = req.body.apikey;
+    const email = req.body.email;
+    const subdomain = req.body.subdomain;
     if (!username || !apikey || !subdomain) {
         res.send("No username, apikey, or subdomain provided.");
         return;
