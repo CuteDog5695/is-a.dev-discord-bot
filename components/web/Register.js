@@ -58,7 +58,7 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
                 email: email,
             },
     });
-    
+
     let pr = await octokit.pulls.create({
         owner: "is-a-dev",
         repo: "register",
@@ -68,7 +68,7 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
         body: `Added \`${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev\` using the site.`,
     });
     let PrUrl = pr.data.html_url;
-    return { "PRURL": PrUrl };
+    return { "prurl": PrUrl };
     
   
 }
