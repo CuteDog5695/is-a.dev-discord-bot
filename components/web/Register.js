@@ -58,6 +58,7 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
                 email: email,
             },
     });
+    
     let pr = await octokit.pulls.create({
         owner: "is-a-dev",
         repo: "register",

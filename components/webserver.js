@@ -192,17 +192,17 @@ server.post("/api/register", upload.none(), async (req, res) => {
     //    res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
     //    return;
     //}
-    console.log('Got body:', req.body);
-    if (!req.body.username || !req.body.apikey || !req.body.subdomain) {
+    console.log('Got query:', req.query);
+    if (!req.query.username || !req.query.apikey || !req.query.subdomain) {
         res.send("No username, apikey, or subdomain provided.");
         return;
     }
-    const type = req.body.type;
-    const content = req.body.content;
-    const username = req.body.username;
-    const apikey = req.body.apikey;
-    const email = req.body.email;
-    const subdomain = req.body.subdomain;
+    const type = req.query.type;
+    const content = req.query.content;
+    const username = req.query.username;
+    const apikey = req.query.apikey;
+    const email = req.query.email;
+    const subdomain = req.query.subdomain;
     
     //res.status(500).send({"ERROR": "This endpoint is currently disabled."});
     //return;
