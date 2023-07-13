@@ -1,4 +1,4 @@
-const Octokit = require("@octokit/rest");
+const { Octokit } = require("@octokit/rest");
 async function RegisterDomain(subdomain, type, username, email, apikey, recordString) {
     switch (type) {
         case "A":
