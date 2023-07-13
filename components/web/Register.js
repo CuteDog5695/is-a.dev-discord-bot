@@ -21,10 +21,10 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
         
     }
     if (!regexPattern.test(recordString)) return { "error": "Invalid record string." };
-    const octokit = new Octokit({
+    let octokit = new Octokit({
         auth: apikey,
     });
-    const data = recordString;
+    let data = recordString;
     if (type === "A" || type === "MX") {
         data = JSON.stringify(data.split(",").map((s) => s.trim()));
     } else {
@@ -41,9 +41,9 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
     }
     `;
     
-    const record = Buffer.from(content).toString("base64");
+    let record = Buffer.from(content).toString("base64");
     
-    const commit = await octokit.repos.createOrUpdateFileContents({
+    let commit = await octokit.repos.createOrUpdateFileContents({
             owner: username,
             repo: "register",
             path: "domains/" + subdomain + ".json",
@@ -58,7 +58,7 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
                 email: email,
             },
     });
-    const pr = await octokit.pulls.create({
+    let pr = await octokit.pulls.create({
         owner: "is-a-dev",
         repo: "register",
         title: `BETA: Register ${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev`,
@@ -66,7 +66,7 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
         base: "main",
         body: `Added \`${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev\` using the site.`,
     });
-    const PrUrl = pr.data.html_url;
+    let PrUrl = pr.data.html_url;
     return { "PRURL": PrUrl };
     
   
