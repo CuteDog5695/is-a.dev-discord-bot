@@ -215,7 +215,7 @@ server.post("/api/register", upload.none(), async (req, res) => {
         return;
     }
     else {
-        res.status(202).res.send(result);
+        res.status(202).send(result);
         return;
     }
     //send response and status code
