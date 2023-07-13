@@ -259,6 +259,12 @@ server.get("/pr/merged/:pr", async function (req, res) {
     }
 });
 
+server.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 function keepAlive() {
     server.listen(3000, () => {
         console.log("Server is ready.");
