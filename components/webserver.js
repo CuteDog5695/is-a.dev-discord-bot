@@ -120,7 +120,7 @@ server.get("/api/check-domain", async (req, res) => {
 
 server.get("/api/count-domains", async (req, res) => {
     const result = await CountDomains();
-    res.send(result);
+    res.json(result);
 });
 
 
