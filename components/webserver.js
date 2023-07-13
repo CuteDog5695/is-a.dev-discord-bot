@@ -188,16 +188,15 @@ server.get("/api/fork", async (req, res) => {
 });
 
 server.post("/api/register", upload.none(), async (req, res) => {
-    const DisableRegister = await controller.findOne({ name: "DisableRegister" });
     //if (DisableRegister.status === "true") {
     //    res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
     //    return;
     //}
     const body = req.body.content;
-    const username = req.headers.username;  
-    const apikey = req.headers.apikey;
-    const email = req.headers.email;
-    const subdomain = req.headers.subdomain;
+    const username = body.username;
+    const apikey = body.apikey;
+    const email = body.email;
+    const subdomain = body.subdomain;
     if (!username || !apikey || !subdomain) {
         res.send("No username, apikey, or subdomain provided.");
         return;
