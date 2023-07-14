@@ -67,6 +67,18 @@ catch (e) {
 }
     
 try {
+    let existingPullRequests = await octokit.pulls.list({
+        owner: "is-a-dev",
+        repo: "register",
+        state: "open",
+        head: `${username}:main`,
+        base: "main",
+    });
+
+    if (existingPullRequests.data.length > 0) {
+        // Pull request already exists, return an error or handle it accordingly
+        return { "error": "A pull request for this domain already exists." };
+    }
     let pr = await octokit.pulls.create({
         owner: "is-a-dev",
         repo: "register",
