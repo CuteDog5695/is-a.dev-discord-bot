@@ -28,7 +28,9 @@ async function EditDomain(subdomain, username, email, apikey, records) {
            "username": "${username}",
            "email": "${email}"
         },
-        "record": ${extractedData}
+        "record": {
+              "${type}": "${value}",
+        }
     }
     `;
     
