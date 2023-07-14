@@ -1,49 +1,26 @@
 const { Octokit } = require("@octokit/rest");
-async function EditDomain(subdomain, type, username, email, apikey, recordString) {
+async function EditDomain(subdomain, username, email, apikey, records) {
     let file = await fetch(`https://api.github.com/repos/${username}/register/contents/domains/${subdomain}.json`)
         .then((res) => res.json())
         .catch((err) => {
             console.log(err);
         });
     let sha = file.sha;    
-    switch (type) {
-        case "A":
-            regexPattern = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
-            break;
-        case "CNAME":
-            regexPattern = /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$/;
-            break;
-        case "MX":
-            regexPattern = /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$/;
-            break;
-        case "TXT":
-            regexPattern = /^.*$/;
-            break;
-        case "URL":
-            regexPattern = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}(\/[a-zA-Z0-9-_.~:/?#[\]@!$&'()*+,;=%]*)?$/;
-            break;
-        default:
-            return { "error": "Invalid record type." };
-        
-    }
-    if (!regexPattern.test(recordString)) return { "error": "Invalid record string." };
     let octokit = new Octokit({
         auth: apikey,
     });
-    let data = recordString;
-    if (type === "A" || type === "MX") {
-        data = JSON.stringify(data.split(",").map((s) => s.trim()));
-    } else {
-        data = `"${data.trim()}"`;
-    }
+    let data = records;
+    const extractedData = data.reduce((result, { type, value }) => {
+        result[type] = value;
+        return result;
+      }, {});
+    
     content = `{
         "owner": {
            "username": "${username}",
            "email": "${email}"
         },
-        "record": {
-            "${type}": ${data.toLowerCase()}
-        }
+        "record": ${extractedData}
     }
     `;
     

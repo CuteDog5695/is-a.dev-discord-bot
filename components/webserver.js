@@ -244,18 +244,17 @@ server.get("/api/edit", upload.none(), async (req, res) => {
         res.send("No username, apikey, or subdomain provided.");
         return;
     }
-    const type = req.query.type;
-    const content = req.query.content;
-    const username = req.query.username;
-    const apikey = req.query.apikey;
-    const email = req.query.email;
-    const subdomain = req.query.subdomain;
+    let records = req.query.records;
+    let username = req.query.username;
+    let apikey = req.query.apikey;
+    let email = req.query.email;
+    let subdomain = req.query.subdomain;
     
     //res.status(500).send({"ERROR": "This endpoint is currently disabled."});
     //return;
     
 
-    const result = await EditDomain(subdomain, type, username, email, apikey, content);
+    const result = await EditDomain(subdomain, username, email, apikey, records);
     // if result json contains ERROR, send error
     if (result.error) {
         res.status(500).send(result);
