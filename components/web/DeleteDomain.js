@@ -1,12 +1,14 @@
 const { Octokit } = require("@octokit/rest");
 async function DeleteDomain(apikey, username, email, domain) {
+    let sha;
+    let file;
     try {
-        let file = await fetch(`https://api.github.com/repos/${username}/register/contents/domains/${domain}.json`)
+        file = await fetch(`https://api.github.com/repos/${username}/register/contents/domains/${domain}.json`)
         .then((res) => res.json())
         .catch((err) => {
             console.log(err);
         });
-        let sha = file.sha;
+        sha = file.sha;
     }
     catch (e) {
         console.log(e);
