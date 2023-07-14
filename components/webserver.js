@@ -334,6 +334,11 @@ server.get("/pr/merged/:pr", async function (req, res) {
 });
 
 
+server.all('*', (req, res) => {
+    res.redirect('https://manage.is-a.dev/');;
+  });
+    
+
 
 function keepAlive() {
     server.listen(3000, () => {
