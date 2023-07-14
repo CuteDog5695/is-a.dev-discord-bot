@@ -66,8 +66,7 @@ catch (e) {
         return { "error": "Error creating domain file." };
 }
     
-    if (commit.status != 201) return { "error": "Error creating domain file." };
-
+try {
     let pr = await octokit.pulls.create({
         owner: "is-a-dev",
         repo: "register",
@@ -76,9 +75,14 @@ catch (e) {
         base: "main",
         body: `Added \`${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev\` using the site.`,
     });
-    if (pr.status != 201) return { "error": "Error creating pull request." };
     let PrUrl = pr.data.html_url;
     return { "prurl": PrUrl };
+}
+catch (e) {
+    console.log(e);
+    return { "error": "Error creating pull request." };
+}
+    
     
   
 }
