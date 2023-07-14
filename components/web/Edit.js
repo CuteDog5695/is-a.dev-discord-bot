@@ -13,16 +13,25 @@ async function EditDomain(subdomain, username, email, apikey, records) {
     
     const extractedData = {};
     for (const { type, value } of records) {
+    if (extractedData[type]) {
+        if (Array.isArray(extractedData[type])) {
+        extractedData[type].push(value);
+        } else {
+        extractedData[type] = [extractedData[type], value];
+        }
+    } else {
         extractedData[type] = value;
+    }
     }
 
     content = `{
-        "owner": {
+    "owner": {
         "username": "${username}",
         "email": "${email}"
-        },
-        "record": ${JSON.stringify(extractedData)}
+    },
+    "record": ${JSON.stringify(extractedData)}
     }`;
+
     
     let record = Buffer.from(content).toString("base64");
     
