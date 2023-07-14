@@ -10,8 +10,17 @@ async function EditDomain(subdomain, username, email, apikey, records) {
         auth: apikey,
     });
     let data = records;
-    let thedata = JSON.parse(data);
-    console.log(thedata);
+    const parsedArray = JSON.parse(data);
+
+    for (let i = 0; i < parsedArray.length; i++) {
+        const obj = parsedArray[i];
+        const type = obj.type;
+        const value = obj.value;
+
+        console.log("Type:", type);
+        console.log("Value:", value);
+    }
+    
     
     
     content = `{
