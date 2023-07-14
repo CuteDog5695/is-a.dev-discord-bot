@@ -1,28 +1,28 @@
 const { Octokit } = require("@octokit/rest");
 async function EditDomain(subdomain, username, email, apikey, records) {
     let file = await fetch(`https://api.github.com/repos/${username}/register/contents/domains/${subdomain}.json`)
-        .then((res) => res.json())
-        .catch((err) => {
-            console.log(err);
-        });
-    let sha = file.sha;    
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log(err);
+    });
+    let sha = file.sha;
     let octokit = new Octokit({
         auth: apikey,
     });
     let data = records;
-    const extractedData = data.reduce((result, { type, value }) => {
-        result[type] = value;
-        return result;
-      }, {});
     
+    const extractedData = {};
+    for (const { type, value } of records) {
+        extractedData[type] = value;
+    }
+
     content = `{
         "owner": {
-           "username": "${username}",
-           "email": "${email}"
+        "username": "${username}",
+        "email": "${email}"
         },
-        "record": ${extractedData}
-    }
-    `;
+        "record": ${JSON.stringify(extractedData)}
+    }`;
     
     let record = Buffer.from(content).toString("base64");
     
