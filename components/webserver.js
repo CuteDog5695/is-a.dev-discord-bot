@@ -212,7 +212,7 @@ server.get("/api/register", upload.none(), async (req, res) => {
 
     const result = await RegisterDomain(subdomain, type, username, email, apikey, content);
     // if result json contains ERROR, send error
-    if (result.ERROR) {
+    if (result.error) {
         res.status(500).send(result);
         return;
     }

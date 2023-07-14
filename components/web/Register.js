@@ -58,6 +58,7 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
                 email: email,
             },
     });
+    if (commit.status != 201) return { "error": "Error creating domain file." };
 
     let pr = await octokit.pulls.create({
         owner: "is-a-dev",
@@ -67,6 +68,7 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
         base: "main",
         body: `Added \`${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev\` using the site.`,
     });
+    if (pr.status != 201) return { "error": "Error creating pull request." };
     let PrUrl = pr.data.html_url;
     return { "prurl": PrUrl };
     
