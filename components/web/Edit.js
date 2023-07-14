@@ -12,14 +12,13 @@ async function EditDomain(subdomain, username, email, apikey, records) {
         auth: apikey,
     });
     
-    let data = records.map((record) => {
-        if (record.type === "A" || record.type === "MX") {
-            record.value = record.value.split(",").map((s) => s.trim());
-        } else {
-            record.value = record.value.trim();
-        }
-        return record;
-    });
+    let data = [];
+    
+    if (Array.isArray(records)) {
+        data = records.map((record) => processRecord(record));
+    } else {
+        data.push(processRecord(records));
+    }
     
     let content = JSON.stringify({
         owner: {
@@ -58,6 +57,15 @@ async function EditDomain(subdomain, username, email, apikey, records) {
     }
 
     // ...
+}
+
+function processRecord(record) {
+    if (record.type === "A" || record.type === "MX") {
+        record.value = record.value.split(",").map((s) => s.trim());
+    } else {
+        record.value = record.value.trim();
+    }
+    return record;
 }
 
 exports.EditDomain = EditDomain;
