@@ -43,7 +43,8 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
     
     let record = Buffer.from(content).toString("base64");
     
-    let commit = await octokit.repos.createOrUpdateFileContents({
+    try {
+        let commit = await octokit.repos.createOrUpdateFileContents({
             owner: username,
             repo: "register",
             path: "domains/" + subdomain + ".json",
@@ -57,7 +58,14 @@ async function RegisterDomain(subdomain, type, username, email, apikey, recordSt
                 name: username,
                 email: email,
             },
-    });
+        });
+
+}
+catch (e) {
+        console.log(e);
+        return { "error": "Error creating domain file." };
+}
+    
     if (commit.status != 201) return { "error": "Error creating domain file." };
 
     let pr = await octokit.pulls.create({
