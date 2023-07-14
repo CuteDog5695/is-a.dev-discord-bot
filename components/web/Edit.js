@@ -31,6 +31,7 @@ async function EditDomain(subdomain, username, email, apikey, records) {
     },
     "record": ${JSON.stringify(extractedData)}
     }`;
+    console.log(content);
 
     
     let record = Buffer.from(content).toString("base64");
