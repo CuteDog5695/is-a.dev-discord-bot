@@ -1,38 +1,34 @@
 const { Octokit } = require("@octokit/rest");
+
 async function EditDomain(subdomain, username, email, apikey, records) {
     let file = await fetch(`https://api.github.com/repos/${username}/register/contents/domains/${subdomain}.json`)
-    .then((res) => res.json())
-    .catch((err) => {
-      console.log(err);
-    });
+        .then((res) => res.json())
+        .catch((err) => {
+            console.log(err);
+        });
     let sha = file.sha;
+    
     let octokit = new Octokit({
         auth: apikey,
     });
-    let data = records;
     
-    let extractedData = {};
-    for (const { type, value } of records) {
-    if (extractedData[type]) {
-        if (Array.isArray(extractedData[type])) {
-        extractedData[type].push(value);
+    let data = records.map((record) => {
+        if (record.type === "A" || record.type === "MX") {
+            record.value = record.value.split(",").map((s) => s.trim());
         } else {
-        extractedData[type] = [extractedData[type], value];
+            record.value = record.value.trim();
         }
-    } else {
-        extractedData[type] = value;
-    }
-    }
-
-    content = `{
-    "owner": {
-        "username": "${username}",
-        "email": "${email}"
-    },
-    "record": ${JSON.stringify(extractedData)}
-    }`;
+        return record;
+    });
+    
+    let content = JSON.stringify({
+        owner: {
+            username: username,
+            email: email,
+        },
+        record: data,
+    });
     console.log(content);
-
     
     let record = Buffer.from(content).toString("base64");
     
@@ -54,43 +50,14 @@ async function EditDomain(subdomain, username, email, apikey, records) {
             },
         });
 
-}
-catch (e) {
+        // ...
+
+    } catch (e) {
         console.log(e);
         return { "error": "Error creating domain file." };
-}
-    
-try {
-    let existingPullRequests = await octokit.pulls.list({
-        owner: "is-a-dev",
-        repo: "register",
-        state: "open",
-        head: `${username}:main`,
-        base: "main",
-    });
-
-    if (existingPullRequests.data.length > 0) {
-        // Pull request already exists, return an error or handle it accordingly
-        return { "error": "A pull request for this domain already exists." };
     }
-    let pr = await octokit.pulls.create({
-        owner: "is-a-dev",
-        repo: "register",
-        title: `BETA: Update ${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev`,
-        head: `${username}:main`,
-        base: "main",
-        body: `Updated \`${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev\` using the site.`,
-    });
-    let PrUrl = pr.data.html_url;
-    return { "prurl": PrUrl };
-}
-catch (e) {
-    console.log(e);
-    return { "error": "Error creating pull request." };
-}
-    
-    
-  
+
+    // ...
 }
 
 exports.EditDomain = EditDomain;
