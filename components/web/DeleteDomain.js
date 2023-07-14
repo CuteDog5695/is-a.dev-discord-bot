@@ -50,10 +50,10 @@ async function DeleteDomain(apikey, username, email, domain) {
         let pr = await octokit.pulls.create({
             owner: "is-a-dev",
             repo: "register",
-            title: `BETA: Delete ${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev`,
+            title: `BETA: Delete ${domain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev`,
             head: `${username}:main`,
             base: "main",
-            body: `Deleted \`${subdomain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev\` using the site.`,
+            body: `Deleted \`${domain.toLowerCase().replace(/\.[^/.]+$/, "")}.is-a.dev\` using the site.`,
         });
         let PrUrl = pr.data.html_url;
         return { "prurl": PrUrl };

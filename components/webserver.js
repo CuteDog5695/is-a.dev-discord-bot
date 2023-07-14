@@ -103,9 +103,15 @@ server.get("/api/domains", async (req, res) => {
         return;
     }
     if (domain) {
-        const domains = await DomainInfo(domain);
-        res.send(domains);
-        return;
+        let domains = await DomainInfo(domain);
+        if (domains.error) {
+            res.status(404).send(domains);
+            return;
+        }
+        else {
+            res.send(domains);
+            return;
+        }
     }
     if (username) {
         const domains = await ListDomains(username);

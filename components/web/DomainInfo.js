@@ -7,7 +7,7 @@ async function DomainInfo(domain){
     });
     console.log(response);
     if (response.status === 404) {
-        return `The domain ${domain}.is-a.dev is not registered!`;
+        return { "error": "Domain not found" };
     } else {
         const data = await response.json();
         const record = data.record;
