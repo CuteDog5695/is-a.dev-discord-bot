@@ -13,6 +13,7 @@ const { CountDomains } = require("./web/Count.js");
 const { DomainInfo } = require("./web/DomainInfo.js");
 const { WebFork } = require("./web/fork.js");
 const { RegisterDomain } = require("./web/Register.js");
+const { EditDomain } = require("./web/Edit.js");
 require("dotenv").config();
 const controller = require("../models/control.js");
 
@@ -211,6 +212,43 @@ server.get("/api/register", upload.none(), async (req, res) => {
     
 
     const result = await RegisterDomain(subdomain, type, username, email, apikey, content);
+    // if result json contains ERROR, send error
+    if (result.error) {
+        res.status(500).send(result);
+        return;
+    }
+    else {
+        res.status(202).send(result);
+        return;
+    }
+    //send response and status code
+    //
+    //res.send("body: " + JSON.stringify(body) + "\nusername: " + username + "\napikey: " + apikey + "\nemail: " + email + "\nsubdomain: " + subdomain);
+});
+
+
+server.get("/api/edit", upload.none(), async (req, res) => {
+    //if (DisableRegister.status === "true") {
+    //    res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
+    //    return;
+    //}
+    console.log('Got query:', req.query);
+    if (!req.query.username || !req.query.apikey || !req.query.subdomain) {
+        res.send("No username, apikey, or subdomain provided.");
+        return;
+    }
+    const type = req.query.type;
+    const content = req.query.content;
+    const username = req.query.username;
+    const apikey = req.query.apikey;
+    const email = req.query.email;
+    const subdomain = req.query.subdomain;
+    
+    //res.status(500).send({"ERROR": "This endpoint is currently disabled."});
+    //return;
+    
+
+    const result = await EditDomain(subdomain, type, username, email, apikey, content);
     // if result json contains ERROR, send error
     if (result.error) {
         res.status(500).send(result);
