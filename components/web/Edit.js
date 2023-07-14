@@ -11,11 +11,13 @@ async function EditDomain(subdomain, username, email, apikey, records) {
     });
     let data = records;
     const parsedArray = JSON.parse(data);
+    let content = "";
+    let value = "";
 
     for (let i = 0; i < parsedArray.length; i++) {
         const obj = parsedArray[i];
-        const type = obj.type;
-        const value = obj.value;
+         type = obj.type;
+         value = obj.value;
 
         console.log("Type:", type);
         console.log("Value:", value);
