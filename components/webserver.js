@@ -14,6 +14,7 @@ const { DomainInfo } = require("./web/DomainInfo.js");
 const { WebFork } = require("./web/fork.js");
 const { RegisterDomain } = require("./web/Register.js");
 const { EditDomain } = require("./web/Edit.js");
+const { DeleteDomain } = require("./web/DeleteDomain.js");
 require("dotenv").config();
 const controller = require("../models/control.js");
 
@@ -261,6 +262,33 @@ server.get("/api/edit", upload.none(), async (req, res) => {
     //send response and status code
     //
     //res.send("body: " + JSON.stringify(body) + "\nusername: " + username + "\napikey: " + apikey + "\nemail: " + email + "\nsubdomain: " + subdomain);
+});
+
+server.get("/api/delete", upload.none(), async (req, res) => {
+    //if (DisableRegister.status === "true") {
+    //    res.status(500).json({ "ERROR": "This endpoint is currently disabled." });
+    //    return;
+    //}
+    console.log('Got query:', req.query);
+    if (!req.query.username || !req.query.apikey || !req.query.subdomain) {
+        res.send("No username, apikey, or subdomain provided.");
+        return;
+    }
+    let username = req.query.username;
+    let apikey = req.query.apikey;
+    let email = req.query.email;
+    let subdomain = req.query.subdomain;
+
+    let result = await DeleteDomain(apikey, username, email, subdomain);
+    // if result json contains ERROR, send error
+    if (result.error) {
+        res.status(500).send(result);
+        return;
+    }
+    else {
+        res.status(202).send(result);
+        return;
+    }
 });
 
 // Notify API
