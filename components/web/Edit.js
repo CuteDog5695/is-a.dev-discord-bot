@@ -39,7 +39,7 @@ async function EditDomain(subdomain, username, email, apikey, records) {
         let commit = await octokit.repos.createOrUpdateFileContents({
             owner: username,
             repo: "register",
-            path: "domains/" + subdomain + ".json",
+            path: `domains/${subdomain}.json`,
             message: `feat(domain): ${subdomain}.is-a.dev`,
             content: record,
             sha: sha,
