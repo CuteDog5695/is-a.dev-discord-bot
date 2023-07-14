@@ -11,7 +11,7 @@ async function EditDomain(subdomain, username, email, apikey, records) {
     });
     let data = records;
     
-    const extractedData = {};
+    let extractedData = {};
     for (const { type, value } of records) {
     if (extractedData[type]) {
         if (Array.isArray(extractedData[type])) {
