@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
     {
         prid: String,
-        merged: Boolean,
-    },
+        merged: Boolean,    },
     { collection: "prdata" }
 );
 

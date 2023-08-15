@@ -134,7 +134,8 @@ mongoose
     });
 
 //SMTP(); off for now
-keepAlive();
+keepAlive(client);
 
 // Log in to Discord with your client's token
 client.login(token);
+

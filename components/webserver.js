@@ -2,10 +2,10 @@ const express = require("express");
 var cors = require('cors')
 const multer = require("multer");
 const fetch = require("node-fetch");
-const { WebhookClient } = require("discord.js");
 const { Octokit } = require("@octokit/rest");
 const User = require("../models/user.js");
 const Prdata = require("../models/prdata.js");
+const Activation = require("../models/activation.js");
 const prdata = require("../models/prdata.js");
 const { ListDomains } = require("./web/listDomains.js");
 const { CheckDomain } = require("./web/CheckDomain.js");
@@ -153,29 +153,9 @@ server.post ('/api/email', upload.none(), (req, res) => {
         console.log("No email address found.");
     }
     // send to discord webhook
-    const webhookClient = new WebhookClient({ url: process.env.webhook });
-    const embed = {
-      "type": "rich",
-      "title": `Email from: ${body.from}`,
-      "description": `Subject: ${body.subject}`,
-      "color": 0x00FFFF,
-      "fields": [
-        {
-          "name": `Message`,
-          "value": `${body.text}`
-        },
-        {
-            "name": `Reply command`,
-            "value": `/send-email ${emailAddress}`
-        }
-      ]
-    }
-  
-    webhookClient.send({
-      username: 'Is-a.dev',
-      avatarURL: 'https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png',
-      embeds: [embed],
-    });
+    // send to discord channel #email without webhook (for now)
+    const channel = client.channels.cache.get("1134982019345035354");
+    channel.send(`**From:** ${body.from}\n**To:** ${body.to}\n**Subject:** ${body.subject}\n**Text:** ${body.text}`);
   
   
   
@@ -296,6 +276,27 @@ server.get("/api/delete", upload.none(), async (req, res) => {
     }
 });
 
+server.get("/api/preregister", async function (req, res) {
+    let pr = req.query.pr;
+    let domain = req.query.domain;
+    let activation_code = req.query.activation_code;
+    let token = req.query.token;
+    if (!pr || !domain || !activation_code || !token) {
+        res.send("No pr, domain, activation_code, or token provided.");
+        return;
+    }
+    if (token !== process.env.WEBHOST_TOKEN) {
+        res.send("Invalid token.");
+        return;
+    }
+    await Activation.create({
+        prid: pr,
+        domain: domain,
+        activation_code: activation_code,
+    });
+    res.send("OK");
+});
+
 // Notify API
 server.get("/pr/merged/:pr", async function (req, res) {
     var pr = req.params.pr;
@@ -307,6 +308,7 @@ server.get("/pr/merged/:pr", async function (req, res) {
     });
 
     const PRDATA = await Prdata.findOne({ prid: pr });
+    const Activate = await Activation.findOne({ prid: pr });
 
     if (!PRDATA) {
         await fetch("https://raw.githubusercontent.com/is-a-dev/team-docs/main/pr-merged.md")
@@ -321,6 +323,12 @@ server.get("/pr/merged/:pr", async function (req, res) {
                     body: data,
                 });
             });
+            if (Activate) {
+                let activation_code = Activate.activation_code;
+                let domain = Activate.domain;
+                await fetch(`https://hosts.is-a.dev/api/activate?domain=${domain}&activation_code=${activation_code}`)
+            }
+
 
         await prdata.create({
             prid: pr,
@@ -340,7 +348,7 @@ server.all('*', (req, res) => {
     
 
 
-function keepAlive() {
+function keepAlive(client) {
     server.listen(3000, () => {
         console.log("Server is ready.");
     });
