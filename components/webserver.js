@@ -326,7 +326,7 @@ server.get("/pr/merged/:pr", async function (req, res) {
             if (Activate) {
                 let activation_code = Activate.activation_code;
                 let domain = Activate.domain;
-                await fetch(`https://hosts.is-a.dev/api/activate?domain=${domain}&activation_code=${activation_code}`)
+                await fetch(`https://hosts.is-a.dev/api/activate?domain=${domain}&activation_code=${activation_code}&NOTIFY_TOKEN=${process.env.WEBHOST_TOKEN}`)
             }
 
 
