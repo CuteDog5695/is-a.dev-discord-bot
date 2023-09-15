@@ -4,7 +4,7 @@ const { Octokit } = require("@octokit/rest");
 require("dotenv").config();
 
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-async function deletePR(interaction, subdomain) {
+async function DeletePR(interaction, subdomain) {
     const id = interaction.user.id;
     const githubUser = await User.findOne({ userid: id });
     const token = githubUser.gittoken;
@@ -31,4 +31,4 @@ async function deletePR(interaction, subdomain) {
     await interaction.editReply({ components: [PrBtn] });
 }
 
-exports.deletePR = deletePR;
+module.exports = { DeletePR };
