@@ -31,8 +31,8 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
 
     const ifexistsurl = `https://raw.githubusercontent.com/${username}/register/main/domains/${subdomain}.json`;
     const ifexists = await fetch(ifexistsurl);
-    console.log(ifexistsurl);
-    console.log(ifexists.status);
+    //console.log(ifexistsurl);
+    //console.log(ifexists.status);
 
     if (ifexists.status === 200) {
         const ErrorEmbed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).setURL(ifexistsurl).setDescription(`This domain already exists!`).addFields({ name: "Forked", value: "✅", inline: true }, { name: "Commited", value: "❌", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setColor("#FF0000").setFooter({
@@ -75,7 +75,7 @@ async function CommitChanges(id, subdomain, type, data, interaction) {
         },
     });
 
-    const embed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).addFields({ name: "Forked", value: "✅", inline: true }, { name: "Commited", value: "✅", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setDescription(`Your domain has been generated! Please wait for a staff member to review your PR.`).setColor("#00b0f4").setFooter({
+    const embed = new EmbedBuilder().setTitle(`Registering ${subdomain}.is-a.dev`).addFields({ name: "Forked", value: "✅", inline: true }, { name: "Commited", value: "✅", inline: true }, { name: "PR Opened", value: "❌", inline: true }).setDescription(`Pushing Domain.`).setColor("#00b0f4").setFooter({
         text: "is-a.dev",
         icon_url: "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
     });
