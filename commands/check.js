@@ -17,7 +17,7 @@ module.exports = {
         if (!guild) return await interaction.reply({ content: "This guild is not registered with Domain Register Bot. Please contact the guild owner to register.", ephemeral: true });
 
 
-        if (subdomain.length <= 2 || subdomain.length > 64) return await interaction.reply("The subdomain length must be between 3 and 64 characters.");
+        if (subdomain.length < 2 || subdomain.length > 64) return await interaction.reply("The subdomain length must be between 2 and 64 characters.");
 
         try {
             const response = await fetch(`https://api.github.com/repos/is-a-dev/register/contents/domains/${subdomain}.json`, {

@@ -23,7 +23,7 @@ module.exports = {
         }
 
 
-        if (subdomain.length <= 2 || subdomain.length > 64) return await interaction.reply("The subdomain length must be between 3 and 64 characters.");
+        if (subdomain.length < 2 || subdomain.length > 64) return await interaction.reply("The subdomain length must be between 2 and 64 characters.");
 
         try {
             const response = await fetch(`https://hosts.is-a.dev/api/activate?domain=${subdomain}&NOTIFY_TOKEN=${process.env.WEBHOST_TOKEN}`, {
