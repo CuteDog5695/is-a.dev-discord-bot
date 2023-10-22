@@ -9,7 +9,7 @@ const newDBUrl = process.env.NEWMONGO_DB;
 
 async function migrateUsers() {
   try {
-    await mongoose.connect(oldDBUrl, { useNewUrlParser: true });
+    await mongoose.connect(oldDBUrl, { useNewUrlParser: true, useUnifiedTopology: true, });
     console.log('Connected to old MongoDB');
 
     const usersToMigrate = await UserOld.find({}).exec();
