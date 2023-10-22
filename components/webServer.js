@@ -162,7 +162,7 @@ function keepAlive(client) {
                 });
             
 
-            await prdata.create({
+            await Prdata.create({
                 prid: pr,
                 merged: true,
             });
