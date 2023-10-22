@@ -15,6 +15,7 @@ const Sentry = require("@sentry/node");
 const keepAlive = require("./components/webServer.js");
 const HandleSelectMenu = require("./events/SelectEvent.js");
 const HandleButtonEvent = require("./events/ButtonEvent.js");
+const HandleModalEvent = require("./events/modal.js");
 require("dotenv").config();
 
 Sentry.init({
@@ -62,6 +63,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
     if (interaction.isButton()) {
         HandleButtonEvent(interaction);
+        return;
+    }
+    if (interaction.isModalSubmit()) {
+        HandleModalEvent(interaction);
         return;
     }
 
