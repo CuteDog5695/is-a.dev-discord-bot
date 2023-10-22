@@ -1,24 +1,55 @@
-const { SlashCommandBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
+const {
+    SlashCommandBuilder,
+    EmbedBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    ActionRowBuilder,
+} = require("discord.js");
 
-const auth = require("../components/auth.js");
-const User = require("../models/user.js");
-const { GuildID } = require("../services/guildId.js");
+const loading = require("../components/loading");
+
+const auth = require("../models/auth");
+
+const domain = process.env.DOMAIN;
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("login").setDescription("Login with GitHub."),
+    data: new SlashCommandBuilder()
+        .setName("login")
+        .setDescription("Login with GitHub"),
     async execute(interaction) {
-        const guildId = interaction.guildId;
-        // get the guild object from the guild id
-        const guild = GuildID(guildId);
-        // if the guild object is false, then the guild is not registered
-        if (!guild) return await interaction.reply({ content: "This guild is not registered with Domain Register Bot. Please contact the guild owner to register.", ephemeral: true });
-        if (await User.findOne({ userid: interaction.user.id })) return await interaction.reply({ content: "You are already logged in!", ephemeral: true });
+        // Send loading embed
+        await loading(interaction, true);
+        // check if user is already logged in
+        const data = await auth.findOne({ _id: interaction.user.id });
+        if (data) {
+            const embed = new EmbedBuilder()
+                .setDescription("You are already logged in!")
+                .setColor("#0096ff");
 
-        const authUrl = auth.getAccessToken(interaction.user.id);
+            await interaction.editReply({ embeds: [embed] });
+            return;
+        }
+        // generate uuid string
+        const uuid = require("crypto").randomUUID();
+        // generate url
+        const url = `${domain}/login?uuid=${uuid}`;
 
-        // reply with login button using ButtonBuilder
-        const loginBtn = new ActionRowBuilder().addComponents(new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel("Login with GitHub").setURL(authUrl));
+        await new auth({
+            _id: interaction.user.id,
+            uuid: uuid,
+            loggedIn: false,
+        }).save();
+        // it needs to be in a row
+        const embed = new EmbedBuilder()
+            .setColor("#0096ff")
+            .setDescription("Click the button below to login with GitHub.");
+        const row = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+                .setStyle(ButtonStyle.Link)
+                .setLabel("Login")
+                .setURL(url),
+        );
 
-        await interaction.reply({ components: [loginBtn], ephemeral: true });
+        await interaction.editReply({ embeds: [embed], components: [row] });
     },
 };

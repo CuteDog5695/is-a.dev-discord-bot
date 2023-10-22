@@ -1,26 +1,54 @@
-const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
-const loading = require("../components/loading");
-const user = require("../models/user");
-const staff = require("../models/staff");
+const {
+    SlashCommandBuilder,
+    EmbedBuilder,
+    ButtonBuilder,
+    ActionRowBuilder,
+    ButtonStyle,
+} = require("discord.js");
+const fetch = require("node-fetch");
+const auth = require("../components/auth.js");
+const User = require("../models/user.js");
+const { GuildID } = require("../services/guildId.js");
+const Maintainers = require("../models/maintainers.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("domains")
-        .setDescription("View and manage your domains."),
+        .setDescription("Lists all domains registered by you!"),
     async execute(interaction) {
-        await loading(interaction, true);
-        const data = await user.findOne({ _id: interaction.user.id });
-        if (!data) {
-            const embed = new EmbedBuilder()
-                .setDescription("You are not logged in!")
-                .setColor("#0096ff");
-            return await interaction.editReply({ embeds: [embed] });
-        }
-        const username = data.githubUsername;
-        found = false;
-        results = [];
+        const guildId = interaction.guildId;
+        // get the guild object from the guild id
+        const guild = GuildID(guildId);
+        console.log(guild);
+        // if the guild object is false, then the guild is not registereds
+        if (!guild)
+            return await interaction.reply({
+                content:
+                    "This guild is not registered with Domain Register Bot. Please contact the guild owner to register.",
+                ephemeral: true,
+            });
+        const githubUser = await User.findOne({ userid: interaction.user.id });
+        const maintainers = await Maintainers.findOne({
+            userid: interaction.user.id,
+        });
+
+        const authUrl = auth.getAccessToken(interaction.user.id);
+        const loginBtn = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+                .setStyle(ButtonStyle.Link)
+                .setLabel("Login with GitHub")
+                .setURL(authUrl),
+        );
+        // add text reply if user is not logged in. along with login button
+        if (!githubUser)
+            return await interaction.reply({
+                content: `Please login first`,
+                components: [loginBtn],
+                ephemeral: true,
+            });
+        let found = false;
+        let results = [];
         let staffresults = [];
-        const maintainers = await staff.findOne({ _id: interaction.user.id });
         if (maintainers) {
             const maintainer = "is-a-dev";
 
@@ -37,6 +65,9 @@ module.exports = {
                     }
                 });
         }
+
+        const username = githubUser.githubid;
+
         fetch("https://raw-api.is-a.dev")
             .then((response) => response.json())
             .then(async (data) => {
@@ -66,19 +97,7 @@ module.exports = {
                                     "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
                             });
 
-                        const deleteDomain = new ButtonBuilder()
-                            .setStyle(ButtonStyle.Danger)
-                            .setLabel("Delete a Domain")
-                            .setCustomId("deleteDomain");
-                            
-                        const registerDomain = new ButtonBuilder()
-                            .setStyle(ButtonStyle.Success)
-                            .setLabel("Register a Domain")
-                            .setCustomId("registerDomain");
-                            
-                        const row = new ActionRowBuilder().addComponents(deleteDomain, registerDomain);    
-
-                        await interaction.editReply({ embeds: [embed], components: [row] });
+                        await interaction.reply({ embeds: [embed] });
                     } else {
                         const embed = new EmbedBuilder()
                             .setTitle("Your Domains")
@@ -90,23 +109,10 @@ module.exports = {
                                     "https://raw.githubusercontent.com/is-a-dev/register/main/media/logo.png",
                             });
 
-                            const deleteDomain = new ButtonBuilder()
-                            .setStyle(ButtonStyle.Danger)
-                            .setLabel("Delete a Domain")
-                            .setCustomId("deleteDomain");
-                            
-                        const registerDomain = new ButtonBuilder()
-                            .setStyle(ButtonStyle.Success)
-                            .setLabel("Register a Domain")
-                            .setCustomId("registerDomain");
-                            
-                        const row = new ActionRowBuilder().addComponents(deleteDomain, registerDomain);    
-
-                            
-                        await interaction.editReply({ embeds: [embed], components: [row] });
+                        await interaction.reply({ embeds: [embed] });
                     }
                 } else {
-                    await interaction.editReply("You don't own any domains.");
+                    await interaction.reply("You don't own any domains.");
                 }
             });
     },

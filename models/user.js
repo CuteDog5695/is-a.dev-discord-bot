@@ -1,15 +1,10 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
-    {
-        userid: String,
-        githubid: String,
-        email: String,
-        gittoken: String,
-        betatester: Boolean,
-        maintainer: Boolean,
-    },
-    { collection: "userdata" }
-);
+const UserSchema = new mongoose.Schema({
+    _id: String, // Discord ID
+    githubUsername: String, // GitHub username
+    githubAccessToken: String, // GitHub access token
+    email: String, // Email
+});
 
-module.exports = mongoose.model("userdata", userSchema);
+module.exports = mongoose.model("user", UserSchema, "user");

@@ -11,10 +11,18 @@ const {
 } = require("discord.js");
 const mongoose = require("mongoose");
 const Sentry = require("@sentry/node");
-const keepAlive = require("./components/webServer.js");
-const HandleSelectMenu = require("./events/SelectEvent.js");
+const keepAlive = require("./components/webserver.js");
+const { ForwardMailGen } = require("./templates/forwardmail/gen.js");
+const { EmailGithubGen } = require("./templates/forwardmail-github/gen.js");
+const { ReplitGen } = require("./templates/replit/gen.js");
+const { HashnodeGen } = require("./templates/hashnode/gen.js");
+const { adminSendEmails } = require("./components/adminSendEmails.js");
+const { DeleteDomain } = require("./components/delete.js");
+const { EditModal } = require("./components/Edit/modal.js");
+
 require("dotenv").config();
 
+// Sentry
 Sentry.init({
     dsn: "https://2854c55af6ab42ffb6f840091e3b235c@o575799.ingest.sentry.io/4505311662309376",
 
@@ -25,8 +33,8 @@ Sentry.init({
 });
 
 const mongoDB = process.env.MONGO_DB;
+
 const token = process.env.DISCORD_TOKEN;
-const status = process.env.STATUS;
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -52,18 +60,44 @@ for (const file of commandFiles) {
 }
 
 client.on(Events.InteractionCreate, async (interaction) => {
-    const command = interaction.client.commands.get(interaction.commandName);
-    console.log(interaction.commandName);
-    if (interaction.isStringSelectMenu()) {
-        HandleSelectMenu(interaction);
-        return;
+    //if (!interaction.isChatInputCommand()) return;
+    if (interaction.customId === "feedback") {
+        // Get the values from the interaction
+        const improve = interaction.fields.getTextInputValue("improve");
+        const suggest = interaction.fields.getTextInputValue("suggest");
+        const username = interaction.user.username;
+
+        // Send the values to the channel #feedback
+        const channel = interaction.guild.channels.cache.find(
+            (channel) => channel.name === "bot-feedback",
+        );
+        const embed = new EmbedBuilder()
+            .setTitle("Feedback")
+            .setDescription(`Improvements: ${improve}\nSuggestions: ${suggest}`)
+            .setColor("#00FF00")
+            .setFooter({ text: `Feedback from ${username}` })
+            .setTimestamp();
+        channel.send({ embeds: [embed] });
+        // Send a reply to the user
+        await interaction.reply({
+            content: "Your submission was received successfully!",
+        });
     }
 
-    if (!command) {
-        console.error(
-            `No command matching ${interaction.commandName} was found.`,
-        );
-        return;
+    if (interaction.customId === "emailforward") {
+        ForwardMailGen(interaction);
+    }
+    if (interaction.customId === "EmailGithub") {
+        EmailGithubGen(interaction);
+    }
+    if (interaction.customId === "Replit") {
+        ReplitGen(interaction);
+    }
+    if (interaction.customId === "hashnode") {
+        HashnodeGen(interaction);
+    }
+    if (interaction.customId === "sendemail") {
+        adminSendEmails(interaction);
     }
     if (
         interaction.user.id !== "598245488977903688" &&
@@ -75,8 +109,23 @@ client.on(Events.InteractionCreate, async (interaction) => {
         });
         return;
     }
-    
 
+    if (interaction.customId === "delete") {
+        DeleteDomain(interaction);
+    }
+    if (interaction.customId === "edit") {
+        EditModal(interaction);
+    }
+
+    const command = interaction.client.commands.get(interaction.commandName);
+    console.log(interaction.commandName);
+
+    if (!command) {
+        console.error(
+            `No command matching ${interaction.commandName} was found.`,
+        );
+        return;
+    }
 
     try {
         await command.execute(interaction);
@@ -96,9 +145,13 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
 });
 
+// When the client is ready, run this code (only once)
+// We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, (c) => {
     client.user.setPresence({
-        activities: [{ name: status, type: ActivityType.Custom }],
+        activities: [
+            { name: `Registering Subdomains`, type: ActivityType.Watching },
+        ],
         status: "online",
     });
 
@@ -109,7 +162,7 @@ mongoose
     .connect(mongoDB, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        dbName: "is-a-dev-beta",
+        dbName: "is-a-dev",
     })
     .then(() => {
         console.log("Connected to the database");
@@ -118,5 +171,8 @@ mongoose
         console.error("Error connecting to the database:", error);
     });
 
-client.login(token);
+//SMTP(); off for now
 keepAlive(client);
+
+// Log in to Discord with your client's token
+client.login(token);

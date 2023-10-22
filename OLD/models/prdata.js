@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const prSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
     {
         prid: String,
         merged: Boolean,
@@ -8,4 +8,4 @@ const prSchema = new mongoose.Schema(
     { collection: "prdata" },
 );
 
-module.exports = mongoose.model("prdata", prSchema);
+module.exports = mongoose.model("prdata", userSchema);
