@@ -14,6 +14,7 @@ const mongoose = require("mongoose");
 const Sentry = require("@sentry/node");
 const keepAlive = require("./components/webServer.js");
 const HandleSelectMenu = require("./events/SelectEvent.js");
+const HandleButtonEvent = require("./events/ButtonEvent.js");
 require("dotenv").config();
 
 Sentry.init({
@@ -57,6 +58,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
     console.log(interaction.commandName);
     if (interaction.isStringSelectMenu()) {
         HandleSelectMenu(interaction);
+        return;
+    }
+    if (interaction.isButton()) {
+        HandleButtonEvent(interaction);
         return;
     }
 
