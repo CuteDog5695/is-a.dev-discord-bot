@@ -3,6 +3,10 @@ const { EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowB
 module.exports = async function (interaction) {
     await Loading(interaction, true);
     const subdomain = interaction.fields.getTextInputValue("DomainCheck");
+    // remove .is-a.dev if it exists
+    if (subdomain.endsWith(".is-a.dev")) {
+        subdomain = subdomain.slice(0, -8);
+    }
     const response = await fetch(
         `https://api.github.com/repos/is-a-dev/register/contents/domains/${subdomain}.json`,
         {

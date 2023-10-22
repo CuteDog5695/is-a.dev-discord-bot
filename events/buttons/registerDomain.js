@@ -7,7 +7,7 @@ module.exports = async function (interaction) {
         .setCustomId('DomainCheck')
         .setPlaceholder('Enter a subdomain')
         .setMinLength(3)
-        .setMaxLength(100)
+        .setMaxLength(17)
         .setRequired(true)
         .setLabel('Enter the subdomain you want to register')
         .setStyle("Short");
