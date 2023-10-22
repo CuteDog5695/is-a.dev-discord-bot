@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const staff = require("./models/staff.js");
 
 const {
     Client,
@@ -65,9 +66,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         );
         return;
     }
-    if (
-        interaction.user.id !== "598245488977903688" &&
-        interaction.user.id !== "853158265466257448"
+    if (await staff.findOne({ _id: interaction.user.id })
     ) {
         await interaction.reply({
             content: "You are not authorized to use this command!",
