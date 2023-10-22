@@ -23,6 +23,10 @@ module.exports = {
 
             await interaction.editReply({ embeds: [embed] });
         } else {
+            const user = await user.findOne({ _id: interaction.user.id });
+            if (user) {
+                await user.deleteOne({ _id: interaction.user.id });
+            }
             const embed = new EmbedBuilder()
                 .setDescription("You are not logged in!")
                 .setColor("#0096ff");

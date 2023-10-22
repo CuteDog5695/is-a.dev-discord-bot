@@ -34,14 +34,14 @@ module.exports = async function (interaction) {
         .setDescription('This is the information you have entered. Please confirm that it is correct. \n\n' + `**Domain:** ${domain}.is-a.dev \n**Type:** ${type} \n**Content:** ${content}`)
         .setColor('#0096ff')
     const confirm = new ButtonBuilder()
-        .setCustomId(`confirm-${domain}`)
+        .setCustomId(`confirm-d-${domain}-t-${dtype}-c-${content}`)
         .setLabel("Confirm")
         .setStyle(ButtonStyle.Primary);
     const cancel = new ButtonBuilder()
-        .setCustomId(`cancel-${domain}`)
+        .setCustomId(`cancel`)
         .setLabel("Cancel")
         .setStyle(ButtonStyle.Primary);
-    const row = new ActionRowBuilder().addComponents(confirm, cancel);
+    const row = new ActionRowBuilder().addComponents(confirm);
     await interaction.editReply({
         components: [row],
         ephemeral: true,
