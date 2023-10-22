@@ -66,7 +66,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         );
         return;
     }
-    if (await staff.findOne({ _id: interaction.user.id })
+    if (!await staff.findOne({ _id: interaction.user.id })
     ) {
         await interaction.reply({
             content: "You are not authorized to use this command!",
