@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder,EmbedBuilder } = require("discord.js");
 const staff = require("../models/staff");
 const Loading = require("../components/loading");
 
