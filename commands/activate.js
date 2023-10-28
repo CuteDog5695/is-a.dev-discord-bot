@@ -43,11 +43,11 @@ module.exports = {
             );
 
             if (response.status === 200) {
-                await interaction.reply(
+                await interaction.editReply(
                     `${subdomain}.is-a.dev has been activated!`,
                 );
             } else {
-                await interaction.reply(
+                await interaction.editReply(
                     `Dam something went wrong. The server responded with ${response.status} speak to andrew or Danny`,
                 );
             }
@@ -56,7 +56,7 @@ module.exports = {
                 "Error occurred while checking domain availability:",
                 error,
             );
-            await interaction.reply({
+            await interaction.editReply({
                 content:
                     "An error occurred while checking the domain activation. Please try again later.",
                 ephemeral: true,
