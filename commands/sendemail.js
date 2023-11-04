@@ -13,7 +13,7 @@ module.exports = {
         .setName("send-email")
         .setDescription("Maintainers send emails!"),
     async execute(interaction) {
-        await Loading(interaction, ephemeral);
+        await Loading(interaction, true);
 
         if (!(await staff.findOne({ _id: interaction.user.id }))) {
             const embed = new EmbedBuilder() 
