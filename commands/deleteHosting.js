@@ -45,8 +45,7 @@ module.exports = {
             if (response.status === 200) {
                 const json = await response.json();
                 const embed = new EmbedBuilder()
-                    .setDescription("Hosting data deleted! Export link is valid for a week.")
-
+                    .setDescription(`Deleted ${subdomain}.is-a.dev hosting data. Export link is valid till <t:${parseInt(json.expiryDate / 1000)}:R>`) 
                 const button = new ButtonBuilder()
                     .setStyle(ButtonStyle.Link)
                     .setLabel("Export")
