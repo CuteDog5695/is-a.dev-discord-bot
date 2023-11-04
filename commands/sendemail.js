@@ -4,6 +4,7 @@ const {
     ModalBuilder,
     TextInputBuilder,
     TextInputStyle,
+        
 } = require("discord.js");
 const staff = require("../models/staff");
 const Loading = require("../components/loading");
@@ -55,6 +56,7 @@ module.exports = {
         modal.addComponents(firstActionRow, secondActionRow, thirdActionRow);
 
         // Show the modal to the user
+        await interaction.deferReply();
         await interaction.showModal(modal);
     },
 };
