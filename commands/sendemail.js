@@ -30,14 +30,12 @@ module.exports = {
             .setCustomId("email")
             // The label is the prompt the user sees for this input
             .setLabel("To email?")
-            .setValue(emailAddress)
             // Short means only a single line of text
             .setStyle(TextInputStyle.Short);
 
         const subject = new TextInputBuilder()
             .setCustomId("subject")
             .setLabel("What is the email subject?")
-            .setValue(emailSubject)
             // Paragraph means multiple lines of text.
             .setStyle(TextInputStyle.Short);
 
