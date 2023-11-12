@@ -29,11 +29,11 @@ module.exports = async function (interaction) {
         .then(async (response) => {
           console.log(response[0].statusCode);
           console.log(response[0].headers);
-          await interaction.reply({ content: `The following has been sent\n\n${message}`, ephemeral: false });
+          await interaction.editReply({ content: `The following has been sent\n\n${message}`, ephemeral: false });
         })
         .catch(async (error) => {
           console.error(error);
-          await interaction.reply({ content: "Email failed to send!", ephemeral: false });
+          await interaction.editReply({ content: "Email failed to send!", ephemeral: false });
         });
       return;  
 }
