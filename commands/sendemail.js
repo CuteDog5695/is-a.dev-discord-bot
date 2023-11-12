@@ -14,8 +14,6 @@ module.exports = {
         .setName("send-email")
         .setDescription("Maintainers send emails!"),
     async execute(interaction) {
-        await Loading(interaction, true);
-
         if (!(await staff.findOne({ _id: interaction.user.id }))) {
             const embed = new EmbedBuilder() 
                 .setDescription("Only staff can use this command!")
@@ -56,7 +54,6 @@ module.exports = {
         modal.addComponents(firstActionRow, secondActionRow, thirdActionRow);
 
         // Show the modal to the user
-        await interaction.deferReply();
         await interaction.showModal(modal);
     },
 };
