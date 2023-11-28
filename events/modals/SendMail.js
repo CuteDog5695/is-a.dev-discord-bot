@@ -22,7 +22,10 @@ module.exports = async function (interaction) {
         to, // Change to your recipient
         from, // Change to your verified sender
         subject: subject,
-        text: message,
+        templateId: 'd-d69e1a5daf3f4fb9a3028dd65957de18',
+        dynamic_template_data: {
+            message: message
+        },
         headers: {
           "List-Unsubscribe": `<mailto:unsub@maintainers.is-a.dev?subject=Unsubscribe&body=Unsubscribe%20me%20from%20all%20emails%20from%20is-a.dev%20please.>`
         }
