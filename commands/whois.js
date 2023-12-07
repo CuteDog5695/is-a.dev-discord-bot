@@ -137,7 +137,7 @@ module.exports = {
 
 
                 const webButton = new ButtonBuilder()
-                    .setStyle(ButtonStyle.LINK)
+                    .setStyle(ButtonStyle.Link)
                     .setLabel("Manage")
                     .setURL(web);
 
