@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
 const fetch = require("node-fetch");
 const staff = require("../models/staff");
 const Loading = require("../components/loading");
@@ -49,6 +49,8 @@ module.exports = {
                     },
                 },
             );
+
+            let web = `https://manage.is-a.dev/maintainers/${domain}`
 
             if (response.status === 404) {
                 const sadEmbed = new EmbedBuilder()
@@ -133,7 +135,15 @@ module.exports = {
                     },
                 };
 
-                await interaction.editReply({ embeds: [embed], ephemeral: ephemeral });
+
+                const webButton = new ButtonBuilder()
+                    .setStyle(ButtonStyle.LINK)
+                    .setLabel("Manage")
+                    .setURL(web);
+
+                const row = new ActionRowBuilder().addComponents(webButton);
+
+                await interaction.editReply({ embeds: [embed], ephemeral: ephemeral, components: [row] });
             }
         } catch (error) {
             console.error("Error performing whois lookup:", error);
