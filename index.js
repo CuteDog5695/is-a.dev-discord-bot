@@ -77,7 +77,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
 
     try {
-        console.log(`${interaction.user.tag} (${interaction.user.id}): /${interaction.commandName} ${interaction.options.data.map((option: any) => option.value ? `${option.name}:${option.value}` : option.name).join(" ")}`);
+        console.log(`${interaction.user.tag} (${interaction.user.id}): /${interaction.commandName} ${interaction.options.data.map((option) => option.value ? `${option.name}:${option.value}` : option.name).join(" ")}`);
 
         await command.execute(interaction);
     } catch (error) {
