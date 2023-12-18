@@ -56,7 +56,6 @@ for (const file of commandFiles) {
 
 client.on(Events.InteractionCreate, async (interaction) => {
     const command = interaction.client.commands.get(interaction.commandName);
-    console.log(interaction.commandName);
     if (interaction.isStringSelectMenu()) {
         HandleSelectMenu(interaction);
         return;
@@ -76,11 +75,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
         );
         return;
     }
-    
-    
-
 
     try {
+        console.log(`${interaction.user.tag} (${interaction.user.id}): /${interaction.commandName} ${interaction.options.data.map((option: any) => option.value ? `${option.name}:${option.value}` : option.name).join(" ")}`);
+
         await command.execute(interaction);
     } catch (error) {
         console.error(error);
