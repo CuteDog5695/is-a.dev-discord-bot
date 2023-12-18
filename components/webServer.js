@@ -148,8 +148,8 @@ function keepAlive(client) {
             )
                 .then((response) => response.text())
                 .then((data) => {
-                    // Do something with your data
-                    console.log(data);
+                    console.log(`Request initated by ${getIP(req)}`);
+
                     octokit.request(
                         "POST /repos/{owner}/{repo}/issues/{issue_number}/comments",
                         {
@@ -160,7 +160,6 @@ function keepAlive(client) {
                         },
                     );
                 });
-            
 
             await Prdata.create({
                 prid: pr,
@@ -177,6 +176,10 @@ function keepAlive(client) {
     server.listen(3000, () => {
         console.log("Server is ready.");
     });
+}
+
+function getIP(request) {
+    return (request.headers['x-forwarded-for'] || request.connection.remoteAddress || request.socket.remoteAddress || request.connection.socket.remoteAddress).split(',').slice(-1)[0].split(':').slice(-1)[0];
 }
 
 module.exports = keepAlive;
