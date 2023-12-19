@@ -41,6 +41,7 @@ module.exports = {
         let count = 0;
         domain = domain.toLowerCase().replace(/\.is-a\.dev$/, "");
         let user = interaction.options.getUser("user");
+        let username = user.username;
         user = interaction.guild.members.cache.get(user.id);
         const emailData = await emails.findOne({ _id: domain });
         if (emailData) {
@@ -102,7 +103,7 @@ module.exports = {
                 "password": password,
                 "password2": password,
                 "quota": "50",
-                "force_pw_update": "1",
+                "force_pw_update": "0",
                 "tls_enforce_in": "1",
                 "tls_enforce_out": "1"
               }),
@@ -115,7 +116,7 @@ module.exports = {
         }
         
         const embed = new EmbedBuilder()
-            .setDescription(`Created email ${email}@${domain}.is-a.dev for ${user.username}!`)
+            .setDescription(`Created email ${email}@${domain}.is-a.dev for ${username}! User has been DMed!`)
             .setColor("#0096ff");
 
         await interaction.editReply({ embeds: [embed] });
@@ -130,7 +131,7 @@ module.exports = {
             
         const DmEmbed = new EmbedBuilder()
             .setTitle("Email Created!")
-            .setDescription(`Your email has been created! You can access it at https://mail.is-a.dev/rc/ or manage it at https://mail.is-a.dev/ /n Username: ${email}@${domain} /n Password: ${password}`)
+            .setDescription(`Your email has been created! You can access it at https://mail.is-a.dev/rc/ or manage it at https://mail.is-a.dev/ \n Username: ${email}@${domain}.is-a.dev \n Password: ${password}`)
             .setColor("#0096ff");
 
         await DmUser(interaction.client, user, DmEmbed);
