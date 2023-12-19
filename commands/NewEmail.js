@@ -130,9 +130,7 @@ module.exports = {
             
         const DmEmbed = new EmbedBuilder()
             .setTitle("Email Created!")
-            .setDescription(`Your email has been created! You can access it at https://mail.is-a.dev/rc/ or manage it at https://mail.is-a.dev/`)
-            .addField("Email", `${email}@${domain}.is-a.dev`)
-            .addField("Password", password)
+            .setDescription(`Your email has been created! You can access it at https://mail.is-a.dev/rc/ or manage it at https://mail.is-a.dev/ /n Username: ${email}@${domain} /n Password: ${password}`)
             .setColor("#0096ff");
 
         await DmUser(interaction.client, user, DmEmbed);
