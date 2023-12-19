@@ -3,7 +3,7 @@ const { SlashCommandBuilder,EmbedBuilder } = require("discord.js");
 const staff = require("../models/staff");
 const emails = require("../models/emails");
 const Loading = require("../components/loading");
-const DmUser = require("../components/dmUser");
+const DmUser = require("../components/DmUser");
 
 module.exports = {
     data: new SlashCommandBuilder()
