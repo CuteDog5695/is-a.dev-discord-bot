@@ -42,8 +42,7 @@ module.exports = {
             .setTitle("New Email")
             .setDescription(`Email: ${email}@${domain}.is-a.dev\nUser: ${user}`)
             .setColor("#0096ff");
-        const response = await fetch(`https://mail.is-a.dev/api/v1/get/domain/${domain}.is-a.dev`);
-        const json = await response.json();
+        const json = await fetch(`https://mail.is-a.dev/api/v1/get/domain/${domain}.is-a.dev`);
         if (json.active === `1`) {
             if (json.mboxes_left === `0`) {
                 const full = new EmbedBuilder()
