@@ -19,7 +19,6 @@ module.exports = {
         .setName("register")
         .setDescription("Register a domain."),
     async execute(interaction) {
-        await interaction.deferReply({ ephemeral: 'true' });
         const data = await user.findOne({ _id: interaction.user.id });
         if (!data) {
             // generate uuid string
@@ -42,7 +41,7 @@ module.exports = {
                     .setLabel("Login")
                     .setURL(url),
             );
-            await interaction.editReply({ embeds: [embed], components: [row] });
+            await interaction.reply({ embeds: [embed], components: [row] });
             return;
         }
         await regiserDomain(interaction);
