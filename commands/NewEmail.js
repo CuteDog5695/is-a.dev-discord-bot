@@ -42,18 +42,23 @@ module.exports = {
             .setTitle("New Email")
             .setDescription(`Email: ${email}@${domain}.is-a.dev\nUser: ${user}`)
             .setColor("#0096ff");
-        const json = await fetch(`https://mail.is-a.dev/api/v1/get/domain/${domain}.is-a.dev`);
-        if (json.active === `1`) {
-            if (json.mboxes_left === `0`) {
-                const full = new EmbedBuilder()
-                    .setDescription("This domain has no mailboxes left!")
-                    .setColor("#ff0000");
-                return await interaction.editReply({ embeds: [full] });
-            }
+        
+        // check if domain exists on mailcow api not mailbox
+        const mailcow = await fetch(`https://mail.is-a.dev/api/v1/get/domain/${domain}`, {
+            method: "GET",
+            headers: {
+                "X-API-Key": process.env.MAILCOW_API_KEY,
+            },
+        });
+        const mailcowData = await mailcow.json();
+        if (mailcowData.status === 200) {
+            const embed = new EmbedBuilder()
+                .setDescription("This domain already exists!")
+                .setColor("#ff0000");
             return await interaction.editReply({ embeds: [embed] });
-
-
         }
+
+        
         let newdomain = new EmbedBuilder()
             .setDescription("This domain does not exist!")
             .setColor("#ff0000");
