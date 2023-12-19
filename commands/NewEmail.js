@@ -38,9 +38,20 @@ module.exports = {
         }
         const email = interaction.options.getString("email");
         let domain = interaction.options.getString("domain");
+        let count = 0;
         domain = domain.toLowerCase().replace(/\.is-a\.dev$/, "");
-        const user = interaction.options.getUser("user");
+        let user = interaction.options.getUser("user");
+        user = interaction.guild.members.cache.get(user.id);
         const emailData = await emails.findOne({ _id: domain });
+        if (emailData) {
+            count = emailData.EmailCount;
+            if (emailData.EmailCount >= 2) {
+                const max = new EmbedBuilder()
+                    .setDescription("This domain already has hit the maximum amount of emails!")
+                    .setColor("#0096ff");
+                return await interaction.editReply({ embeds: [max] });
+            }
+        }
         if (!emailData) {
         // create the domain on the mailcow server
             const create = await fetch(`https://mail.is-a.dev/api/v1/add/domain`, {
@@ -72,13 +83,7 @@ module.exports = {
                     .setColor("#0096ff");
                 return await interaction.editReply({ embeds: [error] });
             }
-            await emails.create({ _id: domain, EmailCount: 0 });
-        }
-        if (emailData.EmailCount >= 2) {
-            const max = new EmbedBuilder()
-                .setDescription("This domain already has hit the maximum amount of emails!")
-                .setColor("#0096ff");
-            return await interaction.editReply({ embeds: [max] });
+            await emails.create({ _id: domain, EmailCount: 0, DiscordID: user.id });
         }
         let DiscordName = user.username;
         // generate random password
@@ -108,13 +113,29 @@ module.exports = {
                 .setColor("#0096ff");
             return await interaction.editReply({ embeds: [error] });
         }
+        
         const embed = new EmbedBuilder()
             .setDescription(`Created email ${email}@${domain}.is-a.dev for ${user.username}!`)
             .setColor("#0096ff");
 
         await interaction.editReply({ embeds: [embed] });
 
-        DmUser(user.id, `Your email has been created! Your password is ${password}. Please change it as soon as possible!`);
+        count++;
+
+        if (count === 1) {
+            await emails.updateOne({ _id: domain }, { EmailCount: count, EmailOne: `${email}@${domain}.is-a.dev` });
+        } else if (count === 2) {
+            await emails.updateOne({ _id: domain }, { EmailCount: count, EmailTwo: `${email}@${domain}.is-a.dev` });
+        }
+            
+        const DmEmbed = new EmbedBuilder()
+            .setTitle("Email Created!")
+            .setDescription(`Your email has been created! You can access it at https://mail.is-a.dev/rc/ or manage it at https://mail.is-a.dev/`)
+            .addField("Email", `${email}@${domain}.is-a.dev`)
+            .addField("Password", password)
+            .setColor("#0096ff");
+
+        await DmUser(interaction.client, user, DmEmbed);
     }
 };
 
