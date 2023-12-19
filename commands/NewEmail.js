@@ -51,6 +51,7 @@ module.exports = {
             },
         });
         const mailcowData = await mailcow.json();
+        console.log(mailcowData.response)
         if (mailcowData.status === 200) {
             const embed = new EmbedBuilder()
                 .setDescription("This domain already exists!")
