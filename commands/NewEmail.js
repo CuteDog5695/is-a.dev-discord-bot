@@ -1,7 +1,9 @@
 const fetch = require("node-fetch");
 const { SlashCommandBuilder,EmbedBuilder } = require("discord.js");
 const staff = require("../models/staff");
+const emails = require("../models/emails");
 const Loading = require("../components/loading");
+const DmUser = require("../components/dmUser");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -38,31 +40,82 @@ module.exports = {
         let domain = interaction.options.getString("domain");
         domain = domain.toLowerCase().replace(/\.is-a\.dev$/, "");
         const user = interaction.options.getUser("user");
-        const embed = new EmbedBuilder()
-            .setTitle("New Email")
-            .setDescription(`Email: ${email}@${domain}.is-a.dev\nUser: ${user}`)
-            .setColor("#0096ff");
-        
-        // check if domain exists on mailcow api not mailbox
-        const mailcow = await fetch(`https://mail.is-a.dev/api/v1/get/domain/${domain}`, {
-            method: "GET",
+        const emailData = await emails.findOne({ _id: domain });
+        if (!emailData) {
+        // create the domain on the mailcow server
+            const create = await fetch(`https://mail.is-a.dev/api/v1/add/domain`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-API-Key": process.env.MAILCOW_API_KEY,
+                },
+                body: JSON.stringify({
+                    "active": "1",
+                    "aliases": "5",
+                    "backupmx": "0",
+                    "defquota": "50",
+                    "description": "",
+                    "domain": `${domain}.is-a.dev`,
+                    "mailboxes": "2",
+                    "maxquota": "60",
+                    "quota": "120",
+                    "relay_all_recipients": "0",
+                    "rl_frame": "s",
+                    "rl_value": "10",
+                    "restart_sogo": "10",
+                    "tags": []
+                  }),
+            });
+            if (create.status !== 200) {
+                const error = new EmbedBuilder()
+                    .setDescription("There was an error creating the domain on the mail server!")
+                    .setColor("#0096ff");
+                return await interaction.editReply({ embeds: [error] });
+            }
+            await emails.create({ _id: domain, EmailCount: 0 });
+        }
+        if (emailData.EmailCount >= 2) {
+            const max = new EmbedBuilder()
+                .setDescription("This domain already has hit the maximum amount of emails!")
+                .setColor("#0096ff");
+            return await interaction.editReply({ embeds: [max] });
+        }
+        let DiscordName = user.username;
+        // generate random password
+        const password = Math.random().toString(36).slice(-8);
+        const created = await fetch(`https://mail.is-a.dev/api/v1/add/mailbox`, {
+            method: "POST",
             headers: {
+                "Content-Type": "application/json",
                 "X-API-Key": process.env.MAILCOW_API_KEY,
             },
+            body: JSON.stringify({
+                "active": "1",
+                "domain": `${domain}.is-a.dev`,
+                "local_part": email,
+                "name": DiscordName,
+                "password": password,
+                "password2": password,
+                "quota": "50",
+                "force_pw_update": "1",
+                "tls_enforce_in": "1",
+                "tls_enforce_out": "1"
+              }),
         });
-        const mailcowData = await mailcow.json();
-        console.log(mailcowData.response)
-        if (mailcowData.status === 200) {
-            const embed = new EmbedBuilder()
-                .setDescription("This domain already exists!")
-                .setColor("#ff0000");
-            return await interaction.editReply({ embeds: [embed] });
+        if (created.status !== 200) {
+            const error = new EmbedBuilder()
+                .setDescription("There was an error creating the email on the mail server!")
+                .setColor("#0096ff");
+            return await interaction.editReply({ embeds: [error] });
         }
+        const embed = new EmbedBuilder()
+            .setDescription(`Created email ${email}@${domain}.is-a.dev for ${user.username}!`)
+            .setColor("#0096ff");
 
-        
-        let newdomain = new EmbedBuilder()
-            .setDescription("This domain does not exist!")
-            .setColor("#ff0000");
-        return await interaction.editReply({ embeds: [newdomain] });
+        await interaction.editReply({ embeds: [embed] });
+
+        DmUser(user.id, `Your email has been created! Your password is ${password}. Please change it as soon as possible!`);
     }
 };
+
+
