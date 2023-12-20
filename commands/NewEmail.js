@@ -72,8 +72,8 @@ module.exports = {
                     "maxquota": "60",
                     "quota": "120",
                     "relay_all_recipients": "0",
-                    "rl_frame": "s",
-                    "rl_value": "10",
+                    "rl_frame": "0",
+                    "rl_value": "0",
                     "restart_sogo": "10",
                     "tags": []
                   }),
