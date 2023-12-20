@@ -104,8 +104,8 @@ module.exports = {
                 "password2": password,
                 "quota": "50",
                 "force_pw_update": "0",
-                "tls_enforce_in": "1",
-                "tls_enforce_out": "1"
+                "tls_enforce_in": "0",
+                "tls_enforce_out": "0"
               }),
         });
         if (created.status !== 200) {
