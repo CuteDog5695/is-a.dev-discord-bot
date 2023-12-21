@@ -41,7 +41,7 @@ module.exports = {
                     .setLabel("Login")
                     .setURL(url),
             );
-            await interaction.reply({ embeds: [embed], components: [row] });
+            await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
             return;
         }
         await regiserDomain(interaction);
