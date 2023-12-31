@@ -123,11 +123,7 @@ module.exports = {
 
         count++;
 
-        if (count === 1) {
-            await emails.updateOne({ _id: domain }, { EmailCount: count, EmailOne: `${email}@${domain}.is-a.dev` });
-        } else if (count === 2) {
-            await emails.updateOne({ _id: domain }, { EmailCount: count, EmailTwo: `${email}@${domain}.is-a.dev` });
-        }
+        await emails.updateOne({ _id: domain }, { EmailCount: count, });
             
         const DmEmbed = new EmbedBuilder()
             .setTitle("Email Created!")
