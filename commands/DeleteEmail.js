@@ -44,9 +44,7 @@ module.exports = {
                     "Content-Type": "application/json",
                     "X-API-Key": process.env.MAILCOW_API_KEY,
                 },
-                body: [
-                    email
-                  ],
+                body: JSON.stringify([email]),
             });
             if (create.status !== 200) {
                 const error = new EmbedBuilder()
