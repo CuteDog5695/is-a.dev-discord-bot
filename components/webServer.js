@@ -52,7 +52,7 @@ function keepAlive(client) {
             .setColor("#FF0000");
 
         const channel = client.channels.cache.get("830872946888146964");
-        channel.send(appeal);
+        channel.send({embeds: [appeal]});
         res.send("Appeal sent");
     });
 
