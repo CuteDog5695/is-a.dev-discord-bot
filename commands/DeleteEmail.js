@@ -50,7 +50,7 @@ module.exports = {
             });
             if (create.status !== 200) {
                 const error = new EmbedBuilder()
-                    .setDescription("There was an error deleting the mailbox on the mail server!")
+                    .setDescription("There was an error deleting the mailbox on the mail server! \n Error: " + create.status)
                     .setColor("#0096ff");
                 return await interaction.editReply({ embeds: [error] });
             }
