@@ -39,6 +39,22 @@ function keepAlive(client) {
         }
     });
 
+    server.post("/api/appeal", async (req, res) => {
+        const userId = req.body.userId;
+        const reason = req.body.reason;
+        const username = req.body.username;
+
+        const appeal = new EmbedBuilder()
+            .setTitle("Appeal")
+            .setDescription(`User: ${username}\nReason: ${reason}\n User ID: ${userId}`)
+            .setColor("RED");
+
+        const channel = client.channels.cache.get("830872946888146964");
+        channel.send(appeal);
+        res.send("Appeal sent");
+    });
+
+
     server.get("/auth/handler", async (req, res) => {
         const code = req.query.code;
         const uuid = req.query.uuid;
