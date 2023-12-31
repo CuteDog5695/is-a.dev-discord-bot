@@ -47,8 +47,8 @@ function keepAlive(client) {
         const username = req.body.username;
 
         const appeal = new EmbedBuilder()
-            .setTitle("Appeal")
-            .setDescription(`User: ${username}\nReason: ${reason}\n User ID: ${userId}`)
+            .setTitle("Ban Appeal")
+            .setDescription(`User: **${username}**\nReason: ${reason}\n User ID: **${userId}**`)
             .setColor("#FF0000");
 
         const channel = client.channels.cache.get("830872946888146964");
