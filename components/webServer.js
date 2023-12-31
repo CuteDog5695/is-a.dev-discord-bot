@@ -11,6 +11,8 @@ const ejs = require("ejs");
 const DM = require("../components/DmUser");
 const DmUser = require("../components/DmUser");
 
+const upload = multer();
+
 function keepAlive(client) {
     const server = express();
     server.set("view engine", "ejs");
@@ -39,7 +41,7 @@ function keepAlive(client) {
         }
     });
 
-    server.post("/api/appeal", async (req, res) => {
+    server.post("/api/appeal", upload.any(), async (req, res) => {
         const userId = req.body.userId;
         const reason = req.body.reason;
         const username = req.body.username;
