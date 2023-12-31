@@ -49,7 +49,7 @@ function keepAlive(client) {
         const appeal = new EmbedBuilder()
             .setTitle("Appeal")
             .setDescription(`User: ${username}\nReason: ${reason}\n User ID: ${userId}`)
-            .setColor("RED");
+            .setColor("#FF0000");
 
         const channel = client.channels.cache.get("830872946888146964");
         channel.send(appeal);
