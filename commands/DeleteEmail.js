@@ -28,7 +28,6 @@ module.exports = {
         let count = 0;
         let domain = email.split("@")[1];
         domain = domain.toLowerCase().replace(/\.is-a\.dev$/, "");
-        user = interaction.guild.members.cache.get(user.id);
         const emailData = await emails.findOne({ _id: domain });
         if (!emailData) {
             const error = new EmbedBuilder()
