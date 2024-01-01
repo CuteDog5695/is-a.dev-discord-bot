@@ -3,8 +3,8 @@ const Loading = require('../../components/loading');
 const DM = require('../../components/DmUser');
 module.exports = async function (interaction) {
     await Loading(interaction, false);
-    let id = interaction.customId.slice(6)
-    console.log(interaction.customId)
+   // get id from custom id aprove-<id>
+    let id = interaction.customId.split('-')[1]
     console.log(id)
     let user = interaction.guild.members.cache.get(id)
     // get username
