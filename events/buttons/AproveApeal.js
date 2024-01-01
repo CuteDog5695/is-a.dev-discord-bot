@@ -25,7 +25,7 @@ module.exports = async function (interaction) {
     const actionRow = new ActionRowBuilder()
         .addComponents(inviteButton)
 
-    await interaction.client.users.send(user, { embeds: [embed], components: [actionRow] });
+    await interaction.client.users.send(id, { embeds: [embed], components: [actionRow] });
 
     // reply to interaction
     await interaction.editReply({
