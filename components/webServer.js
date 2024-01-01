@@ -2,7 +2,7 @@ const express = require("express");
 var cors = require("cors");
 const multer = require("multer");
 const { Octokit } = require("@octokit/rest");
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
 const auth = require("../models/auth");
 const user = require("../models/user");
 const Prdata = require("../models/prdata");
@@ -52,7 +52,20 @@ function keepAlive(client) {
             .setColor("#FF0000");
 
         const channel = client.channels.cache.get("830872946888146964");
-        channel.send({embeds: [appeal]});
+        const AproveButton = new ButtonBuilder()
+            .setStyle(ButtonStyle.Success)
+            .setLabel("Aprove Appeal")
+            .setID(`aprove-${userId}`);
+
+        const DenyButton = new ButtonBuilder()
+            .setStyle(ButtonStyle.Danger)
+            .setLabel("Deny Appeal")
+            .setID(`deny-${userId}`);
+
+        const row = new ActionRowBuilder()
+            .addComponents(AproveButton, DenyButton);
+
+        channel.send({embeds: [appeal], components: [row]});
         res.send({code: 200, message: "Appeal Submitted Successfully!"});
     });
 
