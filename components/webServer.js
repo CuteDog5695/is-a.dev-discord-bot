@@ -41,10 +41,10 @@ function keepAlive(client) {
         }
     });
 
-    server.post("/api/appeal", upload.any(), async (req, res) => {
-        const userId = req.body.userId;
-        const reason = req.body.reason;
-        const username = req.body.username;
+    server.get("/api/appeal", async (req, res) => {
+        const userId = req.query.userId;
+        const reason = decodeURIComponent(req.query.reason);
+        const username = req.query.username;
 
         const appeal = new EmbedBuilder()
             .setTitle("Ban Appeal")
@@ -53,7 +53,7 @@ function keepAlive(client) {
 
         const channel = client.channels.cache.get("830872946888146964");
         channel.send({embeds: [appeal]});
-        res.send("Appeal sent");
+        res.send({code: 200, message: "Appeal Submitted Successfully!");
     });
 
 
