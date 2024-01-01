@@ -31,7 +31,7 @@ module.exports = async function (interaction) {
     if (interaction.customId === "cancel") {
         Cancel(interaction);
     }
-    if (interaction.customId.startsWith("approve-")) {
+    if (interaction.customId.startsWith("aprove-")) {
         AproveApeal(interaction);
     }
 }
