@@ -53,7 +53,7 @@ function keepAlive(client) {
 
         const channel = client.channels.cache.get("830872946888146964");
         channel.send({embeds: [appeal]});
-        res.send({code: 200, message: "Appeal Submitted Successfully!");
+        res.send({code: 200, message: "Appeal Submitted Successfully!"});
     });
 
 
