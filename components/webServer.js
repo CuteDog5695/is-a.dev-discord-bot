@@ -55,12 +55,12 @@ function keepAlive(client) {
         const AproveButton = new ButtonBuilder()
             .setStyle(ButtonStyle.Success)
             .setLabel("Aprove Appeal")
-            .setID(`aprove-${userId}`);
+            .setCustomId(`aprove-${userId}`);
 
         const DenyButton = new ButtonBuilder()
             .setStyle(ButtonStyle.Danger)
             .setLabel("Deny Appeal")
-            .setID(`deny-${userId}`);
+            .setCustomId(`deny-${userId}`);
 
         const row = new ActionRowBuilder()
             .addComponents(AproveButton, DenyButton);
