@@ -4,13 +4,14 @@ const DM = require('../../components/DmUser');
 module.exports = async function (interaction) {
     await Loading(interaction, false);
    // get id from custom id aprove-<id>
-    let id = interaction.customId.split('-')[1]
+    let id = interaction.customId
+    console.log(id)
+    id = id.split('-')[1]
     console.log(id)
     let user = interaction.guild.members.cache.get(id)
     // get username
-    let username = user
-    console.log(user)
-    return;
+    let username = user.username
+    console.log(username)
     // unban user
     await interaction.guild.members.unban(id)
     // send dm
