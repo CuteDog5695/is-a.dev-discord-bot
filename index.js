@@ -105,6 +105,10 @@ client.once(Events.ClientReady, (c) => {
     console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
+client.on("messageCreate", (message) => {
+    if(message.author.id === "850820069310201896") return message.reply("taylor fan detected opinion rejected ✅");
+})
+
 mongoose
     .connect(mongoDB, {
         useNewUrlParser: true,
