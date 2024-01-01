@@ -23,7 +23,7 @@ module.exports = async function (interaction) {
         .setURL('https://discord.gg/PZCGHz4RhQ')
 
     const actionRow = new ActionRowBuilder()
-        .addComponent(inviteButton)
+        .addComponents(inviteButton)
 
     await interaction.client.users.send(user, { embeds: [embed], components: [actionRow] });
 
