@@ -7,7 +7,9 @@ module.exports = async function (interaction) {
     console.log(id)
     let user = interaction.guild.members.cache.get(id)
     // get username
-    let username = user.user.username
+    let username = user
+    console.log(user)
+    return;
     // unban user
     await interaction.guild.members.unban(id)
     // send dm
