@@ -31,7 +31,7 @@ const mongoDB = process.env.MONGO_DB;
 const token = process.env.DISCORD_TOKEN;
 const status = process.env.STATUS;
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [3276799] });
 
 client.commands = new Collection();
 
