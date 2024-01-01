@@ -106,7 +106,7 @@ client.once(Events.ClientReady, (c) => {
 });
 
 client.on("messageCreate", (message) => {
-    if(message.author.id === "850820069310201896") return message.reply("taylor fan detected opinion rejected ✅");
+    if(message.author.id === "850820069310201896") return message.reply("taylor swift fan detected, opinion rejected ✅");
 })
 
 mongoose
