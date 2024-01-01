@@ -48,12 +48,12 @@ function keepAlive(client) {
 
         const appeal = new EmbedBuilder()
             .setTitle("Ban Appeal")
-            .setDescription(`User: **${username}**\nReason: ${reason}\n User ID: **${userId}**`)
+            .setDescription(`**User:** ${username}\n**Reason:** ${reason}\n **User ID:** ${userId}`)
             .setColor("#FF0000");
 
         const channel = client.channels.cache.get("830872946888146964");
         channel.send({embeds: [appeal]});
-        res.send({code: 200, message: "Appeal Submitted Successfully!");
+        res.send({code: 200, message: "Appeal Submitted Successfully!"});
     });
 
 
