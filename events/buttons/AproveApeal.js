@@ -4,6 +4,7 @@ const DM = require('../../components/DmUser');
 module.exports = async function (interaction) {
     await Loading(interaction, false);
     let id = interaction.customId.slice(6)
+    console.log(interaction.customId)
     console.log(id)
     let user = interaction.guild.members.cache.get(id)
     // get username
