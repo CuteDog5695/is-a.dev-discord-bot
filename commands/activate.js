@@ -43,9 +43,7 @@ module.exports = {
             );
 
             if (response.status === 200) {
-                await interaction.editReply(
-                    `${subdomain}.is-a.dev has been activated!`,
-                );
+                await interaction.editReply({ content: `${subdomain}.is-a.dev has been activated!`, embeds: [] });
             } else {
                 await interaction.editReply(
                     `Dam something went wrong. The server responded with ${response.status} speak to andrew or Danny`,
