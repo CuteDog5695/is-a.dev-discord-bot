@@ -1,9 +1,8 @@
 const fetch = require("node-fetch");
-const { SlashCommandBuilder,EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder,EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
 const staff = require("../models/staff");
 const emails = require("../models/emails");
 const Loading = require("../components/loading");
-const DmUser = require("../components/DmUser");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -127,10 +126,29 @@ module.exports = {
             
         const DmEmbed = new EmbedBuilder()
             .setTitle("Email Created!")
-            .setDescription(`Your email has been created! You can access it at https://mail.is-a.dev/rc/ or manage it at https://mail.is-a.dev/ \n Username: ${email}@${domain}.is-a.dev \n Password: ${password}`)
+            .setDescription(`Your email has been created!  \n **Username**: ${email}@${domain}.is-a.dev \n **Password**: ${password} \n To use with your own client or gmail clcik manual setup below!`)
             .setColor("#0096ff");
 
-        await DmUser(interaction.client, user, DmEmbed);
+        const ManageAccountButton = new ButtonBuilder()
+            .setStyle(ButtonStyle.Link)
+            .setLabel("Manage Account")
+            .setURL(`https://mail.is-a.dev/`);
+
+        const WebmailButton = new ButtonBuilder()
+            .setStyle(ButtonStyle.Link)
+            .setLabel("Webmail")
+            .setURL(`https://mail.is-a.dev/rc`);
+
+        const UseWithEmailClientButton = new ButtonBuilder()
+            .setStyle(ButtonStyle.Link)
+            .setLabel("Manual Setup")
+            .setURL(`https://docs.mailcow.email/client/client/#host=mail.is-a.dev&email=${email}@${domain}.is-a.dev&name=${email}&ui=mail.is-a.dev&port=443`);
+
+        const actionRow = new ActionRowBuilder()
+            .addComponents(ManageAccountButton, WebmailButton, UseWithEmailClientButton);
+
+
+        await interaction.client.users.send(user, { embeds: [DmEmbed], components: [actionRow] });
     }
 };
 
