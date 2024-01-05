@@ -126,7 +126,7 @@ module.exports = {
             
         const DmEmbed = new EmbedBuilder()
             .setTitle("Email Created!")
-            .setDescription(`Your email has been created!  \n **Username**: ${email}@${domain}.is-a.dev \n **Password**: ${password} \n To use with your own client or gmail clcik manual setup below!`)
+            .setDescription(`Your email has been created!  \n **Username**: ${email}@${domain}.is-a.dev \n **Password**: ${password} \n To use with your own client or gmail click manual setup below!`)
             .setColor("#0096ff");
 
         const ManageAccountButton = new ButtonBuilder()
