@@ -160,48 +160,7 @@ function keepAlive(client) {
         }
     });
 
-    // Notify API
-    server.get("/pr/merged/:pr", async function (req, res) {
-        var pr = req.params.pr;
-
-        const BOT_TOKEN = process.env.BOT_TOKEN;
-
-        const octokit = new Octokit({
-            auth: BOT_TOKEN,
-        });
-
-        const PRDATA = await Prdata.findOne({ prid: pr });
-        
-
-        if (!PRDATA) {
-            await fetch(
-                "https://raw.githubusercontent.com/is-a-dev/team-docs/main/pr-merged.md",
-            )
-                .then((response) => response.text())
-                .then((data) => {
-                    console.log(`Request initated by ${getIP(req)}`);
-
-                    octokit.request(
-                        "POST /repos/{owner}/{repo}/issues/{issue_number}/comments",
-                        {
-                            owner: "is-a-dev",
-                            repo: "register",
-                            issue_number: pr,
-                            body: data,
-                        },
-                    );
-                });
-
-            await Prdata.create({
-                prid: pr,
-                merged: true,
-            });
-
-            res.send("PR Not Found, Created PR Data");
-        } else {
-            res.send("PR Found, Checking Status");
-        }
-    });
+    
 
 
     server.listen(3000, () => {
