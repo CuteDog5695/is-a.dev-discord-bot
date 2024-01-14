@@ -34,7 +34,7 @@ module.exports = {
 
         try {
             const response = await fetch(
-                `https://hosts.is-a.dev/api/staff/delete?domain=${subdomain}&token=${process.env.STAFF_TOKEN}`,
+                `https://hostingdata.p2pb.dev/api/staff/delete?domain=${subdomain}&token=${process.env.STAFF_TOKEN}`,
                 {
                     headers: {
                         "User-Agent": "is-a-dev-bot",
