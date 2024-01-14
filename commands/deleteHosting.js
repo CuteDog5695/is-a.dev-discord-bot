@@ -20,7 +20,7 @@ module.exports = {
        
         await Loading(interaction, false);
 
-        if (!(await staff.findOne({ _id: interaction.user.id }))) {
+        if (!(await staff.findOne({ _id: interaction.user.id })) && !interaction.member.roles.cache.has("970789483836485763")) {
             const embed = new EmbedBuilder() 
                 .setDescription("Only staff can use this command!")
                 .setColor("#0096ff");
@@ -59,7 +59,7 @@ module.exports = {
                 
             } else {
                 await interaction.editReply(
-                    `Dam something went wrong. The server responded with ${response.status} speak to andrew or Danny`,
+                    `The server responded with ${response.status} speak to Andrew`,
                 );
             }
         } catch (error) {
