@@ -30,15 +30,15 @@ module.exports = {
                 .setColor("#0096ff");
             return await interaction.editReply({ embeds: [embed] });
         }
-        if (interaction.user.id !== "598245488977903688" && interaction.user.id !== "853158265466257448") {
-            const embed = new EmbedBuilder()
-                .setDescription("Only Andrew Or Wily can use this command!")
-                .setColor("#0096ff");
-            return await interaction.editReply({ embeds: [embed] });
-        }
-        const add = interaction.options.getUser("Add Staff");
-        const remove = interaction.options.getUser("Remove Staff");
+        const add = interaction.options.getUser("add");
+        const remove = interaction.options.getUser("remove");
         if (add) {
+            if (interaction.user.id !== "598245488977903688" && interaction.user.id !== "853158265466257448") {
+                const embed = new EmbedBuilder()
+                    .setDescription("Only Andrew Or Wily can use this command!")
+                    .setColor("#0096ff");
+                return await interaction.editReply({ embeds: [embed] });
+            }
             const addData = await staff.findOne({ _id: add.id });
             if (addData) {
                 const embed = new EmbedBuilder()
@@ -58,6 +58,12 @@ module.exports = {
             return await interaction.editReply({ embeds: [embed] });
         }
         if (remove) {
+            if (interaction.user.id !== "598245488977903688" && interaction.user.id !== "853158265466257448") {
+                const embed = new EmbedBuilder()
+                    .setDescription("Only Andrew Or Wily can use this command!")
+                    .setColor("#0096ff");
+                return await interaction.editReply({ embeds: [embed] });
+            }
             const removeData = await staff.findOne({ _id: remove.id });
             if (!removeData) {
                 const embed = new EmbedBuilder()
