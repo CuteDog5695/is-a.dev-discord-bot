@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
 const loading = require("../components/loading");
 const fetch = require("node-fetch");
+const staff = require("../models/staff");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,8 +14,10 @@ module.exports = {
         const userCount = Count.individualOwners;
         // get timestamp of bot online
         const timestamp = new Date(interaction.client.readyTimestamp);
+        // get staff count
+        const staffCount = await staff.countDocuments();
         const embed = {
-            "description": `🟢 **Online Since**: <t:${parseInt(timestamp / 1000)}:R>\n🌐 **Domains Registered**: ${domainCount}\n👯 **Users**: ${userCount}\n`,
+            "description": `🟢 **Online Since**: <t:${parseInt(timestamp / 1000)}:R>\n🌐 **Domains Registered**: ${domainCount}\n👯 **Users**: ${userCount}\n👮 **Staff members**: ${staffCount}\n `,
             "fields": [],
             "author": {
               "name": "is-a.dev",

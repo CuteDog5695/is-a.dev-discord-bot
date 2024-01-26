@@ -141,7 +141,13 @@ module.exports = {
                     .setLabel("Manage")
                     .setURL(web);
 
-                const row = new ActionRowBuilder().addComponents(webButton);
+                const GitHubButton = new ButtonBuilder()
+                    .setStyle(ButtonStyle.Link)
+                    .setLabel("GitHub")
+                    .setEmoji("1200483042788126890")
+                    .setURL(fileURL);
+
+                const row = new ActionRowBuilder().addComponents(webButton, GitHubButton);
 
                 await interaction.editReply({ embeds: [embed], ephemeral: ephemeral, components: [row] });
             }
