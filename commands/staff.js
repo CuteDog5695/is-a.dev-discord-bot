@@ -54,7 +54,7 @@ module.exports = {
                 .setDescription(`${add.username} has been added to the staff database!`)
                 .setColor("#0096ff");
 
-            await DmUser(interaction, add, "You have been added to the staff team! You can now use all the staff commands");
+            await DmUser(interaction.client, add, "You have been added to the staff team! You can now use all the staff commands");
             return await interaction.editReply({ embeds: [embed] });
         }
         if (remove) {
@@ -75,7 +75,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setDescription(`${remove.username} has been removed from the staff database!`)
                 .setColor("#0096ff");
-                await DmUser(interaction, remove, "You have been removed from the staff team! You can no longer use the staff commands");
+                await DmUser(interaction.client, remove, "You have been removed from the staff team! You can no longer use the staff commands");
             return await interaction.editReply({ embeds: [embed] });
         }
         if (!add && !remove) {
