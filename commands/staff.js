@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRow
 const fetch = require("node-fetch");
 const staff = require("../models/staff");
 const Loading = require("../components/loading");
+const DmUser = require("../components/DmUser");
 
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
         )
         .addUserOption((option) =>
             option
-                .setName("Rrmove")
+                .setName("remove")
                 .setDescription("Removes a user from the staff database.")
                 .setRequired(false)
         ),
@@ -52,6 +53,8 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setDescription(`${add.username} has been added to the staff database!`)
                 .setColor("#0096ff");
+
+            await DmUser(interaction, add, "You have been added to the staff team! You can now use all the staff commands");
             return await interaction.editReply({ embeds: [embed] });
         }
         if (remove) {
@@ -66,6 +69,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setDescription(`${remove.username} has been removed from the staff database!`)
                 .setColor("#0096ff");
+                await DmUser(interaction, remove, "You have been removed from the staff team! You can no longer use the staff commands");
             return await interaction.editReply({ embeds: [embed] });
         }
         if (!add && !remove) {
