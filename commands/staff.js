@@ -10,13 +10,13 @@ module.exports = {
         .setDescription("Staff Stuff")
         .addUserOption((option) =>
             option
-                .setName("Add Staff")
+                .setName("add")
                 .setDescription("Adds a user to the staff database.")
                 .setRequired(false)
         )
         .addUserOption((option) =>
             option
-                .setName("Remove Staff")
+                .setName("Rrmove")
                 .setDescription("Removes a user from the staff database.")
                 .setRequired(false)
         ),
