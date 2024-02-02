@@ -18,6 +18,10 @@ function keepAlive(client) {
     server.set("view engine", "ejs");
     server.use(cors());
 
+    server.get("/", async (req, res) => {
+        res.send("bot")
+    });
+
     server.get("/login", async (req, res) => {
         const domain = process.env.DOMAIN;
         const GITHUB_ID = process.env.GITHUB_ID;
