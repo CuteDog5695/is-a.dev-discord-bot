@@ -106,7 +106,7 @@ client.once(Events.ClientReady, (c) => {
 });
 
 client.on("messageCreate", (message) => {
-    if(message.author.id === "850820069310201896" && message.channel.id === "830872854677422153" && message.content.includes(".")) return message.reply("taylor swift fan detected, opinion rejected");
+    if(message.author.id === "850820069310201896" && message.channel.id === "830872854677422153" && message.content.includes(".")) return message.reply("swiftie detected");
 })
 
 mongoose
