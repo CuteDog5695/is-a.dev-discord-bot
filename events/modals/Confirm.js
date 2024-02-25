@@ -29,6 +29,29 @@ module.exports = async function (interaction) {
             break;
     }
     const content  = interaction.fields.getTextInputValue(`Content`)
+    switch (type) {
+    case 'A':
+        regexPattern = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
+        break;
+    case 'CNAME':
+    case 'MX':
+        regexPattern = /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/;
+        break;
+    case 'TXT':
+        regexPattern = /^.*$/;
+        break;
+    case 'URL':
+        regexPattern = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}(\/[a-zA-Z0-9-_.~:/?#[\]@!$&'()*+,;=%]*)?$/;
+        break;
+    case 'AAAA':
+        regexPattern = /^[a-fA-F0-9]{1,4}(:[a-fA-F0-9]{1,4}){7}$/;
+        break;
+    default:
+        return interaction.reply("ERROR: The record type you have provided is invalid"); 
+}
+
+if (!regexPattern.test(content)) return await interaction.reply("ERROR: The record data you have provided is invalid");
+
     const embed = new EmbedBuilder()
         .setTitle('Confirm Domain')
         .setDescription('This is the information you have entered. Please confirm that it is correct. \n\n' + `**Domain:** ${domain}.is-a.dev \n**Type:** ${type} \n**Content:** ${content}`)
