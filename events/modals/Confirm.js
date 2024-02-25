@@ -47,10 +47,10 @@ module.exports = async function (interaction) {
         regexPattern = /^[a-fA-F0-9]{1,4}(:[a-fA-F0-9]{1,4}){7}$/;
         break;
     default:
-        return interaction.reply("ERROR: The record type you have provided is invalid"); 
+        return interaction.editReply("ERROR: The record type you have provided is invalid"); 
 }
 
-if (!regexPattern.test(content)) return await interaction.reply("ERROR: The record data you have provided is invalid");
+if (!regexPattern.test(content)) return await interaction.editReply("ERROR: The record data you have provided is invalid");
 
     const embed = new EmbedBuilder()
         .setTitle('Confirm Domain')
