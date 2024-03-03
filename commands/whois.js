@@ -144,7 +144,7 @@ module.exports = {
                 const GitHubButton = new ButtonBuilder()
                     .setStyle(ButtonStyle.Link)
                     .setLabel("GitHub")
-                    .setEmoji("1200483042788126890")
+                    .setEmoji("🐙")
                     .setURL(fileURL);
 
                 const row = new ActionRowBuilder().addComponents(webButton, GitHubButton);
