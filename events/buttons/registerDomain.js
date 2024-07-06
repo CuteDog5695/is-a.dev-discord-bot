@@ -6,8 +6,8 @@ module.exports = async function (interaction) {
     const domainCheck = new TextInputBuilder()
         .setCustomId('DomainCheck')
         .setPlaceholder('Enter a subdomain')
-        .setMinLength(3)
-        .setMaxLength(17)
+        .setMinLength(2)
+        .setMaxLength(64)
         .setRequired(true)
         .setLabel('Enter the subdomain you want to register')
         .setStyle("Short");
