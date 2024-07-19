@@ -27,7 +27,7 @@ module.exports = {
     async execute(interaction) {
         
         
-        await Loading(interaction, true);
+        await Loading(interaction, false);
 
         if (!(await staff.findOne({ _id: interaction.user.id }))) {
             const embed = new EmbedBuilder() 
