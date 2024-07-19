@@ -43,11 +43,7 @@ module.exports = {
             const secretKey = process.env.ENCRYPTION_KEY;
             const decodeKey = secretKey + id;
             const decoded = jwt.verify(key, decodeKey);
-            const embed = new EmbedBuilder()
-                .setTitle("Decoded Key")
-                .setColor("#0096ff")
-                .addField("Decoded Key", JSON.stringify(decoded, null, 2));
-            await interaction.editReply({ embeds: [embed] });
+            await interaction.editReply({ content: `Decoded: ${JSON.stringify(decoded)}` });
             
         } catch (error) {
             console.error("Error performing lookup:", error);
