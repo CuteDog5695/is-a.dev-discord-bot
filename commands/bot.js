@@ -8,16 +8,13 @@ module.exports = {
         .setName("bot")
         .setDescription("Shows bot info"),
     async execute(interaction) {
-        await loading(interaction, false);
-        const Count = await fetch("https://manage.is-a.dev/api/stats").then((res) => res.json());
-        const domainCount = Count.subdomains;
-        const userCount = Count.individualOwners;
+        await loading(interaction, false)
         // get timestamp of bot online
         const timestamp = new Date(interaction.client.readyTimestamp);
         // get staff count
         const staffCount = await staff.countDocuments();
         const embed = {
-            "description": `🟢 **Online Since**: <t:${parseInt(timestamp / 1000)}:R>\n🌐 **Domains Registered**: ${domainCount}\n👯 **Users**: ${userCount}\n👮 **Staff members**: ${staffCount}\n `,
+            "description": `🟢 **Online Since**: <t:${parseInt(timestamp / 1000)}:R>\n 👮 **Staff members**: ${staffCount}\n `,
             "fields": [],
             "author": {
               "name": "is-a.dev",
