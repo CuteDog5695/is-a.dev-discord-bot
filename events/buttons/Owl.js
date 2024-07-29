@@ -26,16 +26,19 @@ async function sendEmbed(interaction, description, color = "#0096ff", ephemeral 
 
 module.exports = async function (interaction) {
     await Loading(interaction, true);
+
+    // Get the domain from the input string
     const inputString = interaction.customId;
-    const regex = /owl-(.*?)/;
+    const regex = /^owl-(.*)$/;
+
     const match = regex.exec(inputString);
+
+    const domain = match[1];
 
     if (!match) {
         return sendEmbed(interaction, "Invalid domain identifier.", "#ff0000", true);
     }
 
-    const domain = match[1];
-    console.log(domain);
 
     const staffData = await staff.findOne({ _id: interaction.user.id });
     if (!staffData) {
