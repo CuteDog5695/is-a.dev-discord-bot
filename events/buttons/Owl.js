@@ -44,11 +44,11 @@ module.exports = async function (interaction) {
 
     const domainData = await fetchDomainData(domain);
     if (!domainData) {
-        return sendEmbed(interaction, "That domain doesn't exist in the register.", true);
+        return sendEmbed(interaction, "That domain doesn't exist in the register.", "#ff0000", true);
     }
 
     if (!domainData.owner.OWL) {
-        return sendEmbed(interaction, "That domain doesn't have an OWL field.", true);
+        return sendEmbed(interaction, "That domain doesn't have an OWL field.", "#ff0000", true);
     }
 
     try {
