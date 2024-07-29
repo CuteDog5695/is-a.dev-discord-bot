@@ -6,14 +6,14 @@ async function loadKeyStore() {
     const keystore = jose.JWK.createKeyStore();
 
     // Load the public key for encryption from environment variable
-    const publicKey = process.env.PUBLIC_KEY;
+    const publicKey = fs.readFileSync('keys/public_key.pem', 'utf8');
     if (!publicKey) {
         throw new Error('Public key not found in environment variables');
     }
     await keystore.add(publicKey, 'pem');
 
     // Load the private key for decryption from environment variable
-    const privateKey = process.env.PRIVATE_KEY;
+    const privateKey = fs.readFileSync('keys/private_key.pem', 'utf8');
     if (!privateKey) {
         throw new Error('Private key not found in environment variables');
     }
