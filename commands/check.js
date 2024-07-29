@@ -20,7 +20,7 @@ module.exports = {
         
 if (subdomain.length < 1 || subdomain.length > 100) {
             const sadEmbed = new EmbedBuilder()
-                .setDescription("The subdomain length must be between 1 and 64 characters.")
+                .setDescription("The subdomain length must be between 1 and 100 characters.")
                 .setColor("#0096ff");
             return await interaction.reply({ embeds: [sadEmbed] });    
 }
