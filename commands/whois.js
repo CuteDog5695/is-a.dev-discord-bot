@@ -144,7 +144,7 @@ module.exports = {
                 const OwlButton = new ButtonBuilder()
                     .setStyle(ButtonStyle.Primary)
                     .setLabel("OWL")
-                    setCustomId(`owl-${domain}`)
+                    .setCustomId(`owl-${domain}`)
                     .setEmoji("🦉");
 
                 const row = new ActionRowBuilder().addComponents(webButton, GitHubButton, OwlButton);
