@@ -141,7 +141,13 @@ module.exports = {
                     .setEmoji("🐙")
                     .setURL(fileURL);
 
-                const row = new ActionRowBuilder().addComponents(webButton, GitHubButton);
+                const OwlButton = new ButtonBuilder()
+                    .setStyle(ButtonStyle.Primary)
+                    .setLabel("OWL")
+                    setCustomId(`owl-${domain}`)
+                    .setEmoji("🦉");
+
+                const row = new ActionRowBuilder().addComponents(webButton, GitHubButton, OwlButton);
 
                 await interaction.editReply({ embeds: [embed], ephemeral: ephemeral, components: [row] });
             }

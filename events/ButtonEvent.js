@@ -6,6 +6,7 @@ const RecordType = require("./buttons/RecordType")
 const ConfirmRegister = require("./buttons/ConfirmRegister")
 const Cancel = require("./buttons/Cancel")
 const AproveApeal = require("./buttons/AproveApeal")
+const Owl = require("./buttons/Owl")
 module.exports = async function (interaction) {
     if (interaction.customId === "deleteDomain") {
         await ChooseDeleteDomain(interaction);
@@ -24,6 +25,9 @@ module.exports = async function (interaction) {
     }
     if (interaction.customId.startsWith("register-")) {
         RecordType(interaction);
+    }
+    if (interaction.customId.startsWith("owl-")) {
+        Owl(interaction);
     }
     if (interaction.customId.startsWith("confirm-d")) {
         ConfirmRegister(interaction);
