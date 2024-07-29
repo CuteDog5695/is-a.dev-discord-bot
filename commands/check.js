@@ -18,7 +18,7 @@ module.exports = {
             .toLowerCase();
         // get the guild id from the interaction
         
-if (subdomain.length < 1 || subdomain.length > 64) {
+if (subdomain.length < 1 || subdomain.length > 100) {
             const sadEmbed = new EmbedBuilder()
                 .setDescription("The subdomain length must be between 1 and 64 characters.")
                 .setColor("#0096ff");
