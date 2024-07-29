@@ -18,14 +18,7 @@ module.exports = {
             .toLowerCase();
         // get the guild id from the interaction
         
-
-        if (subdomain.length < 2 || subdomain.length > 64) {
-            const sadEmbed = new EmbedBuilder()
-                .setDescription("The subdomain length must be between 2 and 64 characters.")
-                .setColor("#0096ff");
-            return await interaction.reply({ embeds: [sadEmbed] });    
-        }
-            
+  
         try {
             const response = await fetch(
                 `https://api.github.com/repos/is-a-dev/register/contents/domains/${subdomain}.json`,
