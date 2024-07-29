@@ -1,5 +1,6 @@
 const { Octokit } = require("@octokit/rest");
 const user = require("../models/user");
+const { EncryptPayload, DecryptPayload } = require("./owl");
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
 module.exports = async function (type, Ddata, domain, interaction) {
     try {
@@ -9,6 +10,8 @@ module.exports = async function (type, Ddata, domain, interaction) {
         let email = data.email;
         let subdomain = domain;
         let id = interaction.user.id;
+
+        let OWL = await EncryptPayload({ email: email, username: username, user_id: "" });
 
         const octokit = new Octokit({
             auth: token,
@@ -47,7 +50,8 @@ module.exports = async function (type, Ddata, domain, interaction) {
         "owner": {
            "username": "${username}",
            "email": "",
-           "discord": "${id}"
+           "discord": "${id}",
+           "OWL": "${OWL}"
         },
     
         "record": {

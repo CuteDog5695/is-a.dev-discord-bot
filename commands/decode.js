@@ -2,7 +2,8 @@ const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRow
 const fetch = require("node-fetch");
 const staff = require("../models/staff");
 const Loading = require("../components/loading");
-const jwt = require("jsonwebtoken");
+const { EncryptPayload, DecryptPayload } = require("../components/owl");
+
 
 
 
@@ -12,14 +13,8 @@ module.exports = {
         .setDescription("[MAINTAINER] Lookup a user's information.")
         .addStringOption((option) =>
             option
-                .setName("key")
+                .setName("owl")
                 .setDescription("The key to lookup.")
-                .setRequired(true),
-        )
-        .addStringOption((option) =>
-            option
-                .setName("id")
-                .setDescription("The Github Id")
                 .setRequired(true),
         ),
 
@@ -38,11 +33,9 @@ module.exports = {
 
 
         try {
-            const key = interaction.options.getString("key");
-            const id = interaction.options.getString("id");
-            const secretKey = process.env.ENCRYPTION_KEY;
-            const decodeKey = secretKey + id;
-            const decoded = jwt.verify(key, decodeKey);
+            const key = interaction.options.getString("owl");
+
+            const decoded = await DecryptPayload(key);
 
             const embed = new EmbedBuilder()
                 .setTitle("User Information")
