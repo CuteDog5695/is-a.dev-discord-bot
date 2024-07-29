@@ -37,10 +37,16 @@ module.exports = {
 
             const decoded = await DecryptPayload(key);
 
+            const userd = JSON.parse(decoded);
+
+            const username = userd.username;
+            const email = userd.email;
+            const user_id = userd.user_id;
+
             const embed = new EmbedBuilder()
                 .setTitle("User Information")
                 .setColor("#0096ff")
-                .setDescription(`**Key:** ${key}\n**Decoded:** ${JSON.stringify(decoded)}`);
+                .setDescription(`\n**Decoded:** \n\nUsername: ${username}\nEmail: ${email}\nUser ID: ${user_id}`);
 
             await interaction.editReply({ embeds: [embed] });
             
