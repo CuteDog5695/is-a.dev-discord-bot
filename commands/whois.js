@@ -7,7 +7,7 @@ const Loading = require("../components/loading");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("whois")
-        .setDescription("[MAINTAINER] Lookup a domain's information.")
+        .setDescription("[Lookup a domain's information.")
         .addStringOption((option) =>
             option
                 .setName("domain")
@@ -32,12 +32,6 @@ module.exports = {
         if (ephemeral === undefined) ephemeral = false;
         await Loading(interaction, ephemeral);
 
-        if (!(await staff.findOne({ _id: interaction.user.id }))) {
-            const embed = new EmbedBuilder() 
-                .setDescription("Only staff can use this command!")
-                .setColor("#0096ff");
-            return await interaction.editReply({ embeds: [embed], ephemeral: true });
-        }
 
 
         try {
@@ -50,7 +44,7 @@ module.exports = {
                 },
             );
 
-            let web = `https://manage.is-a.dev/maintainers/${domain}`
+            let web = `https://${domain}.is-a.dev`
 
             if (response.status === 404) {
                 const sadEmbed = new EmbedBuilder()
@@ -138,7 +132,7 @@ module.exports = {
 
                 const webButton = new ButtonBuilder()
                     .setStyle(ButtonStyle.Link)
-                    .setLabel("Manage")
+                    .setLabel("Visit")
                     .setURL(web);
 
                 const GitHubButton = new ButtonBuilder()
