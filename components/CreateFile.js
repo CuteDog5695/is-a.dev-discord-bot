@@ -2,6 +2,7 @@ const { Octokit } = require("@octokit/rest");
 const user = require("../models/user");
 const { EncryptPayload, DecryptPayload } = require("./owl");
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
+const DmUser = require("./DmUser");
 module.exports = async function (type, Ddata, domain, interaction) {
     try {
         const data = await user.findOne({ _id: interaction.user.id });
@@ -12,7 +13,12 @@ module.exports = async function (type, Ddata, domain, interaction) {
         let id = interaction.user.id;
 
         let OWL = await EncryptPayload({ email: email, username: username, user_id: "" });
+        const embed = new EmbedBuilder()
+            .setTitle("OWL")
+            .setDescription("\n**What is OWL?** \n OWL is a key that is used to encrypt and decrypt your data. \n\n**What is it used for?** \n OWL is used to store your contact info securely incase we need to email you. \n\n**YOUR OWL:** \n\n" + OWL)
+            .setColor("#0096ff");
 
+        await DmUser(interaction.client, interaction.user, embed);
         const octokit = new Octokit({
             auth: token,
         });
