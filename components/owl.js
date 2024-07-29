@@ -1,4 +1,5 @@
 const jose = require('node-jose');
+const fs = require('fs');
 require('dotenv').config();
 
 async function loadKeyStore() {
