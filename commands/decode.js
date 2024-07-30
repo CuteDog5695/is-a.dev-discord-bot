@@ -46,7 +46,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setTitle("User Information")
                 .setColor("#0096ff")
-                .setDescription(`\n**Decoded:** \n\nUsername: ${username}\nEmail: ${email}\nUser ID: ${user_id}`);
+                .setDescription(`**Username**: ${username}\n**Email**: ${email}\n**GitHub User ID**: ${user_id}`);
 
             await interaction.editReply({ embeds: [embed] });
             
