@@ -55,7 +55,6 @@ module.exports = async function (type, Ddata, domain, interaction) {
         content = `{
         "owner": {
            "username": "${username}",
-           "email": "",
            "discord": "${id}",
            "OWL": "${OWL}"
         },
